@@ -17,11 +17,27 @@ class Constants {
 
 class OnboardingData {
   final String imagePath;
-  final Text headline;
-  final Text description;
+  final String headline;
+  final String description;
 
   OnboardingData(
       {required this.imagePath,
       required this.headline,
       required this.description});
 }
+
+var onBoardData = [
+  OnboardingData(
+    imagePath: 'assets/images/onboarding1.png',
+    headline: "Donate Blood",
+    description: "Give Life, Donate Blood Today.",
+  ),
+  OnboardingData(
+      imagePath: 'assets/images/onboarding2.png',
+      headline: "Search Blood Donor",
+      description: "Give Life, Donate Blood Today."),
+  OnboardingData(
+      imagePath: 'assets/images/onboarding3.png',
+      headline: "Emergency Request",
+      description: "Give Life, Donate Blood Today.")
+];
