@@ -17,8 +17,8 @@ class Constants {
 
 class OnboardingData {
   final String imagePath;
-  final Text headline;
-  final Text description;
+  final String headline;
+  final String description;
 
   OnboardingData(
       {required this.imagePath,
