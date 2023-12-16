@@ -1,5 +1,7 @@
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -20,25 +22,23 @@ class OnboardingScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 80,
+              height: 50,
             ),
             Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.elliptical(
-                          MediaQuery.of(context).size.width, 100),
-                    ),
-                    color: Constants.kPrimaryColor),
-                padding: const EdgeInsets.symmetric(
-                    vertical: Constants.kHorizontalPadding),
-                child: const Column(
-                  children: [
-                    Text(
-                      "Donate Blood",
-                    ),
-                  ],
+              child: ClipPath(
+                clipper: WaveClipperOne(reverse: true, flip: true),
+                child: Container(
+                  width: double.infinity,
+                  decoration:
+                      const BoxDecoration(color: Constants.kPrimaryColor),
+                  padding: const EdgeInsets.all(50),
+                  child: const Column(
+                    children: [
+                      Text(
+                        "Donate Blood",
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )
