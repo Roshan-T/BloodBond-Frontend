@@ -2,7 +2,7 @@ import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final _theme = ThemeData(
+final theme = ThemeData(
     primaryColor: const Color(0XFF5A59D6),
     primarySwatch: Colors.blue,
     visualDensity: VisualDensity.adaptivePlatformDensity,
