@@ -48,6 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           const BoxDecoration(color: Constants.kPrimaryColor),
                       padding: const EdgeInsets.all(50),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             textAlign: TextAlign.center,
@@ -67,13 +68,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           const SizedBox(
                             height: 200,
                           ),
-                          Text(
-                            page.toString(),
-                            style: Get.textTheme.titleSmall
-                                ?.copyWith(color: Colors.white),
-                          ),
                           Row(
-                            children: [],
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 10,
+                                width: page == 0 ? 25 : 10,
+                                margin: EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Container(
+                                height: 10,
+                                width: page == 1 ? 25 : 10,
+                                margin: EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Container(
+                                height: 10,
+                                width: page == 2 ? 25 : 10,
+                                margin: EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           )
                         ],
                       ),
