@@ -106,25 +106,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                             ],
                           ),
+                          SizedBox(
+                            height: Get.height * 0.03,
+                          ),
                           page == 3
-                              ? Expanded(
-                                  child: FractionallySizedBox(
-                                    heightFactor: 0.9,
-                                    widthFactor: 0.9,
-                                    child: ElevatedButton(
-                                        style: Get
-                                            .theme.elevatedButtonTheme.style
-                                            ?.copyWith(
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Constants.kWhiteColor),
-                                        ),
-                                        onPressed: () {},
-                                        child: Text(
-                                          "Lets Go",
-                                          style: Get.textTheme.labelLarge,
-                                        )),
-                                  ),
+                              ? SizedBox(
+                                  width: Get.width * 0.9,
+                                  child: ElevatedButton(
+                                      style: Get.theme.elevatedButtonTheme.style
+                                          ?.copyWith(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Constants.kWhiteColor),
+                                      ),
+                                      onPressed: () {},
+                                      child: Text(
+                                        "Lets Go",
+                                        style: Get.textTheme.labelLarge,
+                                      )),
                                 )
                               : Text("")
                         ],
