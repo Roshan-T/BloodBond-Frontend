@@ -27,17 +27,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           itemBuilder: (_, i) {
             return Column(
               children: [
-                const SizedBox(
-                  height: 50,
+                SizedBox(
+                  height: Get.height * 0.05,
                 ),
                 Center(
                   child: Image.asset(
                     onBoardData[i].imagePath,
-                    height: 300,
+                    height: Get.height * 0.3,
                   ),
                 ),
-                const SizedBox(
-                  height: 25,
+                SizedBox(
+                  height: Get.height * 0.15,
                 ),
                 Expanded(
                   child: ClipPath(
@@ -57,9 +57,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               color: Colors.white,
                             ),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
                           Text(
                             textAlign: TextAlign.center,
                             onBoardData[i].description,
@@ -67,7 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ?.copyWith(color: Colors.white),
                           ),
                           SizedBox(
-                            height: 100,
+                            height: Get.height * 0.1,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
