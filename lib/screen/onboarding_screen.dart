@@ -15,11 +15,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
-
     return Scaffold(
       body: SafeArea(
         child: PageView.builder(
@@ -33,7 +28,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             return Column(
               children: [
                 const SizedBox(
-                  height: 100,
+                  height: 50,
                 ),
                 Center(
                   child: Image.asset(
@@ -42,7 +37,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 25,
                 ),
                 Expanded(
                   child: ClipPath(
@@ -53,7 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           const BoxDecoration(color: Constants.kPrimaryColor),
                       padding: const EdgeInsets.all(50),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             textAlign: TextAlign.center,
@@ -63,15 +58,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                           ),
                           const SizedBox(
-                            height: 40,
+                            height: 30,
                           ),
                           Text(
                             onBoardData[i].description,
                             style: Get.textTheme.titleSmall
                                 ?.copyWith(color: Colors.white),
                           ),
-                          const SizedBox(
-                            height: 200,
+                          SizedBox(
+                            height: 100,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -103,8 +98,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   color: Colors.white,
                                 ),
                               ),
+                              Container(
+                                height: 10,
+                                width: page == 3 ? 25 : 10,
+                                margin: EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                ),
+                              ),
                             ],
-                          )
+                          ),
+                          page == 3
+                              ? Expanded(
+                                  child: FractionallySizedBox(
+                                    heightFactor: 0.9,
+                                    widthFactor: 0.9,
+                                    child: ElevatedButton(
+                                        style: Get
+                                            .theme.elevatedButtonTheme.style
+                                            ?.copyWith(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  Constants.kWhiteColor),
+                                        ),
+                                        onPressed: () {},
+                                        child: Text(
+                                          "Lets Go",
+                                          style: Get.textTheme.labelLarge,
+                                        )),
+                                  ),
+                                )
+                              : Text("")
                         ],
                       ),
                     ),
