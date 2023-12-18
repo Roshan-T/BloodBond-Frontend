@@ -46,7 +46,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       width: double.infinity,
                       decoration:
                           const BoxDecoration(color: Constants.kPrimaryColor),
-                      padding: const EdgeInsets.all(50),
+                      padding: const EdgeInsets.all(30),
                       child: Column(
                         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -61,6 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             height: 30,
                           ),
                           Text(
+                            textAlign: TextAlign.center,
                             onBoardData[i].description,
                             style: Get.textTheme.titleSmall
                                 ?.copyWith(color: Colors.white),
@@ -109,25 +110,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                             ],
                           ),
+                          SizedBox(
+                            height: 40,
+                          ),
                           page == 3
-                              ? Expanded(
-                                  child: FractionallySizedBox(
-                                    heightFactor: 0.9,
-                                    widthFactor: 0.9,
-                                    child: ElevatedButton(
-                                        style: Get
-                                            .theme.elevatedButtonTheme.style
-                                            ?.copyWith(
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  Constants.kWhiteColor),
-                                        ),
-                                        onPressed: () {},
-                                        child: Text(
-                                          "Lets Go",
-                                          style: Get.textTheme.labelLarge,
-                                        )),
-                                  ),
+                              ? SizedBox(
+                                  height: Get.height * 0.065,
+                                  width: Get.width * 1.1,
+                                  child: ElevatedButton(
+                                      style: Get.theme.elevatedButtonTheme.style
+                                          ?.copyWith(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Constants.kWhiteColor),
+                                      ),
+                                      onPressed: () {},
+                                      child: Text(
+                                        "Lets Go",
+                                        style: Get.textTheme.labelLarge,
+                                      )),
                                 )
                               : Text("")
                         ],
