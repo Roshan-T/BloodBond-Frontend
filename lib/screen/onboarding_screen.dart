@@ -44,85 +44,52 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     clipper: OvalTopBorderClipper(),
                     child: Container(
                       width: double.infinity,
-                      decoration:
-                          const BoxDecoration(color: Constants.kPrimaryColor),
-                      padding: const EdgeInsets.all(30),
+                      decoration: BoxDecoration(color: Constants.kPrimaryColor),
+                      padding: EdgeInsets.all(Get.width * 0.1),
                       child: Column(
-                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            textAlign: TextAlign.center,
                             onBoardData[i].headline,
                             style: Get.textTheme.displayLarge?.copyWith(
                               color: Colors.white,
                             ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.04,
                           ),
                           Text(
-                            textAlign: TextAlign.center,
                             onBoardData[i].description,
                             style: Get.textTheme.titleSmall
                                 ?.copyWith(color: Colors.white),
+                            textAlign: TextAlign.center,
                           ),
                           SizedBox(
-                            height: Get.height * 0.1,
+                            height: Get.height * 0.10,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                height: 10,
-                                width: page == 0 ? 25 : 10,
-                                margin: EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
+                              for (int index = 0; index < 4; index++)
+                                Container(
+                                  height: 10,
+                                  width: page == index ? 25 : 10,
+                                  margin: const EdgeInsets.only(right: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                height: 10,
-                                width: page == 1 ? 25 : 10,
-                                margin: EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Container(
-                                height: 10,
-                                width: page == 2 ? 25 : 10,
-                                margin: EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Container(
-                                height: 10,
-                                width: page == 3 ? 25 : 10,
-                                margin: EdgeInsets.only(right: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                ),
-                              ),
                             ],
                           ),
-                          SizedBox(
-<<<<<<< HEAD
-                            height: Get.height * 0.03,
-                          ),
                           page == 3
-                              ? SizedBox(
-                                  width: Get.width * 0.9,
-=======
-                            height: 40,
-                          ),
-                          page == 3
-                              ? SizedBox(
-                                  height: Get.height * 0.065,
-                                  width: Get.width * 1.1,
->>>>>>> a61075d19a8e1e17b6c316184f118d8441e70477
-                                  child: ElevatedButton(
+                              ? Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: SizedBox(
+                                    height: Get.height * 0.065,
+                                    width: Get.width * 0.8,
+                                    child: ElevatedButton(
                                       style: Get.theme.elevatedButtonTheme.style
                                           ?.copyWith(
                                         backgroundColor:
@@ -131,11 +98,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       ),
                                       onPressed: () {},
                                       child: Text(
-                                        "Lets Go",
+                                        "Let's Go",
                                         style: Get.textTheme.labelLarge,
-                                      )),
+                                      ),
+                                    ),
+                                  ),
                                 )
-                              : Text("")
+                              : const SizedBox(),
                         ],
                       ),
                     ),

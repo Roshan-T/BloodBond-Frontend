@@ -41,7 +41,6 @@ final onBoardData = [
       description: "Give Life , Donate Blood Today"),
   OnboardingData(
       imagePath: "assets/images/onboarding4.png",
-      headline: "Your blood can save lives",
-      description:
-          " Be a hero in someone's story donate blood and be a part of a lifesaving journey."),
+      headline: "Save lives",
+      description: " Be a hero in someone's story donate blood."),
 ];
