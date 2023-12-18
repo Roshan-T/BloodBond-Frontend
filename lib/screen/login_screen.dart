@@ -1,7 +1,9 @@
+import 'package:bloodbond/screen/role_select.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:bloodbond/auth/custom_text_form_field.dart';
 import 'package:bloodbond/utils/helper_function.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -183,8 +185,9 @@ class OptionalSignUpWidget extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            //Navigator.pushReplacement(context,
-            //MaterialPageRoute(builder: (context) => const RoleScreen()));
+            Get.offAll(
+              RoleScreen(),
+            );
           },
           child: Text(
             "Sign Up",

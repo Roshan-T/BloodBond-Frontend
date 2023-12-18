@@ -98,7 +98,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                                 Constants.kWhiteColor),
                                       ),
                                       onPressed: () {
-                                        Get.to(LoginScreen());
+                                        Get.offAll(
+                                          LoginScreen(),
+                                        );
                                       },
                                       child: Text(
                                         "Let's Go",
