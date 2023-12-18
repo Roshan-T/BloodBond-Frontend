@@ -48,7 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           const BoxDecoration(color: Constants.kPrimaryColor),
                       padding: const EdgeInsets.all(50),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             textAlign: TextAlign.center,
@@ -95,22 +95,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   color: Colors.white,
                                 ),
                               ),
+                              Container(
+                                height: 10,
+                                width: page == 3 ? 25 : 10,
+                                margin: EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                ),
+                              ),
                             ],
                           ),
-                          page == 2
-                              ? ElevatedButton(
-                                  style: Get.theme.elevatedButtonTheme.style
-                                      ?.copyWith(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Constants.kWhiteColor),
+                          page == 3
+                              ? Expanded(
+                                  child: FractionallySizedBox(
+                                    heightFactor: 0.9,
+                                    widthFactor: 0.9,
+                                    child: ElevatedButton(
+                                        style: Get
+                                            .theme.elevatedButtonTheme.style
+                                            ?.copyWith(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  Constants.kWhiteColor),
+                                        ),
+                                        onPressed: () {},
+                                        child: Text(
+                                          "Lets Go",
+                                          style: Get.textTheme.labelLarge,
+                                        )),
                                   ),
-                                  onPressed: () {},
-                                  child: Text(
-                                    "Lets Go",
-                                    style: Get.textTheme.labelLarge,
-                                  ))
-                              : const Text("")
+                                )
+                              : Text("")
                         ],
                       ),
                     ),
