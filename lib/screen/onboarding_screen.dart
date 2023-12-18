@@ -46,7 +46,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       width: double.infinity,
                       decoration:
                           const BoxDecoration(color: Constants.kPrimaryColor),
-                      padding: const EdgeInsets.all(50),
+                      padding: const EdgeInsets.all(30),
                       child: Column(
                         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -58,6 +58,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                           ),
                           Text(
+                            textAlign: TextAlign.center,
                             onBoardData[i].description,
                             style: Get.textTheme.titleSmall
                                 ?.copyWith(color: Colors.white),
@@ -107,11 +108,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ],
                           ),
                           SizedBox(
+<<<<<<< HEAD
                             height: Get.height * 0.03,
                           ),
                           page == 3
                               ? SizedBox(
                                   width: Get.width * 0.9,
+=======
+                            height: 40,
+                          ),
+                          page == 3
+                              ? SizedBox(
+                                  height: Get.height * 0.065,
+                                  width: Get.width * 1.1,
+>>>>>>> a61075d19a8e1e17b6c316184f118d8441e70477
                                   child: ElevatedButton(
                                       style: Get.theme.elevatedButtonTheme.style
                                           ?.copyWith(
