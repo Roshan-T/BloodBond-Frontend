@@ -15,11 +15,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
-
     return Scaffold(
       body: SafeArea(
         child: PageView.builder(
@@ -32,17 +27,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           itemBuilder: (_, i) {
             return Column(
               children: [
-                const SizedBox(
-                  height: 100,
+                SizedBox(
+                  height: Get.height * 0.05,
                 ),
                 Center(
                   child: Image.asset(
                     onBoardData[i].imagePath,
-                    height: 300,
+                    height: Get.height * 0.3,
                   ),
                 ),
-                const SizedBox(
-                  height: 50,
+                SizedBox(
+                  height: Get.height * 0.15,
                 ),
                 Expanded(
                   child: ClipPath(
@@ -62,16 +57,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               color: Colors.white,
                             ),
                           ),
-                          const SizedBox(
-                            height: 40,
-                          ),
                           Text(
                             onBoardData[i].description,
                             style: Get.textTheme.titleSmall
                                 ?.copyWith(color: Colors.white),
                           ),
-                          const SizedBox(
-                            height: 200,
+                          SizedBox(
+                            height: Get.height * 0.1,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +96,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                               ),
                             ],
-                          )
+                          ),
+                          page == 2
+                              ? ElevatedButton(
+                                  style: Get.theme.elevatedButtonTheme.style
+                                      ?.copyWith(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Constants.kWhiteColor),
+                                  ),
+                                  onPressed: () {},
+                                  child: Text(
+                                    "Lets Go",
+                                    style: Get.textTheme.labelLarge,
+                                  ))
+                              : const Text("")
                         ],
                       ),
                     ),
