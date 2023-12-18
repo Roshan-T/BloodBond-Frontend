@@ -1,3 +1,4 @@
+import 'package:bloodbond/screen/login_screen.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -121,7 +122,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                             MaterialStateProperty.all<Color>(
                                                 Constants.kWhiteColor),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Get.to(LoginScreen());
+                                      },
                                       child: Text(
                                         "Lets Go",
                                         style: Get.textTheme.labelLarge,
