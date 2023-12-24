@@ -1,11 +1,12 @@
 import 'package:bloodbond/screen/login_screen.dart';
+import 'package:bloodbond/screen/signup_screen.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class OnboardingScreen extends StatefulWidget {
-   OnboardingScreen({super.key});
+  OnboardingScreen({super.key});
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -45,7 +46,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     clipper: OvalTopBorderClipper(),
                     child: Container(
                       width: double.infinity,
-                      decoration:const  BoxDecoration(color: Constants.kPrimaryColor),
+                      decoration:
+                          const BoxDecoration(color: Constants.kPrimaryColor),
                       padding: EdgeInsets.all(Get.width * 0.1),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,7 +88,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                           page == 3
                               ? Padding(
-                                  padding:const EdgeInsets.only(top: 20),
+                                  padding: const EdgeInsets.only(top: 20),
                                   child: SizedBox(
                                     height: Get.height * 0.065,
                                     width: Get.width * 0.8,
@@ -99,7 +101,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       ),
                                       onPressed: () {
                                         Get.offAll(
-                                         const LoginScreen(),
+                                          const SignUpScreen(),
                                         );
                                       },
                                       child: Text(

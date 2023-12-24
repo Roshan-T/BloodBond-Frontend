@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import 'package:bloodbond/auth/custom_text_form_field.dart';
+import 'package:bloodbond/screen/auth/custom_text_form_field.dart';
 import 'package:bloodbond/utils/utils.dart';
 
 //import 'auth_controller.dart';

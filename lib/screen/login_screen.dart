@@ -1,8 +1,8 @@
-import 'package:bloodbond/auth/forgot_password_view.dart';
+import 'package:bloodbond/screen/auth/forgot_password_view.dart';
 import 'package:bloodbond/screen/role_select.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodbond/utils/constants.dart';
-import 'package:bloodbond/auth/custom_text_form_field.dart';
+import 'package:bloodbond/screen/auth/custom_text_form_field.dart';
 import 'package:bloodbond/utils/helper_function.dart';
 import 'package:get/get.dart';
 
