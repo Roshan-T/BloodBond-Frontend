@@ -182,6 +182,16 @@ class Textfield extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return TextField(
+      keyboardType: keyboard_type,
+      decoration: InputDecoration(
+        isDense: true,
+        hintText: hint_text,
+        hintStyle: Theme.of(context)
+            .textTheme
+            .labelMedium!
+            .copyWith(color: Constants.kGrey),
+      ),
+    );
   }
 }
