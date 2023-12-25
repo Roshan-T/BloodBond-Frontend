@@ -1,3 +1,4 @@
+import 'package:bloodbond/screen/bloodtype_selection.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -5,6 +6,6 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return BloodTypeSelectionScreen();
   }
 }

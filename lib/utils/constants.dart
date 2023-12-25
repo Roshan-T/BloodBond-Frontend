@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class Constants {
   // Colors
   static const kPrimaryColor = Color.fromARGB(255, 198, 13, 0);
+  static const kLightRed = Color.fromARGB(255, 252, 226, 226);
   static const kAccentColor = Color(0XFFFF4701);
   static const kErrorColor = Color(0XFFE61F34);
   static const kSuccessColor = Colors.green;

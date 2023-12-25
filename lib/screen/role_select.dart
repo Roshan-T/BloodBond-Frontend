@@ -39,13 +39,14 @@ class _RoleScreenState extends State<RoleScreen> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                            text: "Blood",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineLarge!
-                                .copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold)),
+                          text: "Blood",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge!
+                              .copyWith(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                        ),
                         TextSpan(
                             text: "Bond🩸",
                             style: Theme.of(context)
