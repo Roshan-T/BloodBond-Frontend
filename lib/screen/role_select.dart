@@ -130,7 +130,7 @@ class _RoleScreenState extends State<RoleScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () => Get.to(
-                    SignUpScreen(),
+                    const SignUpScreen(),
                   ),
                   child: const Text(
                     "Continue",

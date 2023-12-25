@@ -1,6 +1,6 @@
 import 'package:bloodbond/screen/onboarding_screen.dart';
-
 import 'package:bloodbond/utils/theme.dart';
+import 'package:bloodbond/widget/select_location.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
