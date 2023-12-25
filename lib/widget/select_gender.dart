@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bloodbond/utils/utils.dart';
 
 class SelectGender extends StatefulWidget {
-   SelectGender({super.key});
+  SelectGender({super.key});
 
   @override
   State<SelectGender> createState() => _SelectGenderState();
@@ -25,24 +25,26 @@ class _SelectGenderState extends State<SelectGender> {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: DropdownButton(
-           
-            items: genderitems.map((valueItem) {  // to map each item in the genderitems list into a DropdownMenuItem widget
+          items: genderitems.map((valueItem) {
+            // to map each item in the genderitems list into a DropdownMenuItem widget
             return DropdownMenuItem(
               value: valueItem,
               child: Text(valueItem),
             );
           }).toList(),
 
-           value: valuechoose,// Represents the currently selected value
+          value: valuechoose, // Represents the currently selected value
           onChanged: (newvalue) {
             setState(() {
               valuechoose = newvalue;
             });
           },
-          
 
-          style:const  TextStyle(fontSize: 14, color: Constants.kGrey),
-          underline: const SizedBox(),//to remove underline
+          style: Theme.of(context)
+              .textTheme
+              .labelMedium!
+              .copyWith(color: Constants.kGrey),
+          underline: const SizedBox(), //to remove underline
           isExpanded: true,
           hint: const Text("Select Gender"),
           icon: const Icon(
@@ -50,8 +52,8 @@ class _SelectGenderState extends State<SelectGender> {
             size: 20,
           ),
           dropdownColor: Colors.white,
-          
-            //to transform mapped string into list
+
+          //to transform mapped string into list
         ),
       ),
     );

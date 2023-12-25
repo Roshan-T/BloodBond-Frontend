@@ -38,6 +38,10 @@ class _SelectDateState extends State<SelectDate> {
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.calendar_today),
           isDense: true,
+          hintStyle: Theme.of(context)
+            .textTheme
+            .labelMedium!
+            .copyWith(color: Constants.kGrey),
           hintText: dateSelected == null
               ? "Date of birth"
               : " ${DateFormat('yyyy-MM-dd').format(dateSelected!)}",
