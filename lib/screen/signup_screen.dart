@@ -1,5 +1,9 @@
 import 'package:bloodbond/screen/bloodtype_selection.dart';
+import 'package:bloodbond/screen/onboarding_screen.dart';
 import 'dart:io';
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:bloodbond/widget/select_date.dart';
 import 'package:bloodbond/widget/select_gender.dart';
@@ -19,6 +23,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   XFile? image;
+  bool isFetchingLocation = false;
 
   Future<void> getImage() async {
     ImagePicker picker = ImagePicker();
@@ -28,6 +33,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       image = pickedImage;
     });
   }
+
+  String? latitude;
+  String? longitude;
+  String? city;
 
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
@@ -58,7 +67,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return true;
   }
 
-//Position position =  Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  Future<String?> getNearestCity(double latitude, double longitude) async {
+    final apiUrl =
+        'https://nominatim.openstreetmap.org/reverse?format=json&lat=$latitude&lon=$longitude';
+
+    try {
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        final decodedData = json.decode(response.body);
+        final address = decodedData['address'] as Map<String, dynamic>;
+        final city = address['city'];
+        return city as String?;
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -147,22 +174,58 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   TextField(
                     onTap: () async {
-                      //Get.to(SelectLoc
-                      //ation());
+                      setState(() {
+                        isFetchingLocation = true;
+                      });
+
+                      //  Get.to(SelectLocation());
+
                       await _handleLocationPermission();
                       Position position = await Geolocator.getCurrentPosition(
                           desiredAccuracy: LocationAccuracy.high);
-                      print(position.latitude);
-                      print(position.longitude);
+                      latitude = position.latitude.toString();
+                      longitude = position.longitude.toString();
+
+                      city = await getNearestCity(
+                          position.latitude, position.longitude);
+
+                      setState(() {
+                        isFetchingLocation = false;
+                      });
                     },
                     readOnly: true,
                     decoration: InputDecoration(
+                      suffixIcon: isFetchingLocation
+                          ? const Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircularProgressIndicator(),
+                            )
+                          : null,
                       isDense: true,
-                      hintText: "Select Location",
+                      hintText: latitude == null ? "Select Location" : city,
                       hintStyle: Theme.of(context)
                           .textTheme
                           .labelMedium!
                           .copyWith(color: Constants.kGrey),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  SizedBox(
+                    width: Get.width * 0.9,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.to(
+                          () => BloodTypeSelectionScreen(),
+                        );
+                      },
+                      child: Text(
+                        "Continue",
+                        style: Get.textTheme.titleLarge
+                            ?.copyWith(color: Colors.white),
+                      ),
                     ),
                   ),
                 ],
@@ -178,10 +241,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
 class Textfield extends StatelessWidget {
   final String? hint_text;
   final TextInputType? keyboard_type;
-  Textfield({required this.hint_text, required this.keyboard_type});
+
+  Textfield({
+    required this.hint_text,
+    required this.keyboard_type,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return TextField(
+      readOnly: false,
+      keyboardType: keyboard_type,
+      decoration: InputDecoration(
+        isDense: true,
+        hintText: hint_text,
+        hintStyle: Theme.of(context)
+            .textTheme
+            .labelMedium!
+            .copyWith(color: Constants.kGrey),
+      ),
+    );
   }
 }
