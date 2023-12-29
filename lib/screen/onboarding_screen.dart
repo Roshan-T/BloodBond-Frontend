@@ -1,6 +1,7 @@
-import 'package:bloodbond/screen/bloodtype_selection.dart';
+//import 'package:bloodbond/screen/bloodtype_selection.dart';
+//import 'package:bloodbond/screen/login_screen.dart';
+//import 'package:bloodbond/screen/signup_screen.dart';
 import 'package:bloodbond/screen/login_screen.dart';
-import 'package:bloodbond/screen/signup_screen.dart';
 import 'package:bloodbond/screen/verification_screen.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  OnboardingScreen({super.key});
+  const OnboardingScreen({super.key});
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -103,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       ),
                                       onPressed: () {
                                         Get.offAll(
-                                          const VerificationScreen(),
+                                          const LoginScreen(),
                                         );
                                       },
                                       child: Text(

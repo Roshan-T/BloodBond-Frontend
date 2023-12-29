@@ -11,7 +11,7 @@ class SelectLocation extends StatefulWidget {
 class _SelectLocationState extends State<SelectLocation> {
   LatLng currentloc = const LatLng(22.2096, 83.9856);
   Set<Marker> markers = {
-    Marker(
+    const Marker(
       markerId: MarkerId("12345"),
       icon: BitmapDescriptor.defaultMarker,
       infoWindow: InfoWindow(title: "Pokhara"),
@@ -33,7 +33,7 @@ class _SelectLocationState extends State<SelectLocation> {
             title: currentloc.toString(),
           )));
     });
-    print(currentloc);
+    //print(currentloc);
   }
 
   @override

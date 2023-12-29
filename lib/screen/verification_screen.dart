@@ -15,7 +15,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_ios),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Get.back();
+          },
+        ),
         backgroundColor: Constants.kWhiteColor,
         elevation: 0,
       ),
@@ -52,15 +57,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     height: 250,
                     width: 500,
                     child: Image.asset("assets/images/Confirmed-cuate.png")),
+                const SizedBox(
+                  height: 30,
+                ),
                 const Pinput(
                   length: 6,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                 ),
-
-
                 const SizedBox(
-                  height: 80,
+                  height: 40,
                 ),
                 SizedBox(
                   width: Get.width * 0.9,

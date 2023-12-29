@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BloodTypeSelectionScreen extends StatefulWidget {
+  const BloodTypeSelectionScreen({super.key});
+
   @override
   _BloodTypeSelectionScreenState createState() =>
       _BloodTypeSelectionScreenState();
@@ -95,7 +97,7 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
                     );
                   } else {
                     Get.to(
-                      () => OnboardingScreen(),
+                      () => const OnboardingScreen(),
                     );
                   }
                 },

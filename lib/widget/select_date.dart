@@ -36,7 +36,7 @@ class _SelectDateState extends State<SelectDate> {
         },
         readOnly: true,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.calendar_today),
+          prefixIcon:const Icon(Icons.calendar_today),
           isDense: true,
           hintStyle: Theme.of(context)
             .textTheme
