@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BloodTypeSelectionScreen extends StatefulWidget {
+  const BloodTypeSelectionScreen({super.key});
+
   @override
   _BloodTypeSelectionScreenState createState() =>
       _BloodTypeSelectionScreenState();
@@ -95,7 +97,7 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
                     );
                   } else {
                     Get.to(
-                      () => OnboardingScreen(),
+                      () => const OnboardingScreen(),
                     );
                   }
                 },
@@ -125,8 +127,8 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
           color: isSelected ? Constants.kPrimaryColor : color,
           borderRadius: BorderRadius.circular(8),
           border: isSelected
-              ? Border.all(color: Colors.black, width: 1)
-              : Border.all(color: Colors.transparent),
+              ? Border.all(color: Color(0XFF8B0000), width: 3)
+              : null,
         ),
         child: Center(
           child: Text(

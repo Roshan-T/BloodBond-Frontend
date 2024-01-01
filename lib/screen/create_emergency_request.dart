@@ -123,6 +123,7 @@ class _CreateEmergencyRequestState extends State<CreateEmergencyRequest> {
   }
 
   void showSnackBar(String title) {
+    Get.closeAllSnackbars();
     Get.snackbar(
       title,
       "",

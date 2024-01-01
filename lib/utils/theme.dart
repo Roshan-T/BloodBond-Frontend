@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final theme = ThemeData(
-    primaryColor: const Color(0XFF5A59D6),
-    primarySwatch: Colors.blue,
+    primaryColor: Constants.kPrimaryColor,
+    primarySwatch: Colors.red,
     visualDensity: VisualDensity.adaptivePlatformDensity,
     scaffoldBackgroundColor: Constants.kWhiteColor,
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
@@ -44,26 +44,30 @@ final theme = ThemeData(
     ),
     // text styles
     textTheme: TextTheme(
-      bodyMedium: GoogleFonts.montserrat(
-          fontSize: 36,
-          fontWeight: FontWeight.w500,
-          height: 1,
-          color: Constants.kBlackColor),
+        bodyMedium: GoogleFonts.montserrat(
+            fontSize: 36,
+            fontWeight: FontWeight.w500,
+            height: 1,
+            color: Constants.kBlackColor),
 
-      //headline
-      displayLarge: const TextStyle(
-        fontWeight: FontWeight.w900,
-        height: 1,
-        fontSize: 36,
-        color: Constants.kBlackColor,
-      ),
-      // title
-      titleLarge: const TextStyle(
-        color: Constants.kBlackColor,
-        fontSize: 20,
-        fontWeight: FontWeight.w700,
-      ),
-    ),
+        //headline
+        displayLarge: GoogleFonts.merriweather(
+          fontWeight: FontWeight.w900,
+          height: 1,
+          fontSize: 36,
+          color: Constants.kBlackColor,
+        ),
+        // title
+        titleLarge: const TextStyle(
+          color: Constants.kBlackColor,
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+        ),
+        titleSmall: GoogleFonts.poppins(
+          fontSize: 18,
+          fontWeight: FontWeight.w400,
+          color: Constants.kWhiteColor,
+        )),
 
     // elevated button
     elevatedButtonTheme: ElevatedButtonThemeData(

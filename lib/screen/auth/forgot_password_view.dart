@@ -1,4 +1,6 @@
+import 'package:bloodbond/screen/verification_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:bloodbond/screen/auth/custom_text_form_field.dart';
@@ -60,6 +62,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             setState(() {});
                             return;
                           }
+                          Get.to(const VerificationScreen());
+
                           setState(() {
                             errorText = null;
                           });

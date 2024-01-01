@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bloodbond/utils/utils.dart';
 
 class SelectGender extends StatefulWidget {
-  SelectGender({super.key});
+  const SelectGender({super.key});
 
   @override
   State<SelectGender> createState() => _SelectGenderState();
@@ -18,7 +18,7 @@ class _SelectGenderState extends State<SelectGender> {
     return Container(
       height: 55,
       decoration: BoxDecoration(
-        color: Color(0xffF7F7FB),
+        color: const Color(0xffF7F7FB),
         border: Border.all(color: Colors.black),
         borderRadius: BorderRadius.circular(12),
       ),
