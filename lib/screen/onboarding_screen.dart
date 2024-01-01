@@ -3,7 +3,6 @@
 //import 'package:bloodbond/screen/signup_screen.dart';
 import 'package:bloodbond/screen/QNA.dart';
 import 'package:bloodbond/screen/login_screen.dart';
-import 'package:bloodbond/screen/verification_screen.dart';
 import 'package:bloodbond/utils/constants.dart';
 
 import 'package:bloodbond/widget/custom_stepper.dart';
@@ -24,55 +23,51 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: PageView.builder(
-          onPageChanged: (int index) {
-            setState(() {
-              page = index;
-            });
-          },
-          itemCount: onBoardData.length,
-          itemBuilder: (_, i) {
-            return Column(
-              children: [
-                SizedBox(
-                  height: Get.height * 0.05,
+      body: PageView.builder(
+        onPageChanged: (int index) {
+          setState(() {
+            page = index;
+          });
+        },
+        itemCount: onBoardData.length,
+        itemBuilder: (_, i) {
+          return Column(
+            children: [
+              SizedBox(
+                height: Get.height * 0.21,
+              ),
+              Center(
+                child: Image.asset(
+                  onBoardData[i].imagePath,
+                  height: Get.height * 0.25,
                 ),
-                Center(
-                  child: Image.asset(
-                    onBoardData[i].imagePath,
-                    height: Get.height * 0.3,
-                  ),
-                ),
-                SizedBox(
-                  height: Get.height * 0.15,
-                ),
-                Expanded(
-                  child: ClipPath(
-                    clipper: OvalTopBorderClipper(),
-                    child: Container(
-                      width: double.infinity,
-                      decoration:
-                          const BoxDecoration(color: Constants.kPrimaryColor),
-                      padding: EdgeInsets.all(Get.width * 0.1),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            onBoardData[i].headline,
-                            style: Get.textTheme.displayLarge?.copyWith(
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.center,
+              ),
+              Spacer(),
+              Container(
+                height: 350,
+                child: ClipPath(
+                  clipper: OvalTopBorderClipper(),
+                  child: Container(
+                    width: double.infinity,
+                    decoration:
+                        const BoxDecoration(color: Constants.kPrimaryColor),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 20),
+                        Text(
+                          onBoardData[i].headline,
+                          style: Get.textTheme.displayLarge?.copyWith(
+                            color: Colors.white,
                           ),
-                          SizedBox(
-                            height: Get.height * 0.04,
-                          ),
-                          Text(
-                            onBoardData[i].description,
-                            style: Get.textTheme.titleSmall
-                                ?.copyWith(color: Colors.white),
-                            textAlign: TextAlign.center,
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          onBoardData[i].description,
+                          style: Get.textTheme.titleSmall!.copyWith(
+                            fontWeight: FontWeight.w600,
                           ),
                           SizedBox(
                             height: Get.height * 0.10,
@@ -107,9 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       ),
                                       onPressed: () {
                                         Get.offAll(
-                                          //const LoginScreen(),
-                                          //  const QNA(),
-                                          const CustomStepper(),
+                                          const LoginScreen(),
                                         );
                                       },
                                       child: Text(
