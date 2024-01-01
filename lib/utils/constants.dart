@@ -27,6 +27,33 @@ class OnboardingData {
       required this.description});
 }
 
+class Questions {
+  final String question;
+  bool? result;
+  Questions({required this.question,this.result});
+}
+
+final ListQuestion = [
+  Questions(
+    question: "Do you have diabetes?",
+  ),
+  Questions(
+    question: "Have you ever had problems in your heart?",
+  ),
+  Questions(
+    question: "In the last 28 days, have you tested positive for COVID-19?",
+  ),
+  Questions(
+    question: "Have you ever had a positive test for HIV/AIDS virus?",
+  ),
+  Questions(
+    question: "Have you ever had a cancer?",
+  ),
+  Questions(
+    question: "In last 3 months, have you had a vaccination?",
+  ),
+];
+
 final onBoardData = [
   OnboardingData(
       imagePath: "assets/images/onboarding1.png",
