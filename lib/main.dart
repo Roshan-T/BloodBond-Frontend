@@ -1,4 +1,5 @@
 import 'package:bloodbond/screen/onboarding_screen.dart';
+import 'package:bloodbond/screen/verification_screen.dart';
 import 'package:bloodbond/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: theme,
-      home:const OnboardingScreen(),
+      home: const VerificationScreen(),
     );
   }
 }
