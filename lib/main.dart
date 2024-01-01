@@ -1,4 +1,4 @@
-import 'package:bloodbond/screen/map.dart';
+import 'package:bloodbond/screen/request_description_screendonor.dart';
 import 'package:bloodbond/screen/onboarding_screen.dart';
 import 'package:bloodbond/screen/verification_screen.dart';
 import 'package:bloodbond/utils/theme.dart';
@@ -18,11 +18,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: theme,
-<<<<<<< HEAD
-      home: MapPage(),
-=======
-      home: const VerificationScreen(),
->>>>>>> e678cfd2bca0b896e63b81dc0b892d3e45f7a5fa
+      home: const OnboardingScreen(),
     );
   }
 }
