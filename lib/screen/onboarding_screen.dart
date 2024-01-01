@@ -1,9 +1,12 @@
 //import 'package:bloodbond/screen/bloodtype_selection.dart';
 //import 'package:bloodbond/screen/login_screen.dart';
 //import 'package:bloodbond/screen/signup_screen.dart';
+import 'package:bloodbond/screen/QNA.dart';
 import 'package:bloodbond/screen/login_screen.dart';
 import 'package:bloodbond/screen/verification_screen.dart';
 import 'package:bloodbond/utils/constants.dart';
+
+import 'package:bloodbond/widget/custom_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -104,7 +107,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                       ),
                                       onPressed: () {
                                         Get.offAll(
-                                          const LoginScreen(),
+                                          //const LoginScreen(),
+                                          //  const QNA(),
+                                          const CustomStepper(),
                                         );
                                       },
                                       child: Text(
