@@ -42,7 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   height: Get.height * 0.25,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Container(
                 height: 350,
                 child: ClipPath(
@@ -69,59 +69,58 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           style: Get.textTheme.titleSmall!.copyWith(
                             fontWeight: FontWeight.w600,
                           ),
-                          SizedBox(
-                            height: Get.height * 0.10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              for (int index = 0; index < 4; index++)
-                                Container(
-                                  height: 10,
-                                  width: page == index ? 25 : 10,
-                                  margin: const EdgeInsets.only(right: 10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.white,
-                                  ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Spacer(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            for (int index = 0; index < 4; index++)
+                              Container(
+                                height: 10,
+                                width: page == index ? 25 : 10,
+                                margin: const EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
                                 ),
-                            ],
-                          ),
-                          page == 3
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: SizedBox(
-                                    height: Get.height * 0.065,
-                                    width: Get.width * 0.8,
-                                    child: ElevatedButton(
-                                      style: Get.theme.elevatedButtonTheme.style
-                                          ?.copyWith(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                Constants.kWhiteColor),
-                                      ),
-                                      onPressed: () {
-                                        Get.offAll(
-                                          const LoginScreen(),
-                                        );
-                                      },
-                                      child: Text(
-                                        "Let's Go",
-                                        style: Get.textTheme.labelLarge,
-                                      ),
+                              ),
+                          ],
+                        ),
+                        page == 3
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: SizedBox(
+                                  height: Get.height * 0.065,
+                                  width: Get.width * 0.8,
+                                  child: ElevatedButton(
+                                    style: Get.theme.elevatedButtonTheme.style
+                                        ?.copyWith(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Constants.kWhiteColor),
+                                    ),
+                                    onPressed: () {
+                                      Get.offAll(
+                                        const LoginScreen(),
+                                      );
+                                    },
+                                    child: Text(
+                                      "Let's Go",
+                                      style: Get.textTheme.labelLarge,
                                     ),
                                   ),
-                                )
-                              : const SizedBox(),
-                        ],
-                      ),
+                                ),
+                              )
+                            : const SizedBox(),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
