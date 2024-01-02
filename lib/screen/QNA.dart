@@ -25,7 +25,7 @@ class _QNAState extends State<QNA> {
         ),
         body: Column(
           children: [
-            SizedBox(height: 8,),
+           const SizedBox(height: 8,),
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 16, 10),
               child: Text(
@@ -49,7 +49,7 @@ class _QNAState extends State<QNA> {
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(
+                    return const SizedBox(
                       height: 10,
                     );
                   },
@@ -93,7 +93,7 @@ class _QNAState extends State<QNA> {
                 ),
               ),
             ),
-            SizedBox(
+          const  SizedBox(
               height: 10,
             ),
           ],
@@ -106,7 +106,7 @@ class _QNAState extends State<QNA> {
 class QuestionTile extends StatefulWidget {
   final Questions quest;
 
-  QuestionTile({super.key, required this.quest});
+  const QuestionTile({super.key, required this.quest});
 
   @override
   State<QuestionTile> createState() => _QuestionTileState();
@@ -118,7 +118,7 @@ class _QuestionTileState extends State<QuestionTile> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(width: 0.5, color: Colors.black),
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderRadius:const  BorderRadius.all(Radius.circular(15)),
       ),
       child: ListTile(
         title: Text(widget.quest.question),
@@ -137,7 +137,7 @@ class _QuestionTileState extends State<QuestionTile> {
             style:
                 Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 18),
           ),
-          SizedBox(width: 16),
+       const   SizedBox(width: 16),
           Radio<bool>(
             value: false,
             groupValue: widget.quest.result,
@@ -152,7 +152,7 @@ class _QuestionTileState extends State<QuestionTile> {
             style:
                 Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 18),
           ),
-          SizedBox(width: 16),
+    const      SizedBox(width: 16),
         ]),
       ),
     );

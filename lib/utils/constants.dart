@@ -30,8 +30,44 @@ class OnboardingData {
 class Questions {
   final String question;
   bool? result;
-  Questions({required this.question,this.result});
+  Questions({required this.question, this.result});
 }
+
+class NearbyDonor {
+  final String Name;
+  final String ImagePath;
+  final String BloodGroup;
+  final int? phonenumber;
+
+  NearbyDonor(
+      {required this.Name,
+      required this.ImagePath,
+      required this.BloodGroup,
+      required this.phonenumber});
+}
+
+final DonorList = [
+  NearbyDonor(
+      Name: "Roshan vai",
+      ImagePath: "assets/images/onboarding1.png",
+      BloodGroup: "A+",
+      phonenumber: 980738388),
+  NearbyDonor(
+      Name: "Samir vai",
+      ImagePath: "assets/images/onboarding2.png",
+      BloodGroup: "O+",
+      phonenumber: 985738390),
+  NearbyDonor(
+      Name: "Shishir vai",
+      ImagePath: "assets/images/onboarding3.png",
+      BloodGroup: "AB+",
+      phonenumber: 980737373),
+  NearbyDonor(
+      Name: "Solti vai",
+      ImagePath: "assets/images/onboarding3.png",
+      BloodGroup: "AB+",
+      phonenumber: 980737373),
+];
 
 final ListQuestion = [
   Questions(
