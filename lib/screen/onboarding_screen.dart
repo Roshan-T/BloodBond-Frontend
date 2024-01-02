@@ -43,7 +43,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   height: Get.height * 0.25,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Container(
                 height: 350,
                 child: ClipPath(
@@ -70,6 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           style: Get.textTheme.titleSmall!.copyWith(
                             fontWeight: FontWeight.w600,
                           ),
+                          textAlign: TextAlign.center,
                         ),
                         Spacer(),
                         Row(
@@ -102,8 +103,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     ),
                                     onPressed: () {
                                       Get.offAll(
-                                        // const LoginScreen(),
-                                        const Nearby(),
+                                        const LoginScreen(),
                                       );
                                     },
                                     child: Text(

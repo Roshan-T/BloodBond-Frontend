@@ -134,3 +134,38 @@ final onBoardData = [
       headline: "Save lives",
       description: " Be a hero in someone's story donate blood."),
 ];
+
+class DonorHistory {
+  String imageUrl;
+  DateTime time;
+  String hospital;
+  String location;
+  String donatedto;
+  DonorHistory(
+      {required this.imageUrl,
+      required this.time,
+      required this.hospital,
+      required this.location,
+      required this.donatedto});
+}
+
+List<DonorHistory> donorHistory = [
+  DonorHistory(
+      imageUrl: "assets/images/onboarding1.png",
+      time: DateTime.now(),
+      hospital: "Manipal",
+      location: "Pokhara",
+      donatedto: "Rathore"),
+  DonorHistory(
+      imageUrl: "assets/images/onboarding2.png",
+      time: DateTime.now(),
+      hospital: "GMC",
+      location: "Pokhara",
+      donatedto: "GMC"),
+  DonorHistory(
+      imageUrl: "assets/images/onboarding1.png",
+      time: DateTime.now(),
+      hospital: "FewaCity",
+      location: "Pokhara",
+      donatedto: "Kalu Pandey"),
+];
