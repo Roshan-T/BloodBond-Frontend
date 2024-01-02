@@ -16,22 +16,31 @@ class Constants {
   static const kHorizontalPadding = 20.0;
 }
 
-class OnboardingData {
-  final String imagePath;
-  final String headline;
-  final String description;
-
-  OnboardingData(
-      {required this.imagePath,
-      required this.headline,
-      required this.description});
+class BloodCamp {
+  final String? image;
+  final String? datentime;
+  final String? title;
+  final String? description;
+  final String? location;
+  final String? phonenumber;
+  BloodCamp(this.description, this.location,
+      {required this.image,
+      required this.datentime,
+      required this.title,
+      required this.phonenumber});
 }
 
-class Questions {
-  final String question;
-  bool? result;
-  Questions({required this.question, this.result});
-}
+final ListBloodCamp = [
+
+BloodCamp(" This is fish", "Pokhara", image: "assets/images/onboarding1.png", datentime: "22.23 Monday", title:"Basic bllod bank", phonenumber: "9844545488"),
+BloodCamp(" This is fish", "Pokhara", image: "assets/images/onboarding2.png", datentime: "22.23 Monday", title:"Basic bllod bank", phonenumber: "9844545488"),
+BloodCamp(" This is fish", "Pokhara", image: "assets/images/onboarding3.png", datentime: "22.23 Monday", title:"Basic bllod bank", phonenumber: "9844545488"),
+BloodCamp(" This is fish", "Pokhara", image: "assets/images/onboarding4.png", datentime: "22.23 Monday", title:"Basic bllod bank", phonenumber: "9844545488"),
+
+
+
+
+];
 
 class NearbyDonor {
   final String Name;
@@ -69,6 +78,12 @@ final DonorList = [
       phonenumber: 980737373),
 ];
 
+class Questions {
+  final String question;
+  bool? result;
+  Questions({required this.question, this.result});
+}
+
 final ListQuestion = [
   Questions(
     question: "Do you have diabetes?",
@@ -89,6 +104,17 @@ final ListQuestion = [
     question: "In last 3 months, have you had a vaccination?",
   ),
 ];
+
+class OnboardingData {
+  final String imagePath;
+  final String headline;
+  final String description;
+
+  OnboardingData(
+      {required this.imagePath,
+      required this.headline,
+      required this.description});
+}
 
 final onBoardData = [
   OnboardingData(
