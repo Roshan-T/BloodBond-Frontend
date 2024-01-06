@@ -8,7 +8,7 @@ final theme = ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
     scaffoldBackgroundColor: Constants.kWhiteColor,
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: Colors.white,
       selectedItemColor: Colors.black,
       selectedIconTheme: IconThemeData(
         size: 30,
