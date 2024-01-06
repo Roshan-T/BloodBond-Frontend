@@ -1,6 +1,7 @@
 
 
-import 'package:bloodbond/screen/onboarding_screen.dart';
+import 'package:bloodbond/screen/main_screen.dart';
+
 
 import 'package:bloodbond/utils/theme.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: theme,
-      home: const OnboardingScreen(),
+      home: const MainScreen(),
     );
   }
 }

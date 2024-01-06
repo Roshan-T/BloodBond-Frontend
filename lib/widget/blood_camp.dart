@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:bloodbond/utils/constants.dart';
+import 'package:get/get.dart';
 
-
-class CampBlood extends StatelessWidget {
+class CampTile extends StatelessWidget {
   final BloodCamp campers;
-  const CampBlood({super.key, required this.campers});
+
+  const CampTile({super.key, required this.campers});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+        height: 250,
+        width: 200,
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(width: 0.5, color: Colors.black),
@@ -24,8 +27,8 @@ class CampBlood extends StatelessWidget {
                     border: Border.all(width: 0.5, color: Colors.black),
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                   ),
-                  height: 200,
-                  width: 250,
+                  height: 80,
+                  width: 100,
                   child: Image.asset(campers.image)),
             ),
             Text(
@@ -41,11 +44,11 @@ class CampBlood extends StatelessWidget {
               style: Theme.of(context).textTheme.labelLarge,
               overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(
-              height: 10,
-            ),
+         const  Spacer(
+      
+           ),
             SizedBox(
-              width: 300,
+              width: Get.width*0.45,
               child: ElevatedButton(
                 onPressed: () => 'Null',
                 style: ButtonStyle(
@@ -59,6 +62,7 @@ class CampBlood extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(height: 10,),
           ],
         ));
   }
