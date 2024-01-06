@@ -1,4 +1,5 @@
 import 'package:bloodbond/utils/constants.dart';
+import 'package:bloodbond/widget/blood_camp.dart';
 import 'package:bloodbond/widget/emergency_request_box.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -77,15 +78,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 20,
                 ),
                 Container(
-                  height: 300,
+                  height: 250,
                   child: ListView.separated(
                       physics: const ClampingScrollPhysics(),
                       itemBuilder: (context, index) {
-                        return Container(
-                          height: 300,
-                          width: 350,
-                          color: Colors.amber,
-                        );
+                        return CampTile(campers: bloodCamp[index]);
                       },
                       separatorBuilder: (context, index) {
                         return const SizedBox(
@@ -94,8 +91,33 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemCount: 5),
-                )
+                      itemCount: bloodCamp.length),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Emergency Request",
+                  style: Get.textTheme.displayLarge
+                      ?.copyWith(color: Constants.kBlackColor, fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return EmergencyRequestBox(
+                          emergencyRequest: requests[index]);
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        height: 10,
+                      );
+                    },
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: requests.length)
               ],
             ),
           ),

@@ -2,7 +2,6 @@
 //import 'package:bloodbond/screen/login_screen.dart';
 //import 'package:bloodbond/screen/signup_screen.dart';
 import 'package:bloodbond/screen/QNA.dart';
-import 'package:bloodbond/screen/dummy_screen.dart';
 import 'package:bloodbond/screen/login_screen.dart';
 import 'package:bloodbond/screen/nearby_donor.dart';
 import 'package:bloodbond/utils/constants.dart';
@@ -105,8 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     ),
                                     onPressed: () {
                                       Get.offAll(
-                                          const LoginScreen(),
-                                      
+                                        const LoginScreen(),
                                       );
                                     },
                                     child: Text(
