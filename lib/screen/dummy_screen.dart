@@ -72,7 +72,7 @@ class CampTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         height: 250,
-        width: 300,
+        width: 200,
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(width: 0.5, color: Colors.black),

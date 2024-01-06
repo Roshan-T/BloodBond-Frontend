@@ -1,11 +1,9 @@
-import 'package:bloodbond/screen/donor_donation_history.dart';
-import 'package:bloodbond/screen/main_screen.dart';
-import 'package:bloodbond/screen/request_description_screen_hospital.dart';
-import 'package:bloodbond/screen/request_description_screendonor.dart';
+
+
 import 'package:bloodbond/screen/onboarding_screen.dart';
-import 'package:bloodbond/screen/verification_screen.dart';
+
 import 'package:bloodbond/utils/theme.dart';
-import 'package:bloodbond/widget/custom_stepper.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

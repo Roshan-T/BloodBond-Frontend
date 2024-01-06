@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bloodbond/utils/constants.dart';
-import 'package:get/get.dart';
+
 
 class CampBlood extends StatelessWidget {
   final BloodCamp campers;
@@ -9,7 +9,6 @@ class CampBlood extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(width: 0.5, color: Colors.black),
