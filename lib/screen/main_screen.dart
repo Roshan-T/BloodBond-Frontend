@@ -35,12 +35,12 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     // context.read<AuthController>().logout(context);
     return Scaffold(
-      body: null,
+      body: _screens[_currentIndex],
 
       //bottom navbar
       bottomNavigationBar: BottomNavigationBar(
-
-          // type: BottomNavigationBarType.fixed,
+          elevation: 0,
+          type: BottomNavigationBarType.fixed,
           selectedIconTheme: const IconThemeData(
             color: Constants.kPrimaryColor,
             size: 24,
