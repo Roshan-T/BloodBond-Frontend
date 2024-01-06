@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
+                SizedBox(
                   height: 250,
                   child: ListView.separated(
                       physics: const ClampingScrollPhysics(),
