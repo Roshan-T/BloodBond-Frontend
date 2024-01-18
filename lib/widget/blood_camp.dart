@@ -36,10 +36,9 @@ class CampTile extends StatelessWidget {
                   ),
                   Text(
                     campers.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(color: Constants.kBlackColor),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        color: Constants.kBlackColor,
+                        fontWeight: FontWeight.bold),
                   ),
                   Text(
                     maxLines: 2,
