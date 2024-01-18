@@ -1,3 +1,4 @@
+import 'package:bloodbond/controller/login_controller.dart';
 import 'package:bloodbond/screen/auth/forgot_password_view.dart';
 import 'package:bloodbond/screen/role_select.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +15,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  LoginController controller = Get.put(LoginController());
   String? emailErrorText;
   String? passwordErrorText;
-  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 10,
                 ),
                 CustomTextFormField(
-                  controller: emailController,
+                  controller: controller.emailController.value,
                   hintText: "Enter your email",
                   prefixIcon: Icons.email,
                   errorText: emailErrorText,
@@ -92,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 10,
                 ),
                 CustomTextFormField(
-                  controller: passwordController,
+                  controller: controller.passwordController.value,
                   hintText: "Create a strong password",
                   prefixIcon: Icons.lock,
                   errorText: passwordErrorText,
@@ -122,18 +121,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: 60,
                   width: double.infinity,
-                  child: ElevatedButton(
+                  child: Obx(
+                    () => ElevatedButton(
                       onPressed: () async {
                         //* check validation
                         // check email
-                        if (!isEmailValid(emailController.text.trim())) {
+                        if (!isEmailValid(
+                            controller.emailController.value.text.trim())) {
                           emailErrorText = 'Please enter a valid email';
                         } else {
                           emailErrorText = null;
                           setState(() {});
                         }
                         // check password
-                        if (passwordController.text.trim().length < 6) {
+                        if (controller.passwordController.value.text
+                                .trim()
+                                .length <
+                            6) {
                           passwordErrorText =
                               'Password must have 6 characters or more';
                           setState(() {});
@@ -146,17 +150,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         setState(() {
                           emailErrorText = null;
                           passwordErrorText = null;
-                          isLoading = true;
                         });
+                        controller.loginApi();
                         // login user
-
-                        setState(() {
-                          isLoading = false;
-                        });
                       },
-                      child: isLoading
+                      child: controller.loading.value
                           ? const CircularProgressIndicator(color: Colors.white)
-                          : const Text("Login")),
+                          : const Text("Login"),
+                    ),
+                  ),
                 ),
                 const OptionalSignUpWidget()
               ],

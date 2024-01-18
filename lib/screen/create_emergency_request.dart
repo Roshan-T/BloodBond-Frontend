@@ -80,19 +80,19 @@ class _CreateEmergencyRequestState extends State<CreateEmergencyRequest> {
   // ! create order
   void createOrder() async {
     if (selectedBloodType.isEmpty) {
-      return showSnackBar("Please Select Your Blood Group");
+      return showSnackBar("Please Select Your Blood Group", "");
     }
 
     if (_patientNameController.text.isEmpty) {
-      return showSnackBar("Please enter the patient name");
+      return showSnackBar("Please enter the patient name", "");
     } else if (_bloodUnit.text.isEmpty) {
-      return showSnackBar("Blood Unit can't be empty");
+      return showSnackBar("Blood Unit can't be empty", "");
     } else if (_addressController.text.isEmpty) {
-      return showSnackBar("Address can't be empty");
+      return showSnackBar("Address can't be empty", "");
     } else if (_image == null) {
-      return showSnackBar("Please provide the medical document");
+      return showSnackBar("Please provide the medical document", "");
     } else if (_isAccepted == false) {
-      return showSnackBar("Please accept the terms and conditions");
+      return showSnackBar("Please accept the terms and conditions", "");
     }
   }
 
@@ -122,11 +122,11 @@ class _CreateEmergencyRequestState extends State<CreateEmergencyRequest> {
     setState(() {});
   }
 
-  void showSnackBar(String title) {
+  void showSnackBar(String title, String subtitle) {
     Get.closeAllSnackbars();
     Get.snackbar(
       title,
-      "",
+      subtitle,
       colorText: Colors.white,
       duration: const Duration(seconds: 1),
       backgroundColor: Constants.kPrimaryColor,

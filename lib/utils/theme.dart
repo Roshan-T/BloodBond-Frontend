@@ -44,30 +44,31 @@ final theme = ThemeData(
     ),
     // text styles
     textTheme: TextTheme(
-        bodyMedium: GoogleFonts.montserrat(
-            fontSize: 36,
-            fontWeight: FontWeight.w500,
-            height: 1,
-            color: Constants.kBlackColor),
-
-        //headline
-        displayLarge: GoogleFonts.merriweather(
-          fontWeight: FontWeight.w900,
-          height: 1,
+      bodyMedium: GoogleFonts.montserrat(
           fontSize: 36,
-          color: Constants.kBlackColor,
-        ),
-        // title
-        titleLarge: const TextStyle(
-          color: Constants.kBlackColor,
-          fontSize: 20,
-          fontWeight: FontWeight.w700,
-        ),
-        titleSmall: GoogleFonts.poppins(
-          fontSize: 18,
-          fontWeight: FontWeight.w400,
-          color: Constants.kWhiteColor,
-        )),
+          fontWeight: FontWeight.w500,
+          height: 1,
+          color: Constants.kBlackColor),
+
+      //headline
+      displayLarge: GoogleFonts.merriweather(
+        fontWeight: FontWeight.w900,
+        height: 1,
+        fontSize: 36,
+        color: Constants.kBlackColor,
+      ),
+      // title
+      titleLarge: const TextStyle(
+        color: Constants.kBlackColor,
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+      ),
+      titleSmall: GoogleFonts.poppins(
+        fontSize: 18,
+        fontWeight: FontWeight.w400,
+        color: Constants.kWhiteColor,
+      ),
+    ),
 
     // elevated button
     elevatedButtonTheme: ElevatedButtonThemeData(

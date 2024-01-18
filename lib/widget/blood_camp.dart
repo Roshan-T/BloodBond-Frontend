@@ -9,7 +9,7 @@ class CampTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.only(top: 8,),
+        padding: const EdgeInsets.only(top: 8),
         // height: 200,
         width: 300,
         decoration: BoxDecoration(
@@ -35,10 +35,9 @@ class CampTile extends StatelessWidget {
                   ),
                   Text(
                     campers.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(color: Constants.kBlackColor,fontWeight:FontWeight.bold ),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        color: Constants.kBlackColor,
+                        fontWeight: FontWeight.bold),
                   ),
                   Text(
                     maxLines: 2,

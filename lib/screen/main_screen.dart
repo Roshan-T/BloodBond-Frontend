@@ -1,6 +1,7 @@
 import 'package:bloodbond/screen/create_emergency_request.dart';
 import 'package:bloodbond/screen/donor_donation_history.dart';
 import 'package:bloodbond/screen/home_screen.dart';
+import 'package:bloodbond/screen/profile_screen.dart';
 import 'package:bloodbond/screen/role_select.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,11 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   late int _currentIndex;
   // list of screens in bottom nav bar
-  final List<Widget> _screens = const [
-    HomeScreen(),
-    CreateEmergencyRequest(),
-    HistoryScreen(),
-    RoleScreen(),
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const CreateEmergencyRequest(),
+    const HistoryScreen(),
+    ProfileScreen(),
   ];
 
   @override
