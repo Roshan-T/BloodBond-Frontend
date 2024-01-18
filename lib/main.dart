@@ -1,7 +1,7 @@
-
-
+import 'package:bloodbond/screen/campaign_details.dart';
 import 'package:bloodbond/screen/main_screen.dart';
-
+import 'package:bloodbond/screen/signup_hospital.dart';
+import 'package:bloodbond/screen/signup_screen.dart';
 
 import 'package:bloodbond/utils/theme.dart';
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: theme,
-      home: const MainScreen(),
+      home: SignUpScreenHospital(),
     );
   }
 }

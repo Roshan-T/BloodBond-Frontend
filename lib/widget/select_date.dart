@@ -4,7 +4,9 @@ import 'package:intl/intl.dart';
 import '../utils/constants.dart';
 
 class SelectDate extends StatefulWidget {
-  const SelectDate({super.key});
+  const SelectDate({super.key, required this.datename});
+
+  final String datename;
 
   @override
   State<SelectDate> createState() => _SelectDateState();
@@ -29,23 +31,21 @@ class _SelectDateState extends State<SelectDate> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: TextField(
-        onTap: () {
-          selectDate(context);
-        },
-        readOnly: true,
-        decoration: InputDecoration(
-          prefixIcon:const Icon(Icons.calendar_today),
-          isDense: true,
-          hintStyle: Theme.of(context)
+    return TextField(
+      onTap: () {
+        selectDate(context);
+      },
+      readOnly: true,
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.calendar_today),
+        isDense: true,
+        hintStyle: Theme.of(context)
             .textTheme
             .labelMedium!
             .copyWith(color: Constants.kGrey),
-          hintText: dateSelected == null
-              ? "Date of birth"
-              : " ${DateFormat('yyyy-MM-dd').format(dateSelected!)}",
-        ),
+        hintText: dateSelected == null
+            ? widget.datename
+            : " ${DateFormat('yyyy-MM-dd').format(dateSelected!)}",
       ),
     );
   }
