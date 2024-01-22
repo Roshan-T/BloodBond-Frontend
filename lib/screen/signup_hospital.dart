@@ -15,20 +15,20 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignUpScreenHospital extends StatefulWidget {
+  const SignUpScreenHospital({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignUpScreenHospital> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends State<SignUpScreenHospital> {
   XFile? image;
   bool isFetchingLocation = false;
 
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-   TextEditingController passwordController = TextEditingController();
+  TextEditingController hospitalNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   TextEditingController emailAddressController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
 
@@ -134,35 +134,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(
                     height: 40,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Textfield(
-                            hinttext: "First Name",
-                            control: firstNameController,
-                            keyboardtype: TextInputType.name),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Textfield(
-                            hinttext: "Last Name",
-                            control: lastNameController,
-                            keyboardtype: TextInputType.name),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
+                  Textfield(
+                      hinttext: "Hospital Name",
+                      control: hospitalNameController,
+                      keyboardtype: TextInputType.name),
+                  SizedBox(
+                    height: 20,
                   ),
                   Textfield(
                       hinttext: "Email Address",
                       control: emailAddressController,
                       keyboardtype: TextInputType.emailAddress),
-                  const SizedBox(
-                    height: 15,
+                  SizedBox(
+                    height: 20,
                   ),
                   Textfield(
                     hinttext: "Password",
@@ -179,40 +163,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  const Row(
-                    children: [
-                      Expanded(
-                        child: SelectGender(),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                          child: SelectDate(
-                        datename: "Date of Birth",
-                      )),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                //  SelectDate(
+                  //  datename: "Date of Establishment",
+                  //),
+                  //const SizedBox(
+                   // height: 15,
+                  //),
                   TextField(
                     onTap: () async {
                       setState(() {
                         isFetchingLocation = true;
                       });
-              
+
                       //  Get.to(SelectLocation());
-              
+
                       await _handleLocationPermission();
                       Position position = await Geolocator.getCurrentPosition(
                           desiredAccuracy: LocationAccuracy.high);
                       latitude = position.latitude.toString();
                       longitude = position.longitude.toString();
-              
+
                       city = await getNearestCity(
                           position.latitude, position.longitude);
-              
+
                       setState(() {
                         isFetchingLocation = false;
                       });
@@ -268,12 +241,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Get.to(LoginScreen());
                         },
                         child: Text("Login",
-                            style:
-                                Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      color: Constants.kPrimaryColor,
-                                    )),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: Constants.kPrimaryColor,
+                                )),
                       ),
                     ],
                   ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:bloodbond/utils/constants.dart';
 
 class Nearby extends StatefulWidget {

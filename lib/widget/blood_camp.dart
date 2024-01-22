@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:bloodbond/utils/constants.dart';
-import 'package:get/get.dart';
 
 class CampTile extends StatelessWidget {
   final BloodCamp campers;

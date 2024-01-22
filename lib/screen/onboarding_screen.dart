@@ -1,13 +1,12 @@
 //import 'package:bloodbond/screen/bloodtype_selection.dart';
 //import 'package:bloodbond/screen/login_screen.dart';
 //import 'package:bloodbond/screen/signup_screen.dart';
-import 'package:bloodbond/screen/QNA.dart';
-import 'package:bloodbond/screen/login_screen.dart';
-import 'package:bloodbond/screen/nearby_donor.dart';
-import 'package:bloodbond/utils/constants.dart';
-import 'package:bloodbond/widget/blood_camp.dart';
 
-import 'package:bloodbond/widget/custom_stepper.dart';
+
+
+
+import 'package:bloodbond/screen/login_screen.dart';
+import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -45,7 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
               const Spacer(),
-              Container(
+              SizedBox(
                 height: 350,
                 child: ClipPath(
                   clipper: OvalTopBorderClipper(),
@@ -53,11 +52,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     width: double.infinity,
                     decoration:
                         const BoxDecoration(color: Constants.kPrimaryColor),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 40),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Text(
                           onBoardData[i].headline,
                           style: Get.textTheme.displayLarge?.copyWith(
@@ -65,7 +65,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Text(
                           onBoardData[i].description,
                           style: Get.textTheme.titleSmall!.copyWith(
@@ -73,7 +73,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -105,6 +105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     onPressed: () {
                                       Get.offAll(
                                         const LoginScreen(),
+                                      
                                       );
                                     },
                                     child: Text(

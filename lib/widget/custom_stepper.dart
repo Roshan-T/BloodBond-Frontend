@@ -52,6 +52,6 @@ class _CustomStepperState extends State<CustomStepper> {
         });
       },
     );
-    ;
+    
   }
 }

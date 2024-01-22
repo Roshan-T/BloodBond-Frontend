@@ -5,7 +5,7 @@ import 'package:bloodbond/utils/constants.dart';
 import 'package:bloodbond/widget/blood_camp.dart';
 import 'package:bloodbond/widget/emergency_request_box.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
