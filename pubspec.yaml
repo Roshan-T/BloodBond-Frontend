@@ -49,6 +49,7 @@ dependencies:
   url_launcher: ^6.2.2
   percent_indicator: ^4.2.3
   get_storage: ^2.1.1
+  connectivity_plus: ^5.0.2
   
 
 dev_dependencies:

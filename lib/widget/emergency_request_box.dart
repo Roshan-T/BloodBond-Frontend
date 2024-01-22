@@ -14,8 +14,8 @@ class EmergencyRequestBox extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 175,
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+          height: 150,
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: const Color.fromARGB(255, 240, 245, 245),
@@ -26,7 +26,7 @@ class EmergencyRequestBox extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    radius: 40,
+                    radius: 30,
                     child: Image.asset(emergencyRequest.imageUrl,
                         height: 60, width: 100, fit: BoxFit.cover),
                   ),
@@ -78,7 +78,7 @@ class EmergencyRequestBox extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 3),
                       SizedBox(
                         width: width - 100 - 80,
                         child: RichText(
@@ -86,10 +86,13 @@ class EmergencyRequestBox extends StatelessWidget {
                           text: TextSpan(
                             children: [
                               const WidgetSpan(
-                                child: Icon(
-                                  FontAwesomeIcons.clock,
-                                  size: 24,
-                                  color: Colors.red,
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 5.0),
+                                  child: Icon(
+                                    FontAwesomeIcons.clock,
+                                    size: 20,
+                                    color: Colors.red,
+                                  ),
                                 ),
                               ),
                               TextSpan(
@@ -107,13 +110,12 @@ class EmergencyRequestBox extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 5),
                     ],
                   )
                 ],
               ),
               const SizedBox(
-                height: 10,
+                height: 6,
               ),
               SizedBox(
                 width: Get.width,

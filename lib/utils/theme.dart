@@ -52,7 +52,7 @@ final theme = ThemeData(
 
       //headline
       displayLarge: GoogleFonts.merriweather(
-        fontWeight: FontWeight.w900,
+        fontWeight: FontWeight.w700,
         height: 1,
         fontSize: 36,
         color: Constants.kBlackColor,

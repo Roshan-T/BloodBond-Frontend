@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:bloodbond/screen/nearby_donor_screen.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:bloodbond/widget/blood_camp.dart';
 import 'package:bloodbond/widget/emergency_request_box.dart';
@@ -18,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
             child: Column(
@@ -29,12 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(
-                        radius: 35,
+                        radius: 22,
                         child: Image.asset("assets/images/onboarding2.png"),
                       ),
                     ),
                     const SizedBox(
-                      width: 15,
+                      width: 8,
                     ),
                     Column(
                       children: [
@@ -94,7 +97,50 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: bloodCamp.length),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 15,
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.to(
+                      NearbyDonorScreen(),
+                    );
+                  },
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.green),
+                    ),
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.search_rounded),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            "Nearby Donors",
+                            style: Get.textTheme.labelLarge,
+                          )
+                        ],
+                      ),
+                    ),
+
+                    // decoration: InputDecoration(
+                    //   prefixIcon: const Icon(
+                    //     Icons.search_rounded,
+                    //   ),
+                    //   hintText: "Nearby Donors",
+                    //   border: OutlineInputBorder(
+                    //     borderRadius: BorderRadius.circular(12),
+                    //   ),
+                    // ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
                 ),
                 Text(
                   "Emergency Request",

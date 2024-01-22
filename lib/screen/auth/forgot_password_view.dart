@@ -1,3 +1,4 @@
+import 'package:bloodbond/controller/forget_password_controller.dart';
 import 'package:bloodbond/screen/verification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  final emailController = TextEditingController();
+  ForgetPasswordController controller = Get.put(ForgetPasswordController());
   String? errorText;
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                   const SizedBox(height: 20.0),
                   CustomTextFormField(
-                    controller: emailController,
+                    controller: controller.emailController.value,
                     hintText: "Enter your email",
                     errorText: errorText,
                     prefixIcon: Icons.email,
@@ -55,24 +56,27 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   SizedBox(
                     width: double.infinity,
                     height: 60,
-                    child: ElevatedButton(
+                    child: Obx(
+                      () => ElevatedButton(
                         onPressed: () {
-                          if (!isEmailValid(emailController.text)) {
+                          if (!isEmailValid(
+                              controller.emailController.value.text)) {
                             errorText = "Please enter a valid email";
                             setState(() {});
                             return;
                           }
-                          Get.to(const VerificationScreen());
 
                           setState(() {
                             errorText = null;
                           });
-
-                          //context
-                          // .read<AuthController>()
-                          //.resetPassword(context, emailController.text);
+                          controller.forgetPassword();
                         },
-                        child: const Text("Reset Password")),
+                        child: controller.loading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
+                            : const Text("Reset Password"),
+                      ),
+                    ),
                   ),
                 ],
               ),

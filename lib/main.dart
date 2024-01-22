@@ -1,3 +1,4 @@
+import 'package:bloodbond/controller/network_controller.dart';
 import 'package:bloodbond/screen/donor_donation_history.dart';
 import 'package:bloodbond/screen/main_screen.dart';
 import 'package:bloodbond/screen/request_description_screen_hospital.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: theme,
       home: const SplashScreen(),
+      initialBinding: NetworkBinding(),
     );
   }
 }
