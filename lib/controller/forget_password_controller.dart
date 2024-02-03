@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:bloodbond/controller/network_controller.dart';
-import 'package:bloodbond/screen/login_screen.dart';
 import 'package:bloodbond/screen/verification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,5 +1,7 @@
+import 'package:bloodbond/controller/login_controller.dart';
 import 'package:bloodbond/screen/bloodtype_selection.dart';
 import 'package:bloodbond/screen/login_screen.dart';
+import 'package:bloodbond/utils/helper_function.dart';
 //import 'package:bloodbond/screen/onboarding_screen.dart';
 import 'dart:io';
 
@@ -41,6 +43,9 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
     });
   }
 
+  LoginController controller = Get.put(LoginController());
+  String? emailErrorText;
+  String? passwordErrorText;
   String? latitude;
   String? longitude;
   String? city;
@@ -151,24 +156,19 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                   Textfield(
                     hinttext: "Password",
                     control: passwordController,
-                    keyboardtype: TextInputType.none,
+                    keyboardtype: TextInputType.text,
                   ),
                   const SizedBox(
                     height: 15,
                   ),
                   Textfield(
                       hinttext: "Mobile Number",
+                      maxilength: 10,
                       control: mobileNumberController,
                       keyboardtype: TextInputType.number),
                   const SizedBox(
                     height: 15,
                   ),
-                //  SelectDate(
-                  //  datename: "Date of Establishment",
-                  //),
-                  //const SizedBox(
-                   // height: 15,
-                  //),
                   TextField(
                     onTap: () async {
                       setState(() {
@@ -214,9 +214,41 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(
-                          () => const BloodTypeSelectionScreen(),
-                        );
+                        //check email
+
+                        if (hospitalNameController.text.isEmpty ||
+                            passwordController.text.isEmpty ||
+                            emailAddressController.text.isEmpty ||
+                            mobileNumberController.text.isEmpty) {
+                          // Display an error message or handle the case where not all fields are filled
+
+                          Get.snackbar(
+                            "Please fill all the fields ",
+                            "",
+                            colorText: Colors.white,
+                            backgroundColor: Constants.kPrimaryColor,
+                          );
+                        } else if (!isEmailValid(
+                            emailAddressController.text.trim())) {
+                          Get.snackbar(
+                            "Error!",
+                            "Enter a valid email",
+                            colorText: Colors.white,
+                            backgroundColor: Constants.kPrimaryColor,
+                          );
+                        } else if (passwordController.value.text.trim().length <
+                            6) {
+                          Get.snackbar(
+                            "Error!",
+                            "Enter valid password",
+                            colorText: Colors.white,
+                            backgroundColor: Constants.kPrimaryColor,
+                          );
+                        } else {
+                          Get.to(
+                            () => const LoginScreen(),
+                          );
+                        }
                       },
                       child: Text(
                         "Continue",
@@ -267,20 +299,25 @@ class Textfield extends StatelessWidget {
   final TextInputType? keyboardtype;
   final TextEditingController? control;
 
+  final int? maxilength;
+
   const Textfield({
     super.key,
     required this.hinttext,
     required this.keyboardtype,
     required this.control,
+    this.maxilength,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      maxLength: maxilength,
       readOnly: false,
       keyboardType: keyboardtype,
       controller: control,
       decoration: InputDecoration(
+        counterText: "",
         isDense: true,
         hintText: hinttext,
         hintStyle: Theme.of(context)

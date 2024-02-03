@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:bloodbond/screen/nearby_donor_screen.dart';
 import 'package:bloodbond/utils/constants.dart';

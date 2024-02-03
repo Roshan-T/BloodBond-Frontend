@@ -1,3 +1,4 @@
+import 'package:bloodbond/screen/signup_hospital.dart';
 import 'package:bloodbond/screen/signup_screen.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:bloodbond/widget/role_choose.dart';
@@ -129,9 +130,11 @@ class _RoleScreenState extends State<RoleScreen> {
                 height: 60,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => Get.to(
-                    const SignUpScreen(),
-                  ),
+                  onPressed: () => isDonor
+                      ? Get.to(
+                          const SignUpScreen(),
+                        )
+                      : Get.to(SignUpScreenHospital()),
                   child: const Text(
                     "Continue",
                   ),

@@ -124,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Obx(
                     () => ElevatedButton(
                       onPressed: () async {
+                        print(controller.passwordController.value.text);
                         //* check validation
                         // check email
                         if (!isEmailValid(

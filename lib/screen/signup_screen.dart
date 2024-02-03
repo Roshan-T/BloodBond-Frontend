@@ -1,5 +1,7 @@
 import 'package:bloodbond/screen/bloodtype_selection.dart';
 import 'package:bloodbond/screen/login_screen.dart';
+import 'package:bloodbond/utils/helper_function.dart';
+
 //import 'package:bloodbond/screen/onboarding_screen.dart';
 import 'dart:io';
 
@@ -14,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -28,9 +31,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-   TextEditingController passwordController = TextEditingController();
-  TextEditingController emailAddressController = TextEditingController();
-  TextEditingController mobileNumberController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
+
+  final TextEditingController requestedDate = TextEditingController(
+    text: DateFormat('yyyy-MM-dd').format(
+      DateTime.now(),
+    ),
+  );
+
+  dateSelect(BuildContext context, TextEditingController controller) async {
+    final DateTime todayDate = DateTime.now();
+    final DateTime? choosedDate = await showDatePicker(
+      context: context,
+      initialDate: todayDate,
+      firstDate: todayDate,
+      lastDate: DateTime(2025),
+    );
+    if (choosedDate != null) {
+      controller.text = DateFormat('yyyy-MM-dd').format(choosedDate);
+    }
+    setState(() {});
+  }
 
   Future<void> getImage() async {
     ImagePicker picker = ImagePicker();
@@ -159,7 +182,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Textfield(
                       hinttext: "Email Address",
-                      control: emailAddressController,
+                      control: emailController,
                       keyboardtype: TextInputType.emailAddress),
                   const SizedBox(
                     height: 15,
@@ -167,30 +190,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Textfield(
                     hinttext: "Password",
                     control: passwordController,
-                    keyboardtype: TextInputType.none,
+                    keyboardtype: TextInputType.text,
                   ),
                   const SizedBox(
                     height: 15,
                   ),
                   Textfield(
                       hinttext: "Mobile Number",
-                      control: mobileNumberController,
+                      maxilength: 10,
+                      control: mobileController,
                       keyboardtype: TextInputType.number),
                   const SizedBox(
                     height: 15,
                   ),
-                  const Row(
+                  Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: SelectGender(),
                       ),
                       SizedBox(
                         width: 10,
                       ),
                       Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            dateSelect(context, requestedDate);
+                          },
                           child: SelectDate(
-                        datename: "Date of Birth",
-                      )),
+                            datename: "Date Of Birth",
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -201,18 +231,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       setState(() {
                         isFetchingLocation = true;
                       });
-              
+
                       //  Get.to(SelectLocation());
-              
+
                       await _handleLocationPermission();
                       Position position = await Geolocator.getCurrentPosition(
                           desiredAccuracy: LocationAccuracy.high);
                       latitude = position.latitude.toString();
                       longitude = position.longitude.toString();
-              
+
                       city = await getNearestCity(
                           position.latitude, position.longitude);
-              
+
                       setState(() {
                         isFetchingLocation = false;
                       });
@@ -241,9 +271,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(
-                          () => const BloodTypeSelectionScreen(),
-                        );
+                        if (firstNameController.text.isEmpty ||
+                            lastNameController.text.isEmpty ||
+                            passwordController.text.isEmpty ||
+                            emailController.text.isEmpty ||
+                            mobileController.text.isEmpty ||
+                            requestedDate.text.isEmpty) {
+                          // Display an error message or handle the case where not all fields are filled
+
+                          Get.snackbar(
+                            "Please fill all the fields ",
+                            "",
+                            colorText: Colors.white,
+                            backgroundColor: Constants.kPrimaryColor,
+                          );
+                        } else if (!isEmailValid(emailController.text.trim())) {
+                          Get.snackbar(
+                            "Error!",
+                            "Enter a valid email",
+                            colorText: Colors.white,
+                            backgroundColor: Constants.kPrimaryColor,
+                          );
+                        } else if (passwordController.value.text.trim().length <
+                            6) {
+                          Get.snackbar(
+                            "Error!",
+                            "Enter valid password",
+                            colorText: Colors.white,
+                            backgroundColor: Constants.kPrimaryColor,
+                          );
+                        } else {
+                          Get.to(
+                            () => const BloodTypeSelectionScreen(),
+                          );
+                        }
                       },
                       child: Text(
                         "Continue",
@@ -268,12 +329,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Get.to(LoginScreen());
                         },
                         child: Text("Login",
-                            style:
-                                Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      color: Constants.kPrimaryColor,
-                                    )),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: Constants.kPrimaryColor,
+                                )),
                       ),
                     ],
                   ),
@@ -291,21 +354,25 @@ class Textfield extends StatelessWidget {
   final String? hinttext;
   final TextInputType? keyboardtype;
   final TextEditingController? control;
+  final int? maxilength;
 
   const Textfield({
     super.key,
     required this.hinttext,
     required this.keyboardtype,
     required this.control,
+    this.maxilength,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      maxLength: maxilength,
       readOnly: false,
       keyboardType: keyboardtype,
       controller: control,
       decoration: InputDecoration(
+        counterText: "", // to remove  0/10
         isDense: true,
         hintText: hinttext,
         hintStyle: Theme.of(context)

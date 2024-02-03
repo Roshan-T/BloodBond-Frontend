@@ -9,9 +9,16 @@ class SelectGender extends StatefulWidget {
 }
 
 class _SelectGenderState extends State<SelectGender> {
-  String? valuechoose;
+  TextEditingController genderController = TextEditingController();
 
-  List<String> genderitems = ["Male", "Female"];
+  List<String> genderitems = ["", "Male", "Female"];
+
+  bool showHint = true;
+  @override
+  void initState() {
+    super.initState();
+    genderController = TextEditingController(text: genderitems.first);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +40,17 @@ class _SelectGenderState extends State<SelectGender> {
             );
           }).toList(),
 
-          value: valuechoose, // Represents the currently selected value
+          // value: valuechoose, // Represents the currently selected value
+          // onChanged: (newvalue) {
+          //   setState(() {
+          //     valuechoose = newvalue;
+          //   });
+          // },
+          value: genderController.text.isEmpty ? null : genderController.text,
+
           onChanged: (newvalue) {
             setState(() {
-              valuechoose = newvalue;
+              genderController.text = newvalue as String;
             });
           },
 
@@ -46,7 +60,12 @@ class _SelectGenderState extends State<SelectGender> {
               .copyWith(color: Constants.kGrey),
           underline: const SizedBox(), //to remove underline
           isExpanded: true,
-          hint: const Text("Select Gender"),
+          hint: Text(
+            "Select Gender",
+            style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                  color: Constants.kGrey,
+                ),
+          ),
           icon: const Icon(
             Icons.arrow_drop_down,
             size: 20,
@@ -57,5 +76,12 @@ class _SelectGenderState extends State<SelectGender> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    genderController
+        .dispose(); // Dispose the controller when the widget is disposed
+    super.dispose();
   }
 }

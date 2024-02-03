@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:get/get.dart';
 
-import '../widget/donor_history_box.dart';
+
 
 class NearbyDonorScreen extends StatelessWidget {
   NearbyDonorScreen({super.key});

@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'package:bloodbond/controller/network_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
-
-import '../routes/url.dart';
 import '../services/services.dart';
 import '../utils/constants.dart';
 
@@ -26,7 +23,8 @@ class NearbyDonorController extends GetxController {
       if (donors != null) {
         donorList.value = donors;
       }
-    } catch (e) {
+    } 
+    catch (e) {
       Get.closeAllSnackbars();
 
       if (NetworkController().connectionStatus == 0.obs) {
