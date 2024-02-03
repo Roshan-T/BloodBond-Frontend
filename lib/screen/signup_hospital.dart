@@ -163,11 +163,11 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                   const SizedBox(
                     height: 15,
                   ),
-                //  SelectDate(
+                  //  SelectDate(
                   //  datename: "Date of Establishment",
                   //),
                   //const SizedBox(
-                   // height: 15,
+                  // height: 15,
                   //),
                   TextField(
                     onTap: () async {

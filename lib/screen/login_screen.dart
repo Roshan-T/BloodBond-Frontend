@@ -91,6 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 10,
                 ),
                 CustomTextFormField(
+                  isPassword: true,
                   controller: controller.passwordController.value,
                   hintText: "Create a strong password",
                   prefixIcon: Icons.lock,

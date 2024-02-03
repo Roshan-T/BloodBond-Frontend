@@ -29,6 +29,7 @@ class LoginController extends GetxController {
           "password": passwordController.value.text
         }),
       );
+      // print(response.body);
       var data = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
