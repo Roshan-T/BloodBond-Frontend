@@ -27,6 +27,7 @@ class LoginController extends GetxController {
           "password": passwordController.value.text
         }),
       );
+      // print(response.body);
       var data = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
@@ -53,7 +54,8 @@ class LoginController extends GetxController {
           backgroundColor: Constants.kPrimaryColor,
         );
       }
-    } catch (e) {
+    } catch (e) 
+    {
       Get.closeAllSnackbars();
       loading.value = false;
       if (NetworkController().connectionStatus == 0.obs) {

@@ -1,3 +1,4 @@
+import 'package:bloodbond/controller/Signup_controller.dart';
 import 'package:bloodbond/screen/bloodtype_selection.dart';
 import 'package:bloodbond/screen/login_screen.dart';
 import 'package:bloodbond/utils/helper_function.dart';
@@ -18,6 +19,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
+SignUpController signupController = Get.put(SignUpController());
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -29,11 +32,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   XFile? image;
   bool isFetchingLocation = false;
 
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
+  // TextEditingController lastNameController = TextEditingController();
+  // TextEditingController passwordController = TextEditingController();
+  // TextEditingController emailController = TextEditingController();
+  // TextEditingController mobileController = TextEditingController();
 
   final TextEditingController requestedDate = TextEditingController(
     text: DateFormat('yyyy-MM-dd').format(
@@ -63,10 +65,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       image = pickedImage;
     });
   }
-
-  String? latitude;
-  String? longitude;
-  String? city;
 
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
@@ -109,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         final decodedData = json.decode(response.body);
         final address = decodedData['address'] as Map<String, dynamic>;
         final city = address['city'];
-        return city as String?;
+        return city as String;
       }
     } catch (e) {
       print('Error: $e');
@@ -163,16 +161,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Expanded(
                         child: Textfield(
                             hinttext: "First Name",
-                            control: firstNameController,
+                            control: signupController.firstnamecontroller.value,
                             keyboardtype: TextInputType.name),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
                         child: Textfield(
                             hinttext: "Last Name",
-                            control: lastNameController,
+                            control: signupController.lastnamecontroller.value,
                             keyboardtype: TextInputType.name),
                       ),
                     ],
@@ -182,14 +180,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Textfield(
                       hinttext: "Email Address",
-                      control: emailController,
+                      control: signupController.emailcontroller.value,
                       keyboardtype: TextInputType.emailAddress),
                   const SizedBox(
                     height: 15,
                   ),
                   Textfield(
                     hinttext: "Password",
-                    control: passwordController,
+                    control: signupController.passwordcontroller.value,
                     keyboardtype: TextInputType.text,
                   ),
                   const SizedBox(
@@ -198,7 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Textfield(
                       hinttext: "Mobile Number",
                       maxilength: 10,
-                      control: mobileController,
+                      control: signupController.phonecontroller.value,
                       keyboardtype: TextInputType.number),
                   const SizedBox(
                     height: 15,
@@ -208,15 +206,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const Expanded(
                         child: SelectGender(),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
                         child: GestureDetector(
-                          onTap: () {
-                            dateSelect(context, requestedDate);
-                          },
-                          child: SelectDate(
+                          onTap: () {},
+                          child: const SelectDate(
                             datename: "Date Of Birth",
                           ),
                         ),
@@ -237,10 +233,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       await _handleLocationPermission();
                       Position position = await Geolocator.getCurrentPosition(
                           desiredAccuracy: LocationAccuracy.high);
-                      latitude = position.latitude.toString();
-                      longitude = position.longitude.toString();
+                      signupController.lat = position.latitude;
+                      signupController.long = position.longitude;
 
-                      city = await getNearestCity(
+                      signupController.city = await getNearestCity(
                           position.latitude, position.longitude);
 
                       setState(() {
@@ -256,7 +252,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             )
                           : null,
                       isDense: true,
-                      hintText: latitude == null ? "Select Location" : city,
+                      hintText: signupController.city ?? "Select Location",
                       hintStyle: Theme.of(context)
                           .textTheme
                           .labelMedium!
@@ -271,11 +267,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (firstNameController.text.isEmpty ||
-                            lastNameController.text.isEmpty ||
-                            passwordController.text.isEmpty ||
-                            emailController.text.isEmpty ||
-                            mobileController.text.isEmpty ||
+                        if (signupController
+                                .firstnamecontroller.value.text.isEmpty ||
+                            signupController
+                                .lastnamecontroller.value.text.isEmpty ||
+                            signupController
+                                .passwordcontroller.value.text.isEmpty ||
+                            signupController
+                                .emailcontroller.value.text.isEmpty ||
+                            signupController
+                                .phonecontroller.value.text.isEmpty ||
                             requestedDate.text.isEmpty) {
                           // Display an error message or handle the case where not all fields are filled
 
@@ -285,14 +286,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             colorText: Colors.white,
                             backgroundColor: Constants.kPrimaryColor,
                           );
-                        } else if (!isEmailValid(emailController.text.trim())) {
+                        } else if (!isEmailValid(signupController
+                            .emailcontroller.value.text
+                            .trim())) {
                           Get.snackbar(
                             "Error!",
                             "Enter a valid email",
                             colorText: Colors.white,
                             backgroundColor: Constants.kPrimaryColor,
                           );
-                        } else if (passwordController.value.text.trim().length <
+                        } else if (signupController
+                                .passwordcontroller.value.text
+                                .trim()
+                                .length <
                             6) {
                           Get.snackbar(
                             "Error!",
@@ -326,7 +332,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Get.to(LoginScreen());
+                          Get.to(const LoginScreen());
                         },
                         child: Text("Login",
                             style: Theme.of(context)

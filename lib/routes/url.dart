@@ -4,5 +4,7 @@ class Url {
   static const login = '$mainUrl/api/v1/login';
   static const nearbyDonor = '$mainUrl/api/v1/donors/';
   static const forgetPassword = '$mainUrl/api/v1/forgot-password';
-  static const registerdonor = "$mainUrl/api/v1/donors/register";
+  static const getImage = "$mainUrl/get-image/";
+  static const register = "$mainUrl/api/v1/donors/register";
+  static const hospitalregister = "$mainUrl/api/v1/hospitals/register";
 }

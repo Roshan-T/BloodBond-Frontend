@@ -1,3 +1,5 @@
+import 'package:bloodbond/controller/Signup_controller.dart';
+import 'package:bloodbond/screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -14,6 +16,7 @@ class SelectDate extends StatefulWidget {
 
 class _SelectDateState extends State<SelectDate> {
   DateTime? dateSelected;
+  final contoller = signupController;
 
   Future<void> selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -23,8 +26,11 @@ class _SelectDateState extends State<SelectDate> {
       lastDate: DateTime(2030),
     );
     if (pickedDate != null) {
+      print("pickedDate: ${pickedDate}");
       setState(() {
         dateSelected = pickedDate;
+        contoller.dateofbirthcontroller.value.text =
+            "${dateSelected!.year}-${dateSelected!.month}-${dateSelected!.day}";
       });
     }
   }
@@ -32,7 +38,6 @@ class _SelectDateState extends State<SelectDate> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      
       onTap: () {
         selectDate(context);
       },

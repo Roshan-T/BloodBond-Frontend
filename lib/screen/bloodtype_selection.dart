@@ -1,3 +1,4 @@
+import 'package:bloodbond/controller/Signup_controller.dart';
 import 'package:bloodbond/screen/onboarding_screen.dart';
 import 'package:bloodbond/screen/signup_screen.dart';
 import 'package:bloodbond/utils/constants.dart';
@@ -13,18 +14,17 @@ class BloodTypeSelectionScreen extends StatefulWidget {
 }
 
 class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
-  String selectedBloodType = "";
-  String selectedBloodRh = "";
+  final controller = signupController;
 
   void updateSelection(String bloodType) {
     setState(() {
-      selectedBloodType = bloodType;
+      controller.selectedBloodType = bloodType;
     });
   }
 
   void togglePositiveSelection(String text) {
     setState(() {
-      selectedBloodRh = text;
+      controller.selectedBloodRh = text;
     });
   }
 
@@ -83,7 +83,8 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  if (selectedBloodType.isEmpty || selectedBloodRh.isEmpty) {
+                  if (controller.selectedBloodType.isEmpty ||
+                      controller.selectedBloodRh.isEmpty) {
                     Get.snackbar(
                       "Please Select Your Blood Group!",
                       "",
@@ -96,16 +97,17 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
                       ),
                     );
                   } else {
-                    Get.to(
-                      () => const OnboardingScreen(),
-                    );
+                    if (controller.loading.value) return;
+                    controller.registerDonor();
                   }
                 },
-                child: Text(
-                  "Continue",
-                  style:
-                      Get.textTheme.titleLarge?.copyWith(color: Colors.white),
-                ),
+                child: controller.loading.value == true
+                    ? const CircularProgressIndicator()
+                    : Text(
+                        "Sign Up",
+                        style: Get.textTheme.titleLarge
+                            ?.copyWith(color: Colors.white),
+                      ),
               ),
             ),
           ],
@@ -115,7 +117,7 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
   }
 
   Widget _buildBloodTypeButton(String bloodType, Color color) {
-    bool isSelected = selectedBloodType == bloodType;
+    bool isSelected = controller.selectedBloodType == bloodType;
 
     return GestureDetector(
       onTap: () => updateSelection(bloodType),
@@ -145,7 +147,7 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
   }
 
   Widget _buildRhButton(String text, Color color) {
-    bool isSelected = selectedBloodRh == text;
+    bool isSelected = controller.selectedBloodRh == text;
     return GestureDetector(
       onTap: () {
         togglePositiveSelection(text);

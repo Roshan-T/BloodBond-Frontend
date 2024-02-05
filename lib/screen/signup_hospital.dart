@@ -1,3 +1,4 @@
+import 'package:bloodbond/controller/hospital_signup_controller.dart';
 import 'package:bloodbond/controller/login_controller.dart';
 import 'package:bloodbond/screen/bloodtype_selection.dart';
 import 'package:bloodbond/screen/login_screen.dart';
@@ -25,14 +26,15 @@ class SignUpScreenHospital extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreenHospital> {
+  HospitalSignUpController hController = HospitalSignUpController();
   XFile? image;
   bool isFetchingLocation = false;
 
-  TextEditingController hospitalNameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  // final hospitalNameController = TextEditingController();
+  // final passwordController = TextEditingController();
 
-  TextEditingController emailAddressController = TextEditingController();
-  TextEditingController mobileNumberController = TextEditingController();
+  // final emailAddressController = TextEditingController();
+  // final mobileNumberController = TextEditingController();
 
   Future<void> getImage() async {
     ImagePicker picker = ImagePicker();
@@ -141,21 +143,21 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                   ),
                   Textfield(
                       hinttext: "Hospital Name",
-                      control: hospitalNameController,
+                      control: hController.hospitalnamecontroller.value,
                       keyboardtype: TextInputType.name),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Textfield(
                       hinttext: "Email Address",
-                      control: emailAddressController,
+                      control: hController.emailcontroller.value,
                       keyboardtype: TextInputType.emailAddress),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Textfield(
                     hinttext: "Password",
-                    control: passwordController,
+                    control: hController.passwordcontroller.value,
                     keyboardtype: TextInputType.text,
                   ),
                   const SizedBox(
@@ -164,11 +166,17 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                   Textfield(
                       hinttext: "Mobile Number",
                       maxilength: 10,
-                      control: mobileNumberController,
+                      control: hController.phonecontroller.value,
                       keyboardtype: TextInputType.number),
                   const SizedBox(
                     height: 15,
                   ),
+                  //  SelectDate(
+                  //  datename: "Date of Establishment",
+                  //),
+                  //const SizedBox(
+                  // height: 15,
+                  //),
                   TextField(
                     onTap: () async {
                       setState(() {
@@ -180,10 +188,10 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                       await _handleLocationPermission();
                       Position position = await Geolocator.getCurrentPosition(
                           desiredAccuracy: LocationAccuracy.high);
-                      latitude = position.latitude.toString();
-                      longitude = position.longitude.toString();
+                      hController.lat = position.latitude;
+                      hController.long = position.longitude;
 
-                      city = await getNearestCity(
+                      hController.city = await getNearestCity(
                           position.latitude, position.longitude);
 
                       setState(() {
@@ -199,7 +207,7 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                             )
                           : null,
                       isDense: true,
-                      hintText: latitude == null ? "Select Location" : city,
+                      hintText: hController.city ?? "Select Location",
                       hintStyle: Theme.of(context)
                           .textTheme
                           .labelMedium!
@@ -216,10 +224,11 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                       onPressed: () {
                         //check email
 
-                        if (hospitalNameController.text.isEmpty ||
-                            passwordController.text.isEmpty ||
-                            emailAddressController.text.isEmpty ||
-                            mobileNumberController.text.isEmpty) {
+                        if (hController
+                                .hospitalnamecontroller.value.text.isEmpty ||
+                            hController.passwordcontroller.value.text.isEmpty ||
+                            hController.emailcontroller.value.text.isEmpty ||
+                            hController.phonecontroller.value.text.isEmpty) {
                           // Display an error message or handle the case where not all fields are filled
 
                           Get.snackbar(
@@ -229,14 +238,16 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                             backgroundColor: Constants.kPrimaryColor,
                           );
                         } else if (!isEmailValid(
-                            emailAddressController.text.trim())) {
+                            hController.emailcontroller.value.text.trim())) {
                           Get.snackbar(
                             "Error!",
                             "Enter a valid email",
                             colorText: Colors.white,
                             backgroundColor: Constants.kPrimaryColor,
                           );
-                        } else if (passwordController.value.text.trim().length <
+                        } else if (hController.passwordcontroller.value.text
+                                .trim()
+                                .length <
                             6) {
                           Get.snackbar(
                             "Error!",
@@ -245,16 +256,20 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                             backgroundColor: Constants.kPrimaryColor,
                           );
                         } else {
-                          Get.to(
-                            () => const LoginScreen(),
-                          );
+                          if (hController.loading.value) return;
+                          hController.hospitalSignUp();
+                          //  Get.to(
+                          //   () => const LoginScreen(),
+                          // );
                         }
                       },
-                      child: Text(
-                        "Continue",
-                        style: Get.textTheme.titleLarge
-                            ?.copyWith(color: Colors.white),
-                      ),
+                      child: hController.loading.value == true
+                          ? const CircularProgressIndicator()
+                          : Text(
+                              "Continue",
+                              style: Get.textTheme.titleLarge
+                                  ?.copyWith(color: Colors.white),
+                            ),
                     ),
                   ),
                   Row(
@@ -270,7 +285,7 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Get.to(LoginScreen());
+                          Get.to(const LoginScreen());
                         },
                         child: Text("Login",
                             style: Theme.of(context)

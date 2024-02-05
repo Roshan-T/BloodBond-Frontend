@@ -1,3 +1,4 @@
+import 'package:bloodbond/screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodbond/utils/utils.dart';
 
@@ -9,16 +10,14 @@ class SelectGender extends StatefulWidget {
 }
 
 class _SelectGenderState extends State<SelectGender> {
-  TextEditingController genderController = TextEditingController();
-
-  List<String> genderitems = ["", "Male", "Female"];
-
   bool showHint = true;
+  final controller = signupController;
   @override
   void initState() {
     super.initState();
-    genderController = TextEditingController(text: genderitems.first);
   }
+
+  final genderitems = ["Male", "Female"];
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +39,15 @@ class _SelectGenderState extends State<SelectGender> {
             );
           }).toList(),
 
-          // value: valuechoose, // Represents the currently selected value
-          // onChanged: (newvalue) {
-          //   setState(() {
-          //     valuechoose = newvalue;
-          //   });
-          // },
-          value: genderController.text.isEmpty ? null : genderController.text,
+          value: controller.gender.isEmpty
+              ? null
+              : controller.gender == "M"
+                  ? genderitems[0]
+                  : genderitems[1],
 
           onChanged: (newvalue) {
             setState(() {
-              genderController.text = newvalue as String;
+              controller.gender = newvalue == "Male" ? "M" : "F";
             });
           },
 
@@ -76,12 +73,5 @@ class _SelectGenderState extends State<SelectGender> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    genderController
-        .dispose(); // Dispose the controller when the widget is disposed
-    super.dispose();
   }
 }
