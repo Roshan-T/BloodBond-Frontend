@@ -20,11 +20,14 @@ class NearbyDonorController extends GetxController {
   }
 
   void fetchDonors() async {
+    isLoading(true);
     try {
-      isLoading(true);
       var donors = await ApiService.fetchDonors();
+      print(donors);
       if (donors != null) {
         donorList.value = donors;
+      } else {
+        donorList.value = [];
       }
     } catch (e) {
       Get.closeAllSnackbars();
@@ -54,14 +57,14 @@ class NearbyDonor {
   String sex;
   DateTime dateOfBirth;
   String bloodGroup;
-  int latitude;
-  int longitude;
+  double latitude;
+  double longitude;
   String city;
   int id;
   String email;
   DateTime createdAt;
   String image;
-  DateTime lastDonationDate;
+  dynamic lastDonationDate;
   int points;
 
   NearbyDonor({
@@ -89,14 +92,14 @@ class NearbyDonor {
         sex: json["sex"],
         dateOfBirth: DateTime.parse(json["date_of_birth"]),
         bloodGroup: json["blood_group"],
-        latitude: json["latitude"],
-        longitude: json["longitude"],
+        latitude: json["latitude"]?.toDouble(),
+        longitude: json["longitude"]?.toDouble(),
         city: json["city"],
         id: json["id"],
         email: json["email"],
         createdAt: DateTime.parse(json["created_at"]),
         image: json["image"],
-        lastDonationDate: DateTime.parse(json["last_donation_date"]),
+        lastDonationDate: json["last_donation_date"],
         points: json["points"],
       );
 
@@ -114,7 +117,7 @@ class NearbyDonor {
         "email": email,
         "created_at": createdAt.toIso8601String(),
         "image": image,
-        "last_donation_date": lastDonationDate.toIso8601String(),
+        "last_donation_date": lastDonationDate,
         "points": points,
       };
 }

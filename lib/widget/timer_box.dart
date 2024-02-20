@@ -49,9 +49,9 @@ class CountdownController extends GetxController {
   void startCountdown(DateTime futureTime) {
     Duration duration = futureTime.difference(DateTime.now());
     timeRemaining.value = duration;
-
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      timeRemaining.value = timeRemaining.value - Duration(seconds: 1);
+    print(duration);
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      timeRemaining.value = timeRemaining.value - const Duration(seconds: 1);
 
       if (timeRemaining.value.isNegative) {
         timer.cancel();

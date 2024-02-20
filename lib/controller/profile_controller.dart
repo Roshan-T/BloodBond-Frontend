@@ -9,7 +9,13 @@ class ProfileController extends GetxController {
 
   void logout() {
     getStorage.remove('token');
+    getStorage.remove("role");
+    getStorage.remove('latitude');
+    getStorage.remove('longitude');
+    getStorage.remove('blood_group');
+    getStorage.remove('first_name');
+    getStorage.remove('image');
 
-    Get.offAll(const LoginScreen());
+    Get.offAll(() => const LoginScreen());
   }
 }

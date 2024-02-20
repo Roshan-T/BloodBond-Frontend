@@ -1,8 +1,11 @@
+import 'package:bloodbond/screen/request_description_screendonor.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
+import '../controller/home_screen_controller.dart';
 
 class EmergencyRequestBox extends StatelessWidget {
   final EmergencyRequest emergencyRequest;
@@ -26,9 +29,15 @@ class EmergencyRequestBox extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
+                    backgroundColor: Constants.kPrimaryColor,
                     radius: 30,
-                    child: Image.asset(emergencyRequest.imageUrl,
-                        height: 60, width: 100, fit: BoxFit.cover),
+                    child: Text(
+                      emergencyRequest.bloodGroup,
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                   const SizedBox(
                     width: 15,
@@ -65,7 +74,7 @@ class EmergencyRequestBox extends StatelessWidget {
                                 ),
                               ),
                               TextSpan(
-                                text: emergencyRequest.address,
+                                text: emergencyRequest.hospital.city.toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
@@ -97,7 +106,7 @@ class EmergencyRequestBox extends StatelessWidget {
                               ),
                               TextSpan(
                                 text: DateFormat.jm()
-                                    .format(emergencyRequest.time),
+                                    .format(emergencyRequest.expiryTime),
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
@@ -119,9 +128,13 @@ class EmergencyRequestBox extends StatelessWidget {
               ),
               SizedBox(
                 width: Get.width,
-                child: const ElevatedButton(
-                  onPressed: null,
-                  child: Text(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.to(() => RequestDetail(
+                          emergencyRequest: emergencyRequest,
+                        ));
+                  },
+                  child: const Text(
                     "Donate Now",
                   ),
                 ),
@@ -141,13 +154,8 @@ class EmergencyRequestBox extends StatelessWidget {
                   bottomLeft: Radius.circular(12),
                 ),
                 color: Constants.kPrimaryColor),
-            child: Text(
-              emergencyRequest.bloodGroup,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
+            child: const Icon(Icons.hourglass_empty,
+                color: Constants.kWhiteColor, size: 20),
           ),
         ),
       ],

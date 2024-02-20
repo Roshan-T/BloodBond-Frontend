@@ -30,7 +30,7 @@ class BloodCamp {
       required this.phonenumber});
 }
 
- List<BloodCamp> bloodCamp = [
+List<BloodCamp> bloodCamp = [
   BloodCamp(" This is fish", "Pokhara",
       image: "assets/images/onboarding1.png",
       datentime: "22.23 Monday",
@@ -183,68 +183,68 @@ List<DonorHistory> donorHistory = [
       donatedto: "Kalu Pandey"),
 ];
 
-class EmergencyRequest {
-  EmergencyRequest(
-      {required this.bloodGroup,
-      required this.patientName,
-      required this.medicalProblem,
-      required this.bloodUnit,
-      required this.address,
-      required this.time,
-      required this.imageUrl,
-      required this.gender,
-      required this.phoneNumber});
+// class EmergencyRequest {
+//   EmergencyRequest(
+//       {required this.bloodGroup,
+//       required this.patientName,
+//       required this.medicalProblem,
+//       required this.bloodUnit,
+//       required this.address,
+//       required this.time,
+//       required this.imageUrl,
+//       required this.gender,
+//       required this.phoneNumber});
 
-  String bloodGroup;
-  String patientName;
-  String medicalProblem;
-  int bloodUnit;
-  String address;
-  DateTime time;
-  String imageUrl;
-  String gender;
-  int phoneNumber;
-}
+//   String bloodGroup;
+//   String patientName;
+//   String medicalProblem;
+//   int bloodUnit;
+//   String address;
+//   DateTime time;
+//   String imageUrl;
+//   String gender;
+//   int phoneNumber;
+// }
 
-List<EmergencyRequest> requests = [
-  EmergencyRequest(
-      phoneNumber: 9898989898,
-      bloodGroup: "A+",
-      patientName: "Munna Bhai",
-      medicalProblem: "Cancer",
-      bloodUnit: 2,
-      address: "Mars",
-      time: DateTime.now(),
-      imageUrl: "assets/images/onboarding2.png",
-      gender: "Male"),
-  EmergencyRequest(
-      phoneNumber: 9898989898,
-      bloodGroup: "A+",
-      patientName: "Munna Bhai",
-      medicalProblem: "Cancer",
-      bloodUnit: 2,
-      address: "Mars",
-      time: DateTime.now(),
-      imageUrl: "assets/images/onboarding2.png",
-      gender: "Male"),
-  EmergencyRequest(
-      phoneNumber: 9898989898,
-      bloodGroup: "A+",
-      patientName: "Munna Bhai",
-      medicalProblem: "Cancer",
-      bloodUnit: 2,
-      address: "Mars",
-      time: DateTime.now(),
-      imageUrl: "assets/images/onboarding2.png",
-      gender: "Male"),
-  EmergencyRequest(
-      phoneNumber: 9898989898,
-      bloodGroup: "A+",
-      patientName: "Munna Bhai",
-      medicalProblem: "Cancer",
-      bloodUnit: 2,
-      address: "Mars",
-      time: DateTime.now(),
-      imageUrl: "assets/images/onboarding2.png",
-      gender: "Male"),
-];
+// // List<EmergencyRequest> requests = [
+//   EmergencyRequest(
+//       phoneNumber: 9898989898,
+//       bloodGroup: "A+",
+//       patientName: "Munna Bhai",
+//       medicalProblem: "Cancer",
+//       bloodUnit: 2,
+//       address: "Mars",
+//       time: DateTime.now(),
+//       imageUrl: "assets/images/onboarding2.png",
+//       gender: "Male"),
+//   EmergencyRequest(
+//       phoneNumber: 9898989898,
+//       bloodGroup: "A+",
+//       patientName: "Munna Bhai",
+//       medicalProblem: "Cancer",
+//       bloodUnit: 2,
+//       address: "Mars",
+//       time: DateTime.now(),
+//       imageUrl: "assets/images/onboarding2.png",
+//       gender: "Male"),
+//   EmergencyRequest(
+//       phoneNumber: 9898989898,
+//       bloodGroup: "A+",
+//       patientName: "Munna Bhai",
+//       medicalProblem: "Cancer",
+//       bloodUnit: 2,
+//       address: "Mars",
+//       time: DateTime.now(),
+//       imageUrl: "assets/images/onboarding2.png",
+//       gender: "Male"),
+//   EmergencyRequest(
+//       phoneNumber: 9898989898,
+//       bloodGroup: "A+",
+//       patientName: "Munna Bhai",
+//       medicalProblem: "Cancer",
+//       bloodUnit: 2,
+//       address: "Mars",
+//       time: DateTime.now(),
+//       imageUrl: "assets/images/onboarding2.png",
+//       gender: "Male"),
+// ];

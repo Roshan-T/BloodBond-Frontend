@@ -1,33 +1,57 @@
+import 'dart:convert';
+
+import 'package:bloodbond/controller/home_screen_controller.dart';
+import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/utils/utils.dart';
 import 'package:bloodbond/widget/timer_box.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
-class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+class RequestDetail extends StatefulWidget {
+  final EmergencyRequest emergencyRequest;
+  const RequestDetail({super.key, required this.emergencyRequest});
 
   @override
-  State<MapPage> createState() => _MapPageState();
+  State<RequestDetail> createState() => _MapPageState();
 }
 
-class _MapPageState extends State<MapPage> {
-  static const LatLng _pGooglePlex = LatLng(37.4223, -122.0848);
-  static const LatLng _pApplePark = LatLng(37.3346, -122.0090);
-
+class _MapPageState extends State<RequestDetail> {
+  late EmergencyRequest request;
+  late double latitude;
+  late double longitude;
+  var expiryTime;
+  var name;
   Map<PolylineId, Polyline> polylines = {};
-
-  Duration remainingTime =
-      DateTime(2024, 1, 5, 24, 00, 0).difference(DateTime.now());
 
   @override
   void initState() {
     super.initState();
-    countdownController.startCountdown(DateTime(2024, 12, 30, 24, 00, 0));
+    request = widget.emergencyRequest;
+
+    var storage = GetStorage();
+    latitude = storage.read('latitude');
+    longitude = storage.read('longitude');
+    name = storage.read('first_name');
+    expiryTime = request.expiryTime;
+
+    // LatLng donorLat =
+    //     LatLng(request.donor['latitude'], request.donor['longitude']);
+    countdownController.startCountdown(request.expiryTime);
   }
 
-  bool isAccepted = false;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    countdownController.dispose();
+  }
+
   final CountdownController countdownController = CountdownController();
+  @override
+  bool isAccepted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,19 +76,22 @@ class _MapPageState extends State<MapPage> {
             SizedBox(
               height: Get.height * 0.25,
               child: GoogleMap(
-                initialCameraPosition: const CameraPosition(
-                  target: _pGooglePlex,
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(latitude, longitude),
                   zoom: 10,
                 ),
                 markers: {
-                  const Marker(
-                      markerId: MarkerId("_sourceLocation"),
+                  Marker(
+                      markerId: const MarkerId("1"),
                       icon: BitmapDescriptor.defaultMarker,
-                      position: _pGooglePlex),
-                  const Marker(
-                      markerId: MarkerId("_destionationLocation"),
+                      position: LatLng(
+                          request.hospital.latitude, request.hospital.latitude),
+                      infoWindow: InfoWindow(title: request.hospital.name)),
+                  Marker(
+                      markerId: const MarkerId("2"),
                       icon: BitmapDescriptor.defaultMarker,
-                      position: _pApplePark)
+                      position: LatLng(latitude, longitude),
+                      infoWindow: InfoWindow(title: name))
                 },
                 polylines: Set<Polyline>.of(polylines.values),
               ),
@@ -89,18 +116,16 @@ class _MapPageState extends State<MapPage> {
                     height: 15,
                   ),
                   Text(
-                    "Patient Name: " + "Roshan Tiwari",
+                    "Patient Name: ${request.patientName}",
                     style: Get.textTheme.labelLarge,
                   ),
                   Row(
                     children: [
                       Text(
-                        "Medical Problem: " + "Nothing AS SUCH",
+                        "Medical Problem: ${request.medicalCondition}",
                         style: Get.textTheme.labelLarge,
                       ),
-                      const SizedBox(
-                        width: 20,
-                      ),
+                      const Spacer(),
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -110,13 +135,14 @@ class _MapPageState extends State<MapPage> {
                           onTap: () {
                             Get.to(
                               FullScreen(
-                                photoUrl: "assets/images/onboarding4.png",
+                                photoUrl:
+                                    Url.getImage + jsonDecode(request.report),
                               ),
                             );
                           },
-                          child: Image.asset(
-                            "assets/images/onboarding4.png",
-                            fit: BoxFit.cover,
+                          child: Image.network(
+                            Url.getImage + jsonDecode(request.report),
+                            fit: BoxFit.fill,
                             width: 50,
                             height: 50,
                           ),
@@ -125,21 +151,21 @@ class _MapPageState extends State<MapPage> {
                     ],
                   ),
                   Text(
-                    "Location: " + "Pokhara",
+                    "Location: ${request.hospital.city}",
                     style: Get.textTheme.labelLarge,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   Text(
-                    "Requested Time: " + "2024/10/24 , 4:30 PM",
+                    "Requested Time: ${DateFormat('MMM d yyyy, HH:mm a').format(request.requestedTime)}",
                     style: Get.textTheme.labelLarge,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   Text(
-                    "Needed Within: " + "2024/10/24 , 4:30 PM",
+                    "Needed Within: ${DateFormat('MMM d yyyy, HH:mm a').format(request.expiryTime)}",
                     style: Get.textTheme.labelLarge,
                   ),
                   const SizedBox(
@@ -157,7 +183,7 @@ class _MapPageState extends State<MapPage> {
                     children: [
                       Obx(() => TimerBox(
                           time:
-                              "${countdownController.timeRemaining.value.inHours % 24}",
+                              "${countdownController.timeRemaining.value.inHours}",
                           timeDuration: "Hour")),
                       Obx(() => TimerBox(
                           time:
@@ -204,7 +230,7 @@ class FullScreen extends StatelessWidget {
       backgroundColor: Constants.kGrey,
       body: Center(
         child: InteractiveViewer(
-          child: Image.asset(
+          child: Image.network(
             photoUrl,
             fit: BoxFit.fill,
           ),

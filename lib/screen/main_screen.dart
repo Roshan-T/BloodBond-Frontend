@@ -6,6 +6,7 @@ import 'package:bloodbond/screen/role_select.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_storage/get_storage.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({this.currentIndex = 0, super.key});
@@ -17,19 +18,23 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   late int _currentIndex;
+  late String role;
   // list of screens in bottom nav bar
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const CreateEmergencyRequest(),
-    const HistoryScreen(),
-    ProfileScreen(),
-  ];
+  List<Widget> _screens = [];
 
   @override
   void initState() {
     super.initState();
     // getCurrentUser(); // get current user
     _currentIndex = widget.currentIndex;
+    var storage = GetStorage();
+    role = storage.read('role');
+    _screens = [
+      HomeScreen(),
+      const CreateEmergencyRequest(),
+      const HistoryScreen(),
+      ProfileScreen(),
+    ];
   }
 
   @override
