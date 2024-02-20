@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:bloodbond/controller/network_controller.dart';
 import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/screen/main_screen.dart';

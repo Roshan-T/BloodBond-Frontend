@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'package:bloodbond/controller/network_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
-
-import '../routes/url.dart';
 import '../services/services.dart';
 import '../utils/constants.dart';
 
@@ -45,8 +42,8 @@ class NearbyDonorController extends GetxController {
 }
 
 List<NearbyDonor> nearbyDonorFromJson(String str) => List<NearbyDonor>.from(
-    json.decode(str).map((x) => NearbyDonor.fromJson(x)));
-
+    json.decode(str).map((x) => NearbyDonor.fromJson(x)));   // converts from json into list of nearbydonors
+    
 String nearbyDonorToJson(List<NearbyDonor> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 

@@ -1,5 +1,8 @@
+import 'package:bloodbond/controller/hospital_signup_controller.dart';
+import 'package:bloodbond/controller/login_controller.dart';
 import 'package:bloodbond/screen/bloodtype_selection.dart';
 import 'package:bloodbond/screen/login_screen.dart';
+import 'package:bloodbond/utils/helper_function.dart';
 //import 'package:bloodbond/screen/onboarding_screen.dart';
 import 'dart:io';
 
@@ -23,14 +26,15 @@ class SignUpScreenHospital extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreenHospital> {
+  HospitalSignUpController hController = HospitalSignUpController();
   XFile? image;
   bool isFetchingLocation = false;
 
-  TextEditingController hospitalNameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  // final hospitalNameController = TextEditingController();
+  // final passwordController = TextEditingController();
 
-  TextEditingController emailAddressController = TextEditingController();
-  TextEditingController mobileNumberController = TextEditingController();
+  // final emailAddressController = TextEditingController();
+  // final mobileNumberController = TextEditingController();
 
   Future<void> getImage() async {
     ImagePicker picker = ImagePicker();
@@ -41,6 +45,9 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
     });
   }
 
+  LoginController controller = Get.put(LoginController());
+  String? emailErrorText;
+  String? passwordErrorText;
   String? latitude;
   String? longitude;
   String? city;
@@ -136,29 +143,30 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                   ),
                   Textfield(
                       hinttext: "Hospital Name",
-                      control: hospitalNameController,
+                      control: hController.hospitalnamecontroller.value,
                       keyboardtype: TextInputType.name),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Textfield(
                       hinttext: "Email Address",
-                      control: emailAddressController,
+                      control: hController.emailcontroller.value,
                       keyboardtype: TextInputType.emailAddress),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Textfield(
                     hinttext: "Password",
-                    control: passwordController,
-                    keyboardtype: TextInputType.none,
+                    control: hController.passwordcontroller.value,
+                    keyboardtype: TextInputType.text,
                   ),
                   const SizedBox(
                     height: 15,
                   ),
                   Textfield(
                       hinttext: "Mobile Number",
-                      control: mobileNumberController,
+                      maxilength: 10,
+                      control: hController.phonecontroller.value,
                       keyboardtype: TextInputType.number),
                   const SizedBox(
                     height: 15,
@@ -180,10 +188,10 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                       await _handleLocationPermission();
                       Position position = await Geolocator.getCurrentPosition(
                           desiredAccuracy: LocationAccuracy.high);
-                      latitude = position.latitude.toString();
-                      longitude = position.longitude.toString();
+                      hController.lat = position.latitude;
+                      hController.long = position.longitude;
 
-                      city = await getNearestCity(
+                      hController.city = await getNearestCity(
                           position.latitude, position.longitude);
 
                       setState(() {
@@ -199,7 +207,7 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                             )
                           : null,
                       isDense: true,
-                      hintText: latitude == null ? "Select Location" : city,
+                      hintText: hController.city ?? "Select Location",
                       hintStyle: Theme.of(context)
                           .textTheme
                           .labelMedium!
@@ -214,15 +222,54 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(
-                          () => const BloodTypeSelectionScreen(),
-                        );
+                        //check email
+
+                        if (hController
+                                .hospitalnamecontroller.value.text.isEmpty ||
+                            hController.passwordcontroller.value.text.isEmpty ||
+                            hController.emailcontroller.value.text.isEmpty ||
+                            hController.phonecontroller.value.text.isEmpty) {
+                          // Display an error message or handle the case where not all fields are filled
+
+                          Get.snackbar(
+                            "Please fill all the fields ",
+                            "",
+                            colorText: Colors.white,
+                            backgroundColor: Constants.kPrimaryColor,
+                          );
+                        } else if (!isEmailValid(
+                            hController.emailcontroller.value.text.trim())) {
+                          Get.snackbar(
+                            "Error!",
+                            "Enter a valid email",
+                            colorText: Colors.white,
+                            backgroundColor: Constants.kPrimaryColor,
+                          );
+                        } else if (hController.passwordcontroller.value.text
+                                .trim()
+                                .length <
+                            6) {
+                          Get.snackbar(
+                            "Error!",
+                            "Enter valid password",
+                            colorText: Colors.white,
+                            backgroundColor: Constants.kPrimaryColor,
+                          );
+                        } else {
+                          if (hController.loading.value) return;
+                          hController.hospitalSignUp();
+                          //  Get.to(
+                          //   () => const LoginScreen(),
+                          // );
+                        }
                       },
-                      child: Text(
-                        "Continue",
-                        style: Get.textTheme.titleLarge
-                            ?.copyWith(color: Colors.white),
-                      ),
+                      child: hController.loading.value == true
+                          ? const CircularProgressIndicator()
+                          : Text(
+                              "Continue",
+                              style: Get.textTheme.titleLarge
+                                  ?.copyWith(color: Colors.white),
+                            ),
                     ),
                   ),
                   Row(
@@ -238,7 +285,7 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Get.to(LoginScreen());
+                          Get.to(const LoginScreen());
                         },
                         child: Text("Login",
                             style: Theme.of(context)
@@ -267,20 +314,25 @@ class Textfield extends StatelessWidget {
   final TextInputType? keyboardtype;
   final TextEditingController? control;
 
+  final int? maxilength;
+
   const Textfield({
     super.key,
     required this.hinttext,
     required this.keyboardtype,
     required this.control,
+    this.maxilength,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      maxLength: maxilength,
       readOnly: false,
       keyboardType: keyboardtype,
       controller: control,
       decoration: InputDecoration(
+        counterText: "",
         isDense: true,
         hintText: hinttext,
         hintStyle: Theme.of(context)
