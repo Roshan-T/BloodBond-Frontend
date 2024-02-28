@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bloodbond/controller/all_hospitals_detail_controller.dart';
 import 'package:bloodbond/controller/home_screen_controller.dart';
 import 'package:bloodbond/models/campaignModel.dart';
 import 'package:bloodbond/routes/url.dart';
@@ -12,6 +13,7 @@ import '../controller/nearby_donor.controller.dart';
 import '../utils/constants.dart' as cons;
 
 class ApiService {
+  //For nearby donors
   static Future<List<NearbyDonor>?> fetchDonors() async {
     var response = await http.get(
       Uri.parse(Url.nearbyDonor),
@@ -34,6 +36,45 @@ class ApiService {
       return null;
     }
   }
+
+
+
+
+ static Future<List<AllHospital>?> fetchAllHospitals() async {
+    var response = await http.get(
+      Uri.parse(Url.getAllhospitals),
+      headers: {"Content-Type": "application/json"},
+    );
+    var data = response.body;
+    // print(data);
+    // print(nearbyDonorFromJson(data));
+    if (response.statusCode == 200) {
+      final x = allHospitalFromJson(data);
+      return x;
+    } else {
+      Get.closeAllSnackbars();
+      Get.snackbar(
+        jsonDecode(data)['detail'],
+        "",
+        colorText: Colors.white,
+        backgroundColor: cons.Constants.kPrimaryColor,
+      );
+      return null;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   static Future<List<EmergencyRequest>?> fetchEmergencyRequest() async {
     var response = await http.get(

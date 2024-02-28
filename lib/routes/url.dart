@@ -12,4 +12,5 @@ class Url {
   static const uploadImage = "$mainUrl/upload-image";
   static const getCampaings = "$mainUrl/api/v1/campaigns/";
   static const postCampaings = "$mainUrl/api/v1/campaigns/";
+  static const getAllhospitals = "$mainUrl/api/v1/hospitals/";
 }
