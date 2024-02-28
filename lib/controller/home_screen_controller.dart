@@ -19,7 +19,7 @@ class HomeController extends GetxController {
     fetchEmergencyRequest();
   }
 
-  void fetchEmergencyRequest() async {
+  Future<void> fetchEmergencyRequest() async {
     isRequestLoading(true);
     try {
       var list = await ApiService.fetchEmergencyRequest();

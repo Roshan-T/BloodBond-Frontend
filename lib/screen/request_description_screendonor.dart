@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:bloodbond/controller/emerequest_description.dart';
 import 'package:bloodbond/controller/home_screen_controller.dart';
 import 'package:bloodbond/routes/url.dart';
+import 'package:bloodbond/services/services.dart';
 import 'package:bloodbond/utils/utils.dart';
 import 'package:bloodbond/widget/timer_box.dart';
 import 'package:flutter/material.dart';
@@ -51,10 +53,10 @@ class _MapPageState extends State<RequestDetail> {
 
   final CountdownController countdownController = CountdownController();
   @override
-  bool isAccepted = false;
-
-  @override
   Widget build(BuildContext context) {
+    RequestController controller = Get.put(RequestController());
+    HomeController homeController = Get.put(HomeController());
+    print("Accept:$request.accepted");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -203,15 +205,31 @@ class _MapPageState extends State<RequestDetail> {
             ),
             Center(
               child: SizedBox(
-                height: 60,
-                width: Get.width * 0.8,
-                child: ElevatedButton(
-                  onPressed: null,
-                  child: Text(
-                    isAccepted ? "Accepted" : "Accept Request",
+                  height: 60,
+                  width: Get.width * 0.8,
+                  child: Obx(
+                    () => ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          controller.acceptRequest(request.id);
+                          homeController.fetchEmergencyRequest();
+                        });
+                        // login user
+                      },
+                      child: controller.loading.value
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : (request.accepted
+                              ? const Text("Accepted")
+                              : const Text('Accept Request')),
+                    ),
+                  )
+                  // ElevatedButton(
+                  //   onPressed: null,
+                  //   child: Text(
+                  //     request.accepted ? "Accepted" : "Accept Request",
+                  //   ),
+                  // ),
                   ),
-                ),
-              ),
             ),
           ],
         ),

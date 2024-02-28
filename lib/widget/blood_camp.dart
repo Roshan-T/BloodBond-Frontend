@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloodbond/models/campaignModel.dart';
 import 'package:bloodbond/routes/url.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,7 @@ class CampTile extends StatelessWidget {
                     height: 120,
                     width: 250,
                     child: Image.network(
-                      Url.getImage + campers.banner,
+                      Url.getImage + jsonDecode(campers.banner),
                       fit: BoxFit.fill,
                     ),
                   ),

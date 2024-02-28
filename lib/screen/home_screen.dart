@@ -29,9 +29,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // storage = GetStorage();
-    first_name = storage.read('name') == Null
-        ? storage.read('first_name')
-        : storage.read('name');
+    first_name = storage.read('role') == 'hospital'
+        ? storage.read('name')
+        : storage.read('first_name');
     image = storage.read('image');
     print(first_name);
     final HomeController requestController = Get.put(HomeController());
