@@ -6,6 +6,7 @@ import 'package:bloodbond/screen/profile_screen.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class MainScreen extends StatefulWidget {
@@ -93,6 +94,7 @@ class _MainScreenState extends State<MainScreen> {
           currentIndex: _currentIndex,
           onTap: (index) => setState(
                 () {
+                  Get.deleteAll();
                   _currentIndex = index;
                 },
               )),

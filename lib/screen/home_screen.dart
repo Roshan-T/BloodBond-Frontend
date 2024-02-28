@@ -1,4 +1,3 @@
-
 import 'package:bloodbond/controller/home_screen_controller.dart';
 import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/screen/nearby_donor_screen.dart';
@@ -12,15 +11,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class HomeScreen extends StatelessWidget {
-  var storage;
+  var storage = GetStorage();
   var first_name;
   var image;
-
-  HomeScreen({super.key}) {
-    storage = GetStorage();
-    first_name = storage.read('first_name');
-    image = storage.read('image');
-  }
 
 //   void initState() {
 //     // TODO: implement initState
@@ -36,8 +29,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // storage = GetStorage();
-    // first_name = storage.read('first_name');
-    // image = storage.read('image');
+    first_name = storage.read('name') == Null
+        ? storage.read('first_name')
+        : storage.read('name');
+    image = storage.read('image');
+    print(first_name);
     final HomeController requestController = Get.put(HomeController());
     return Scaffold(
       appBar: AppBar(
@@ -140,21 +136,48 @@ class HomeScreen extends StatelessWidget {
                   height: 20,
                 ),
                 SizedBox(
-                  height: 250,
-                  child: ListView.separated(
-                      physics: const ClampingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return CampTile(campers: bloodCamp[index]);
+                    height: 250,
+                    child: GetBuilder<HomeController>(
+                      init: HomeController(),
+                      builder: (requestController) {
+                        if (requestController.isCampaignLoading.value) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                                backgroundColor: Colors.black),
+                          );
+                        } else {
+                          return ListView.separated(
+                              physics: const ClampingScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return CampTile(
+                                    campers:
+                                        requestController.campaignList[index]);
+                              },
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(
+                                  width: 10,
+                                );
+                              },
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: requestController.campaignList.length);
+                        }
                       },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          width: 10,
-                        );
-                      },
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: bloodCamp.length),
-                ),
+                    )
+                    //  ListView.separated(
+                    //     physics: const ClampingScrollPhysics(),
+                    //     itemBuilder: (context, index) {
+                    //       return CampTile(campers: bloodCamp[index]);
+                    //     },
+                    //     separatorBuilder: (context, index) {
+                    //       return const SizedBox(
+                    //         width: 10,
+                    //       );
+                    //     },
+                    //     shrinkWrap: true,
+                    //     scrollDirection: Axis.horizontal,
+                    //     itemCount: bloodCamp.length),
+                    ),
                 const SizedBox(
                   height: 15,
                 ),

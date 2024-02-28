@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloodbond/controller/home_screen_controller.dart';
+import 'package:bloodbond/models/campaignModel.dart';
 import 'package:bloodbond/routes/url.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,6 +45,29 @@ class ApiService {
     if (response.statusCode == 200) {
       final x = emergencyRequestFromJson(data);
       print(x);
+      return x;
+    } else {
+      Get.closeAllSnackbars();
+      Get.snackbar(
+        jsonDecode(data)['detail'],
+        "",
+        colorText: Colors.white,
+        backgroundColor: cons.Constants.kPrimaryColor,
+      );
+      return null;
+    }
+  }
+
+  static Future<List<CampaignDetails>?> fetchCampaigns() async {
+    var response = await http.get(
+      Uri.parse(Url.getCampaings),
+      headers: {"Content-Type": "application/json"},
+    );
+    var data = response.body;
+
+    final x = campaignDetailsFromJson(data);
+    print(x);
+    if (response.statusCode == 200) {
       return x;
     } else {
       Get.closeAllSnackbars();

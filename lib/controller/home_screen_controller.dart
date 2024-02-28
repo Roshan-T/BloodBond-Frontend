@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bloodbond/models/campaignModel.dart';
 import 'package:bloodbond/services/services.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +9,13 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   RxBool isRequestLoading = false.obs;
   var requestList = <EmergencyRequest>[];
-  @override
-  void onClose() {
-    super.onClose();
-  }
+  RxBool isCampaignLoading = false.obs;
+  var campaignList = <CampaignDetails>[];
 
   @override
   void onInit() {
     super.onInit();
+    fetchCampaigns();
     fetchEmergencyRequest();
   }
 
@@ -41,6 +41,32 @@ class HomeController extends GetxController {
     } finally {
       update();
       isRequestLoading(false);
+    }
+  }
+
+  void fetchCampaigns() async {
+    isCampaignLoading(true);
+    try {
+      var clist = await ApiService.fetchCampaigns();
+
+      if (clist != null) {
+        campaignList = clist;
+      } else {
+        campaignList = [];
+      }
+    } catch (e) {
+      Get.closeAllSnackbars();
+
+      Get.snackbar(
+        'Error Occured',
+        "",
+        colorText: Colors.white,
+        backgroundColor: Constants.kPrimaryColor,
+      );
+    } finally {
+      update();
+
+      isCampaignLoading(false);
     }
   }
 }

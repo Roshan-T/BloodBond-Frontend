@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bloodbond/controller/home_screen_controller.dart';
 import 'package:bloodbond/controller/network_controller.dart';
 import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/screen/home_screen.dart';
@@ -54,6 +55,7 @@ class CreateEmergencyRequestController extends GetxController {
         loading.value = false;
 
         Get.closeAllSnackbars();
+
         Get.snackbar(
           'Requested Sucessfully',
           "",

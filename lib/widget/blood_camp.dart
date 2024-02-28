@@ -1,15 +1,17 @@
+import 'package:bloodbond/models/campaignModel.dart';
+import 'package:bloodbond/routes/url.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodbond/utils/constants.dart';
 
 class CampTile extends StatelessWidget {
-  final BloodCamp campers;
+  final CampaignDetails campers;
 
   const CampTile({super.key, required this.campers});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.all(8),
         // height: 200,
         width: 300,
         decoration: BoxDecoration(
@@ -31,9 +33,13 @@ class CampTile extends StatelessWidget {
                     ),
                     height: 120,
                     width: 250,
-                    child: Image.asset(campers.image),
+                    child: Image.network(
+                      Url.getImage + campers.banner,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                   Text(
+                    maxLines: 1,
                     campers.title,
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                         color: Constants.kBlackColor,

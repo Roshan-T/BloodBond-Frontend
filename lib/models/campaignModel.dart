@@ -72,8 +72,8 @@ class Hospital {
   String name;
   String email;
   String phone;
-  int latitude;
-  int longitude;
+  double latitude;
+  double longitude;
   String image;
   bool isVerified;
   String city;
@@ -97,8 +97,8 @@ class Hospital {
         name: json["name"],
         email: json["email"],
         phone: json["phone"],
-        latitude: json["latitude"],
-        longitude: json["longitude"],
+        latitude: json["latitude"]?.toDouble(),
+        longitude: json["longitude"]?.toDouble(),
         image: json["image"],
         isVerified: json["is_verified"],
         city: json["city"],

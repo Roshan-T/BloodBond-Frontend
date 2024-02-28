@@ -40,8 +40,12 @@ class LoginController extends GetxController {
         getStorage.write('latitude', data['user']['latitude']);
         getStorage.write('longitude', data['user']['longitude']);
         getStorage.write('blood_group', data['user']['blood_group']);
+
+        getStorage.write('name', data['user']['name']);
         getStorage.write('first_name', data['user']['first_name']);
         getStorage.write('image', data['user']['image']);
+        getStorage.write('id', data['user']['id']);
+        getStorage.write('city', data['user']['city']);
         Get.closeAllSnackbars();
         Get.snackbar(
           'Login Sucessful',

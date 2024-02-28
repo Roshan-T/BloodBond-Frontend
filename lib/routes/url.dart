@@ -10,4 +10,5 @@ class Url {
   static const getEmergencyRequest = "$mainUrl/api/v1/emergency-requests/";
   static const postEmergencyRequest = "$mainUrl/api/v1/emergency-requests/";
   static const uploadImage = "$mainUrl/upload-image";
+  static const getCampaings = "$mainUrl/api/v1/campaigns/";
 }

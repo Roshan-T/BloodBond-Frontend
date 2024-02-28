@@ -14,6 +14,8 @@ class ProfileController extends GetxController {
     getStorage.remove('blood_group');
     getStorage.remove('first_name');
     getStorage.remove('image');
+    getStorage.remove('id');
+    getStorage.remove('city');
 
     Get.offAll(() => const LoginScreen());
   }
