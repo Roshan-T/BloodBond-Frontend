@@ -166,15 +166,17 @@ class ProfileDataBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.all(8),
-      height: 50,
+      padding: const EdgeInsets.all(20),
+      height: 75,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: const Color.fromARGB(255, 240, 245, 245),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Column(
                 children: [
@@ -235,7 +237,7 @@ class DetailBox extends StatelessWidget {
             detail,
             style: Theme.of(context)
                 .textTheme
-                .labelMedium!
+                .labelSmall!
                 .copyWith(color: Colors.black, fontWeight: FontWeight.w400),
           ),
         ],

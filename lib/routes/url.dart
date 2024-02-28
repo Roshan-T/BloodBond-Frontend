@@ -7,5 +7,9 @@ class Url {
   static const getImage = "$mainUrl/get-image/";
   static const register = "$mainUrl/api/v1/donors/register";
   static const hospitalregister = "$mainUrl/api/v1/hospitals/register";
-  static const allhospital = "$mainUrl/api/v1/hospitals/";
+  static const getEmergencyRequest = "$mainUrl/api/v1/emergency-requests/";
+  static const postEmergencyRequest = "$mainUrl/api/v1/emergency-requests/";
+  static const uploadImage = "$mainUrl/upload-image";
+  static const getCampaings = "$mainUrl/api/v1/campaigns/";
+  static const getAllhospitals = "$mainUrl/api/v1/hospitals/";
 }

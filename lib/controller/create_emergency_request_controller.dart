@@ -1,8 +1,14 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:bloodbond/controller/home_screen_controller.dart';
 import 'package:bloodbond/controller/network_controller.dart';
 import 'package:bloodbond/routes/url.dart';
+import 'package:bloodbond/screen/home_screen.dart';
 import 'package:bloodbond/screen/main_screen.dart';
+import 'package:bloodbond/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -10,57 +16,59 @@ import 'package:http/http.dart';
 
 import '../utils/constants.dart';
 
-class LoginController extends GetxController {
-  final emailController = TextEditingController().obs;
-  final passwordController = TextEditingController().obs;
+class CreateEmergencyRequestController extends GetxController {
   RxBool loading = false.obs;
 
-  final getStorage = GetStorage();
-
-  void loginApi() async {
+  void emergencyRequest(
+      final bloodGroup,
+      final patientName,
+      final medicalProblem,
+      final requestedDate,
+      final expiryDate,
+      final report) async {
     loading.value = true;
+
     try {
+      var token = GetStorage().read('token');
+      print("token is : $token");
+      var file = await ApiService.uploadImage(report);
       final response = await post(
-        Uri.parse(Url.login),
-        headers: {"Content-Type": "application/json"},
+        Uri.parse(Url.postEmergencyRequest),
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $token ',
+        },
         body: jsonEncode({
-          "email": emailController.value.text,
-          "password": passwordController.value.text
+          "patient_name": patientName,
+          "blood_group": bloodGroup,
+          "medical_condition": medicalProblem,
+          "report": file,
+          "requested_time": requestedDate.toString(),
+          "expiry_time": expiryDate.toString()
         }),
       );
-      // print(response.body);
+
       var data = jsonDecode(response.body);
       // var user = data.user;
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         loading.value = false;
-        getStorage.write("token", data['access_token']);
-        getStorage.write('firstLogin', false);
-        getStorage.write("role", data['role']);
-        getStorage.write('latitude', data['user']['latitude']);
-        getStorage.write('longitude', data['user']['longitude']);
-        getStorage.write('blood_group', data['user']['blood_group']);
 
-        getStorage.write('name', data['user']['name']);
-        getStorage.write('first_name', data['user']['first_name']);
-        getStorage.write('image', data['user']['image']);
-        getStorage.write('id', data['user']['id']);
-        getStorage.write('city', data['user']['city']);
         Get.closeAllSnackbars();
+
         Get.snackbar(
-          'Login Sucessful',
-          "Congratulations",
+          'Requested Sucessfully',
+          "",
           colorText: Colors.white,
           backgroundColor: Colors.green,
         );
-        emailController.close();
-        passwordController.close();
-        Get.offAll(const MainScreen());
+
+        Get.off(const MainScreen());
       } else {
         loading.value = false;
         Get.closeAllSnackbars();
         Get.snackbar(
-          "Login Failed",
+          "Request Failed",
           data['detail'],
           colorText: Colors.white,
           backgroundColor: Constants.kPrimaryColor,

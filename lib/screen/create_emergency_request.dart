@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:bloodbond/controller/create_emergency_request_controller.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:bloodbond/widget/datetime_box.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -22,23 +22,22 @@ class _CreateEmergencyRequestState extends State<CreateEmergencyRequest> {
 
   bool _isAccepted = false;
 
-  File? _image;
+  File? image;
   final _imagePicker = ImagePicker();
   selectImage() async {
     final choosedImage =
         await _imagePicker.pickImage(source: ImageSource.gallery);
     if (choosedImage != null) {
       setState(() {
-        _image = File(choosedImage.path);
+        image = File(choosedImage.path);
       });
     }
   }
 
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _patientNameController = TextEditingController();
-  final TextEditingController _medicalProblemController =
+  final TextEditingController patientNameController = TextEditingController();
+  final TextEditingController medicalProblemController =
       TextEditingController();
-  final TextEditingController _bloodUnit = TextEditingController();
+  // final TextEditingController _bloodUnit = TextEditingController();
   final TextEditingController requestedDate = TextEditingController(
     text: DateFormat('yyyy-MM-dd').format(
       DateTime.now(),
@@ -77,35 +76,17 @@ class _CreateEmergencyRequestState extends State<CreateEmergencyRequest> {
     return combinedDateTime;
   }
 
-  // ! create order
-  void createOrder() async {
-    if (selectedBloodType.isEmpty) {
-      return showSnackBar("Please Select Your Blood Group", "");
-    }
-
-    if (_patientNameController.text.isEmpty) {
-      return showSnackBar("Please enter the patient name", "");
-    } else if (_bloodUnit.text.isEmpty) {
-      return showSnackBar("Blood Unit can't be empty", "");
-    } else if (_addressController.text.isEmpty) {
-      return showSnackBar("Address can't be empty", "");
-    } else if (_image == null) {
-      return showSnackBar("Please provide the medical document", "");
-    } else if (_isAccepted == false) {
-      return showSnackBar("Please accept the terms and conditions", "");
-    }
-  }
-
   @override
   void dispose() {
     super.dispose();
-    _patientNameController.dispose();
-    _bloodUnit.dispose();
+    patientNameController.dispose();
+    // _bloodUnit.dispose();
     requestedDate.dispose();
     requestedTime.dispose();
     expirationDate.dispose();
     expirationTime.dispose();
-    _addressController.dispose();
+    medicalProblemController.dispose();
+    controller.dispose();
   }
 
   dateSelect(BuildContext context, TextEditingController controller) async {
@@ -158,6 +139,8 @@ class _CreateEmergencyRequestState extends State<CreateEmergencyRequest> {
     });
   }
 
+  CreateEmergencyRequestController controller =
+      Get.put(CreateEmergencyRequestController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -249,7 +232,7 @@ class _CreateEmergencyRequestState extends State<CreateEmergencyRequest> {
                 ),
                 TextField(
                   keyboardType: TextInputType.name,
-                  controller: _patientNameController,
+                  controller: patientNameController,
                   decoration: InputDecoration(
                     hintText: "Enter the patient name",
                     hintStyle: Theme.of(context)
@@ -271,7 +254,7 @@ class _CreateEmergencyRequestState extends State<CreateEmergencyRequest> {
                 ),
                 TextField(
                   keyboardType: TextInputType.name,
-                  controller: _medicalProblemController,
+                  controller: medicalProblemController,
                   decoration: InputDecoration(
                     hintText: "Enter the medical problem",
                     hintStyle: Theme.of(context)
@@ -283,53 +266,7 @@ class _CreateEmergencyRequestState extends State<CreateEmergencyRequest> {
                 const SizedBox(
                   height: 20,
                 ),
-                Text(
-                  "Blood Unit (in bag)",
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: Constants.kGrey, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  keyboardType: TextInputType.number,
-                  controller: _bloodUnit,
-                  // only accept the numbers input
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: InputDecoration(
-                    hintText: "Enter the unit of blood",
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .labelMedium!
-                        .copyWith(color: Constants.kGrey),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Address",
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: Constants.kGrey, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: _addressController,
-                  // only accept the numbers input
 
-                  decoration: InputDecoration(
-                    hintText: "Enter the address",
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .labelMedium!
-                        .copyWith(color: Constants.kGrey),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
                 Row(
                   children: [
                     DateTimeBox(
@@ -407,15 +344,15 @@ class _CreateEmergencyRequestState extends State<CreateEmergencyRequest> {
                 SizedBox(
                   height: 60,
                   width: 60,
-                  child: _image == null
+                  child: image == null
                       ? IconButton(
                           onPressed: selectImage,
                           icon: const Icon(Icons.add_a_photo),
                         )
                       : kIsWeb
-                          ? Image.network(_image!.path)
+                          ? Image.network(image!.path)
                           : Image.file(
-                              _image!,
+                              image!,
                               fit: BoxFit.fill,
                             ),
                 ),
@@ -453,10 +390,47 @@ class _CreateEmergencyRequestState extends State<CreateEmergencyRequest> {
                 SizedBox(
                   height: 60,
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: createOrder,
-                    child: const Text(
-                      "Save",
+                  child: Obx(
+                    () => ElevatedButton(
+                      onPressed: () {
+                        if (selectedBloodType.isEmpty) {
+                          return showSnackBar(
+                              "Please Select Your Blood Group", "");
+                        }
+
+                        if (patientNameController.text.isEmpty) {
+                          return showSnackBar(
+                              "Please enter the patient name", "");
+                          // } else if (_bloodUnit.text.isEmpty) {
+                          //   return showSnackBar("Blood Unit can't be empty", "");
+                        } else if (image == null) {
+                          return showSnackBar(
+                              "Please provide the medical document", "");
+                        } else if (medicalProblemController.text.isEmpty) {
+                          return showSnackBar(
+                              "Please provide the medical problem", "");
+                        } else if (_isAccepted == false) {
+                          return showSnackBar(
+                              "Please accept the terms and conditions", "");
+                        }
+
+                        controller.emergencyRequest(
+                            selectedBloodType,
+                            patientNameController.text,
+                            medicalProblemController.text,
+                            convertDateTime(
+                              requestedDate.text,
+                              requestedTime.text,
+                            ),
+                            convertDateTime(
+                              expirationDate.text,
+                              expirationTime.text,
+                            ),
+                            image);
+                      },
+                      child: controller.loading.value
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text("Save"),
                     ),
                   ),
                 ),
