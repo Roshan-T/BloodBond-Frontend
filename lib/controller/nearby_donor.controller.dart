@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:bloodbond/controller/network_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../services/services.dart';
@@ -28,7 +26,7 @@ class NearbyDonorController extends GetxController {
 
       Get.snackbar(
         'Error Occured',
-        "",
+        '$e',
         colorText: Colors.white,
         backgroundColor: Constants.kPrimaryColor,
       );

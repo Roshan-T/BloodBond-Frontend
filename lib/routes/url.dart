@@ -7,4 +7,5 @@ class Url {
   static const getImage = "$mainUrl/get-image/";
   static const register = "$mainUrl/api/v1/donors/register";
   static const hospitalregister = "$mainUrl/api/v1/hospitals/register";
+  static const allhospital = "$mainUrl/api/v1/hospitals/";
 }
