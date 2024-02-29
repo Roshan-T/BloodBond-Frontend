@@ -1,116 +1,114 @@
+import 'dart:convert';
+
+import 'package:bloodbond/models/campaignModel.dart';
+import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class CampaignDetail extends StatefulWidget {
-  const CampaignDetail({super.key});
-
+  const CampaignDetail({super.key, required this.campers});
+  final CampaignDetails campers;
   @override
   State<CampaignDetail> createState() => _CampaignDetailState();
 }
 
 class _CampaignDetailState extends State<CampaignDetail> {
+  var campers;
+  @override
+  void initState() {
+    super.initState();
+    campers = widget.campers;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(" Details"),
-          centerTitle: true,
+          backgroundColor: Constants.kWhiteColor,
+          elevation: 0,
+          leading: IconButton(
+            icon:
+                const Icon(Icons.arrow_back_ios, color: Constants.kBlackColor),
+            onPressed: () => Navigator.pop(context),
+          ),
+          centerTitle: false,
+          title: Text(
+            "Campaign Details",
+            style: Get.textTheme.headlineSmall?.copyWith(
+                color: Constants.kBlackColor, fontWeight: FontWeight.bold),
+          ),
         ),
         body: SingleChildScrollView(
-          child: Container(
-            width: double.maxFinite,
-            height: 1100,
-            color: Constants.kWhiteColor,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Expanded(
-                    flex: 1,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      child: Image.asset(
-                        "assets/images/onboarding4.png",
-                        fit: BoxFit.fill,
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  child: Image.network(
+                    Url.getImage + jsonDecode(campers.banner),
+                    fit: BoxFit.fill,
+                    height: 300,
+                    width: double.maxFinite,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Description",
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      campers.description,
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          fontSize: 15, fontWeight: FontWeight.normal),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Campaign Details",
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CampaignDetailsContainer(campers: campers),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Center(
+                      child: SizedBox(
+                        height: 60,
+                        width: double.maxFinite,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: const Text(
+                            "Interested for donation",
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ), //image
-                Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Constants.kWhiteColor,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      width: double.maxFinite,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 15, right: 8, left: 8),
-                            child: Text(
-                              "Description",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(
-                                    fontSize: 17,
-                                    color: Colors.grey,
-                                  ),
-                            ),
-                          ), //String "description"
-
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(fontSize: 17),
-                            ),
-                          ),
-
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              "Campaign Details",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(
-                                    fontSize: 17,
-                                    color: Colors.grey,
-                                  ),
-                            ),
-                          ), //String"Food Details"
-
-                          const FoodDetailsContainer(),
-
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Flexible(
-                            child: FractionallySizedBox(
-                              heightFactor: 0.5,
-                              widthFactor: 1,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  "Interested for donation",
-                                ),
-                              ),
-                            ),
-                          ), //elevatedbutton
-                        ],
-                      ),
+                    const SizedBox(
+                      height: 30,
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
@@ -156,37 +154,39 @@ class CustomText extends StatelessWidget {
   }
 }
 
-class FoodDetails extends StatelessWidget {
-  const FoodDetails({super.key});
-
+class CampDetails extends StatelessWidget {
+  const CampDetails({super.key, required this.campers});
+  final CampaignDetails campers;
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        CustomText(topic: "Title ", topicDetail: campers.title),
+        Divider(
+          thickness: 1,
+          color: Colors.grey.withOpacity(0.3),
+        ),
+        CustomText(topic: "Hospital Name", topicDetail: campers.hospital.name),
+        Divider(
+          thickness: 1,
+          color: Colors.grey.withOpacity(0.3),
+        ),
         CustomText(
-            topic: "Title ", topicDetail: "Bank Blood (Campaign's Title)"),
+            topic: "Campaign Date",
+            topicDetail: dateFormatter.format(campers.date)),
         Divider(
           thickness: 1,
           color: Colors.grey.withOpacity(0.3),
         ),
-        CustomText(topic: "Organization Name", topicDetail: " Red Cross "),
-        Divider(
-          thickness: 1,
-          color: Colors.grey.withOpacity(0.3),
-        ),
-        CustomText(topic: "Campaign Date", topicDetail: "2023-08-19"),
-        Divider(
-          thickness: 1,
-          color: Colors.grey.withOpacity(0.3),
-        ),
-        CustomText(topic: "Time ", topicDetail: "7 AM "),
+        CustomText(
+            topic: "Time ", topicDetail: timeFormatter.format(campers.date)),
         Divider(
           thickness: 1,
           color: Colors.grey.withOpacity(0.3),
         ),
 
-        CustomText(topic: "Address", topicDetail: "Pokhara"),
+        CustomText(topic: "Address", topicDetail: campers.city),
 
         // CustomText(topic: " Quantity", topicDetail: "4"),
       ],
@@ -194,9 +194,9 @@ class FoodDetails extends StatelessWidget {
   }
 }
 
-class FoodDetailsContainer extends StatelessWidget {
-  const FoodDetailsContainer({super.key});
-
+class CampaignDetailsContainer extends StatelessWidget {
+  const CampaignDetailsContainer({super.key, required this.campers});
+  final CampaignDetails campers;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -210,7 +210,10 @@ class FoodDetailsContainer extends StatelessWidget {
           width: 1.0,
         ),
       ),
-      child: const FoodDetails(),
+      child: CampDetails(campers: campers),
     );
   }
 }
+
+DateFormat dateFormatter = DateFormat('yyyy-MM-dd');
+DateFormat timeFormatter = DateFormat('HH:mm a');

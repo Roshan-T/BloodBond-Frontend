@@ -1,16 +1,22 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:bloodbond/models/campaignModel.dart';
+import 'package:bloodbond/routes/url.dart';
+import 'package:bloodbond/screen/hospital_ind_reqandcamp.dart';
+import 'package:bloodbond/screen/main_screen.dart';
 import 'package:bloodbond/services/services.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart';
 
 class HomeController extends GetxController {
   RxBool isRequestLoading = false.obs;
-  var requestList = <EmergencyRequest>[];
+  var requestList = <EmergencyRequest>[].obs;
   RxBool isCampaignLoading = false.obs;
-  var campaignList = <CampaignDetails>[];
+  var campaignList = <CampaignDetails>[].obs;
 
   @override
   void onInit() {
@@ -19,15 +25,114 @@ class HomeController extends GetxController {
     fetchEmergencyRequest();
   }
 
+  void removeRequest(final id) async {
+    try {
+      var token = GetStorage().read('token');
+
+      final response = await delete(
+        Uri.parse("${Url.getEmergencyRequest}/$id"),
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $token ',
+        },
+      );
+      // print(response.body);
+      var data = jsonDecode(response.body);
+      // var user = data.user;
+      // print(response.statusCode);
+      print(data);
+      if (response.statusCode == 204) {
+        Get.closeAllSnackbars();
+        Get.snackbar(
+          'Sucessfully Deleted',
+          "",
+          colorText: Colors.white,
+          backgroundColor: Colors.green,
+        );
+
+        // Get.offAll(MainScreen());
+      } else {
+        Get.closeAllSnackbars();
+        Get.snackbar(
+          "Failed",
+          data['detail'],
+          colorText: Colors.white,
+          backgroundColor: Constants.kPrimaryColor,
+        );
+      }
+    } catch (e) {
+      Get.closeAllSnackbars();
+
+      if (e == SocketException) {
+        Get.snackbar(
+          'Check Your Internet Connection',
+          "",
+          colorText: Colors.white,
+          backgroundColor: Constants.kPrimaryColor,
+        );
+      }
+    }
+  }
+
+  void removeCampaign(final id) async {
+    try {
+      var token = GetStorage().read('token');
+
+      final response = await delete(
+        Uri.parse("${Url.getCampaings}/$id"),
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $token ',
+        },
+      );
+      // print(response.body);
+      var data = jsonDecode(response.body);
+      // var user = data.user;
+      // print(response.statusCode);
+
+      if (response.statusCode == 204) {
+        Get.closeAllSnackbars();
+        Get.snackbar(
+          'Sucessfully Deleted',
+          "",
+          colorText: Colors.white,
+          backgroundColor: Colors.green,
+        );
+        Get.to(HospitalIndRequest());
+
+        // Get.offAll(MainScreen());
+      } else {
+        Get.closeAllSnackbars();
+        Get.snackbar(
+          "Failed",
+          data['detail'],
+          colorText: Colors.white,
+          backgroundColor: Constants.kPrimaryColor,
+        );
+      }
+    } catch (e) {
+      Get.closeAllSnackbars();
+
+      if (e == SocketException) {
+        Get.snackbar(
+          'Check Your Internet Connection',
+          "",
+          colorText: Colors.white,
+          backgroundColor: Constants.kPrimaryColor,
+        );
+      }
+    }
+  }
+
   Future<void> fetchEmergencyRequest() async {
     isRequestLoading(true);
     try {
       var list = await ApiService.fetchEmergencyRequest();
       print(list);
       if (list != null) {
-        requestList = list;
+        requestList.value = list;
       } else {
-        requestList = [];
+        requestList = [] as RxList<EmergencyRequest>;
       }
     } catch (e) {
       Get.closeAllSnackbars();
@@ -50,9 +155,9 @@ class HomeController extends GetxController {
       var clist = await ApiService.fetchCampaigns();
 
       if (clist != null) {
-        campaignList = clist;
+        campaignList.value = clist;
       } else {
-        campaignList = [];
+        campaignList = [] as RxList<CampaignDetails>;
       }
     } catch (e) {
       Get.closeAllSnackbars();
