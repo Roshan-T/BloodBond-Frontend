@@ -1,12 +1,18 @@
+import 'package:bloodbond/controller/emerequest_description.dart';
+import 'package:bloodbond/controller/home_screen_controller.dart';
 import 'package:bloodbond/widget/custom_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
 import '../utils/constants.dart';
 
 class RequestDescrptionScreenHospital extends StatefulWidget {
-  const RequestDescrptionScreenHospital({super.key});
+  final EmergencyRequest emergencyRequest;
+  const RequestDescrptionScreenHospital(
+      {super.key, required this.emergencyRequest});
 
   @override
   State<RequestDescrptionScreenHospital> createState() =>
@@ -15,11 +21,24 @@ class RequestDescrptionScreenHospital extends StatefulWidget {
 
 class _RequestDescrptionScreenHospitalState
     extends State<RequestDescrptionScreenHospital> {
-  bool isReceived = false;
-  static const LatLng _pGooglePlex = LatLng(37.4223, -122.0848);
-  static const LatLng _pApplePark = LatLng(37.3346, -122.0090);
+  late EmergencyRequest request;
+  late double latitude;
+  late double longitude;
+
+  var name;
+  void initState() {
+    super.initState();
+    request = widget.emergencyRequest;
+
+    var storage = GetStorage();
+    latitude = storage.read('latitude');
+    longitude = storage.read('longitude');
+    name = storage.read('first_name');
+  }
+
   @override
   Widget build(BuildContext context) {
+    RequestController controller = Get.put(RequestController());
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -39,19 +58,19 @@ class _RequestDescrptionScreenHospitalState
           SizedBox(
             height: Get.height * 0.25,
             child: GoogleMap(
-              initialCameraPosition: const CameraPosition(
-                target: _pGooglePlex,
+              initialCameraPosition: CameraPosition(
+                target: LatLng(latitude, longitude),
                 zoom: 10,
               ),
               markers: {
-                const Marker(
+                Marker(
                     markerId: MarkerId("_sourceLocation"),
                     icon: BitmapDescriptor.defaultMarker,
-                    position: _pGooglePlex),
-                const Marker(
-                    markerId: MarkerId("_destionationLocation"),
-                    icon: BitmapDescriptor.defaultMarker,
-                    position: _pApplePark)
+                    position: LatLng(latitude, longitude)),
+                //  Marker(
+                //     markerId: MarkerId("_destionationLocation"),
+                //     icon: BitmapDescriptor.defaultMarker,
+                //     position: LatLng(latitude, longitude))
               },
             ),
           ),
@@ -75,13 +94,13 @@ class _RequestDescrptionScreenHospitalState
                   height: 10,
                 ),
                 Text(
-                  "Patient Name: " + "Roshan Tiwari",
+                  "Patient Name: ${request.patientName}",
                   style: Get.textTheme.labelLarge,
                 ),
                 Row(
                   children: [
                     Text(
-                      "Medical Problem: " + "Nothing AS SUCH",
+                      "Medical Problem: ${request.medicalCondition}",
                       style: Get.textTheme.labelLarge,
                     ),
                     const SizedBox(
@@ -90,22 +109,28 @@ class _RequestDescrptionScreenHospitalState
                   ],
                 ),
                 Text(
-                  "Location: " + "Pokhara",
+                  "Location: ${request.hospital.city}",
+                  style: Get.textTheme.labelLarge,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "Requested Time: ${DateFormat('MMM d yyyy, HH:mm a').format(request.requestedTime)}",
                   style: Get.textTheme.labelLarge,
                 ),
                 Text(
-                  "Requested Time: " + "2024/10/24 , 4:30 PM",
-                  style: Get.textTheme.labelLarge,
-                ),
-                Text(
-                  "Needed Within: " + "2024/10/24 , 4:30 PM",
+                  "Needed Within: ${DateFormat('MMM d yyyy, HH:mm a').format(request.expiryTime)}",
                   style: Get.textTheme.labelLarge,
                 ),
               ],
             ),
           ),
           const Spacer(),
-          const CustomStepper(),
+          CustomStepper(
+            accept: request.accepted,
+            donated: request.donated,
+          ),
           const Spacer(),
           Center(
             child: SizedBox(
@@ -114,14 +139,11 @@ class _RequestDescrptionScreenHospitalState
               child: ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    !isReceived;
+                    controller.confirmDonate(request.id);
                   });
                 },
                 child: Text(
-                  "Received",
-                  style: TextStyle(
-                      fontWeight:
-                          isReceived ? FontWeight.bold : FontWeight.normal),
+                  request.accepted == true ? "Received" : "Not Accepted",
                 ),
               ),
             ),

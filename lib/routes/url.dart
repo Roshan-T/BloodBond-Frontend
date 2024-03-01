@@ -10,7 +10,7 @@ class Url {
   static const getEmergencyRequest = "$mainUrl/api/v1/emergency-requests";
   static const postEmergencyRequest = "$mainUrl/api/v1/emergency-requests/";
   static const uploadImage = "$mainUrl/upload-image";
-  static const getCampaings = "$mainUrl/api/v1/campaigns/";
+  static const getCampaings = "$mainUrl/api/v1/campaigns";
   static const postCampaings = "$mainUrl/api/v1/campaigns/";
   static const getAllhospitals = "$mainUrl/api/v1/hospitals/";
   static const readUser = "$mainUrl/api/v1/profile";

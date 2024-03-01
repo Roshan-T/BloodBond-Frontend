@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:bloodbond/models/campaignModel.dart';
 import 'package:bloodbond/routes/url.dart';
+import 'package:bloodbond/screen/campaign_details.dart';
 import 'package:flutter/material.dart';
 import 'package:bloodbond/utils/constants.dart';
+import 'package:get/get.dart';
 
 class CampTile extends StatelessWidget {
   final CampaignDetails campers;
@@ -17,7 +19,7 @@ class CampTile extends StatelessWidget {
         // height: 200,
         width: 300,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 239, 236, 236),
+          color: const Color.fromARGB(255, 240, 245, 245),
           border: Border.all(width: 0.5, color: Colors.black),
           borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
@@ -35,9 +37,14 @@ class CampTile extends StatelessWidget {
                     ),
                     height: 120,
                     width: 250,
-                    child: Image.network(
-                      Url.getImage + jsonDecode(campers.banner),
-                      fit: BoxFit.fill,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                      child: Image.network(
+                        Url.getImage + jsonDecode(campers.banner),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                   Text(
@@ -62,7 +69,7 @@ class CampTile extends StatelessWidget {
                 height: 45,
                 width: 280,
                 child: ElevatedButton(
-                  onPressed: () => 'Null',
+                  onPressed: () => Get.to(CampaignDetail(campers: campers)),
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all(Constants.kPrimaryColor),

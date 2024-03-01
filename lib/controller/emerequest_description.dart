@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/screen/home_screen.dart';
+import 'package:bloodbond/screen/main_screen.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,7 @@ class RequestController extends GetxController {
           colorText: Colors.white,
           backgroundColor: Colors.green,
         );
-        Get.to(HomeScreen());
+        Get.offAll(MainScreen());
       } else {
         loading.value = false;
         Get.closeAllSnackbars();
@@ -99,7 +100,7 @@ class RequestController extends GetxController {
           colorText: Colors.white,
           backgroundColor: Colors.green,
         );
-        Get.to(HomeScreen());
+        Get.to(MainScreen());
       } else {
         loading.value = false;
         Get.closeAllSnackbars();

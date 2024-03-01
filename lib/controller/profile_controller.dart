@@ -13,6 +13,7 @@ class ProfileController extends GetxController {
     getStorage.remove('longitude');
     getStorage.remove('blood_group');
     getStorage.remove('first_name');
+    getStorage.remove('name');
     getStorage.remove('image');
     getStorage.remove('id');
     getStorage.remove('city');

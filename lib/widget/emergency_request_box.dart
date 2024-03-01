@@ -130,9 +130,9 @@ class EmergencyRequestBox extends StatelessWidget {
                 width: Get.width,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.to(() => RequestDetail(
-                          emergencyRequest: emergencyRequest,
-                        ));
+                    Get.to(RequestDetail(
+                      emergencyRequest: emergencyRequest,
+                    ));
                   },
                   child: const Text(
                     "Donate Now",
