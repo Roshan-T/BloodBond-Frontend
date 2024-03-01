@@ -124,10 +124,10 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> fetchEmergencyRequest() async {
+  Future<void> fetchEmergencyRequest({bool a = false}) async {
     isRequestLoading(true);
     try {
-      var list = await ApiService.fetchEmergencyRequest();
+      var list = await ApiService.fetchEmergencyRequest(All: a);
       print(list);
       if (list != null) {
         requestList.value = list;
@@ -149,10 +149,10 @@ class HomeController extends GetxController {
     }
   }
 
-  void fetchCampaigns() async {
+  void fetchCampaigns({bool a = false}) async {
     isCampaignLoading(true);
     try {
-      var clist = await ApiService.fetchCampaigns();
+      var clist = await ApiService.fetchCampaigns(All: a);
 
       if (clist != null) {
         campaignList.value = clist;

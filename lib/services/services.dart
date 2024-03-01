@@ -37,10 +37,7 @@ class ApiService {
     }
   }
 
-
-
-
- static Future<List<AllHospital>?> fetchAllHospitals() async {
+  static Future<List<AllHospital>?> fetchAllHospitals() async {
     var response = await http.get(
       Uri.parse(Url.getAllhospitals),
       headers: {"Content-Type": "application/json"},
@@ -63,22 +60,10 @@ class ApiService {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  static Future<List<EmergencyRequest>?> fetchEmergencyRequest() async {
+  static Future<List<EmergencyRequest>?> fetchEmergencyRequest(
+      {bool All = false}) async {
     var response = await http.get(
-      Uri.parse(Url.getEmergencyRequest),
+      Uri.parse("${Url.getEmergencyRequest}/?showAll=$All"),
       headers: {"Content-Type": "application/json"},
     );
     var data = response.body;
@@ -99,9 +84,10 @@ class ApiService {
     }
   }
 
-  static Future<List<CampaignDetails>?> fetchCampaigns() async {
+  static Future<List<CampaignDetails>?> fetchCampaigns(
+      {bool All = false}) async {
     var response = await http.get(
-      Uri.parse(Url.getCampaings),
+      Uri.parse("${Url.getCampaings}/?showAll=$All"),
       headers: {"Content-Type": "application/json"},
     );
     var data = response.body;
