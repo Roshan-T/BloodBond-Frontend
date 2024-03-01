@@ -13,7 +13,7 @@ class DonorDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchDonor(1);
+    fetchDonor(8);
   }
 
   void fetchDonor(int id) async {
@@ -36,13 +36,10 @@ class DonorDetailsController extends GetxController {
   }
 
   static Future<Donor?> _fetchDonor(int id) async {
-    var token = GetStorage().read('token');
-
     var response = await http.get(
       Uri.parse("${Url.getdonor}/$id"),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer $token",
       },
     );
 
