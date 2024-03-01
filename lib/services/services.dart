@@ -8,6 +8,7 @@ import 'package:bloodbond/routes/url.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import '../controller/nearby_donor.controller.dart';
 import '../utils/constants.dart' as cons;
@@ -20,8 +21,7 @@ class ApiService {
       headers: {"Content-Type": "application/json"},
     );
     var data = response.body;
-    // print(data);
-    // print(nearbyDonorFromJson(data));
+
     if (response.statusCode == 200) {
       final x = nearbyDonorFromJson(data);
       return x;
@@ -36,21 +36,48 @@ class ApiService {
       return null;
     }
   }
-
-
-
-
- static Future<List<AllHospital>?> fetchAllHospitals() async {
+  
+//read user
+  static Future<String?> fetchUserProfile() async {
     var response = await http.get(
+      Uri.parse(Url.readUser),
+      headers: {"Content-Type": "application/json"},
+    );
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      return response.body;
+    } else if (response.statusCode == 401) {
+      Map<String, dynamic> responseData = jsonDecode(response.body);
+      Get.closeAllSnackbars();
+      Get.snackbar(
+        responseData['detail'],
+        "",
+        colorText: Colors.white,
+        backgroundColor: cons.Constants.kPrimaryColor,
+      );
+      return null;
+    } else {
+      Get.closeAllSnackbars();
+      Get.snackbar(
+        'Error',
+        'Unexpected error occurred (${response.statusCode})',
+        colorText: Colors.white,
+        backgroundColor: cons.Constants.kPrimaryColor,
+      );
+      return null;
+    }
+  }
+
+//get donors
+  static Future<List<AllHospital>?> fetchAllHospitals() async {
+    var response = await get(
       Uri.parse(Url.getAllhospitals),
       headers: {"Content-Type": "application/json"},
     );
     var data = response.body;
-    // print(data);
-    // print(nearbyDonorFromJson(data));
     if (response.statusCode == 200) {
-      final x = allHospitalFromJson(data);
-      return x;
+      return allHospitalFromJson(data);
     } else {
       Get.closeAllSnackbars();
       Get.snackbar(
@@ -62,19 +89,6 @@ class ApiService {
       return null;
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   static Future<List<EmergencyRequest>?> fetchEmergencyRequest() async {
     var response = await http.get(

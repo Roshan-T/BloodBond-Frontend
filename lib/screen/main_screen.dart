@@ -31,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
     // getCurrentUser(); // get current user
     _currentIndex = widget.currentIndex;
     var storage = GetStorage();
-    role = storage.read('role');
+    //role = storage.read('role');
     _screens = [
       HomeScreen(),
       SelectForm(),

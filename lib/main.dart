@@ -1,3 +1,4 @@
+import 'package:bloodbond/controller/get_donor_detail.dart';
 import 'package:bloodbond/controller/network_controller.dart';
 
 import 'package:bloodbond/screen/splash_screen.dart';
@@ -14,6 +15,7 @@ void main() async {
   runApp(
     const MyApp(),
   );
+ Get.lazyPut(() => DonorDetailsController()); 
 }
 
 class MyApp extends StatelessWidget {

@@ -1,3 +1,4 @@
+import 'package:bloodbond/controller/get_donor_detail.dart';
 import 'package:bloodbond/controller/profile_controller.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    DonorDetailsController donorDetailsController = Get.find();
     bool isDonor = true;
     return Scaffold(
         body: SingleChildScrollView(
@@ -44,14 +47,17 @@ class ProfileScreen extends StatelessWidget {
                   ))
             ],
           ),
-          const SizedBox(height: 60),
-          Text(
-            "Roshan Tiwari",
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-                color: Constants.kBlackColor),
-          ),
+
+         
+         
+             Text(
+              "Roshan Tiwari",
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                  color: Constants.kBlackColor),
+            ),
+          
           const SizedBox(height: 10),
           Text(
             "roshantiwari9827@gmail.com",
