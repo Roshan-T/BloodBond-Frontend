@@ -1,5 +1,6 @@
 import 'package:bloodbond/controller/home_screen_controller.dart';
 import 'package:bloodbond/utils/constants.dart';
+import 'package:bloodbond/widget/donor_history_box.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -67,7 +68,49 @@ class _HistoryDonorState extends State<HistoryDonor>
       ),
       body: TabBarView(
         controller: _tabController, // Assigning the TabController
-        children: [],
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Obx(
+              () {
+                if (requestController.isRequestLoading.value) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                        backgroundColor: Colors.black),
+                  );
+                } else {
+                  final filteredList = requestController.requestList
+                      .where((request) => request.donor.id == providedId)
+                      .toList();
+
+                  if (filteredList.isEmpty) {
+                    return const Center(
+                        child: Text(
+                      'Not Donated',
+                      textAlign: TextAlign.center,
+                    ));
+                  }
+
+                  return ListView.separated(
+                    physics: ClampingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final request = filteredList[index];
+                      return HistoryBox(
+                        donorHistory: request,
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 20);
+                    },
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: filteredList.length,
+                  );
+                }
+              },
+            ),
+          )
+        ],
       ),
     );
   }

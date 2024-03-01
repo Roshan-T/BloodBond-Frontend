@@ -25,7 +25,7 @@ class HomeController extends GetxController {
     fetchEmergencyRequest();
   }
 
-  void removeRequest(final id) async {
+  removeRequest(final id) async {
     try {
       var token = GetStorage().read('token');
 
@@ -74,7 +74,7 @@ class HomeController extends GetxController {
     }
   }
 
-  void removeCampaign(final id) async {
+  removeCampaign(final id) async {
     try {
       var token = GetStorage().read('token');
 
@@ -149,7 +149,7 @@ class HomeController extends GetxController {
     }
   }
 
-  void fetchCampaigns({bool a = false}) async {
+  fetchCampaigns({bool a = false}) async {
     isCampaignLoading(true);
     try {
       var clist = await ApiService.fetchCampaigns(All: a);

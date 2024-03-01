@@ -108,12 +108,13 @@ class _HospitalIndRequestState extends State<HospitalIndRequest>
                       return Dismissible(
                         key: Key(request.id.toString()),
                         onDismissed: (direction) {
-                          setState(() async {
-                            requestController.removeRequest(request.id);
-
-                            requestController.fetchEmergencyRequest();
-                          });
                           filteredList.removeAt(index);
+                          setState(() async {
+                            await requestController.removeRequest(request.id);
+
+                            await requestController.fetchEmergencyRequest();
+                          });
+
                           Get.snackbar("Request Deleted", "");
                         },
                         background: Container(
@@ -190,12 +191,13 @@ class _HospitalIndRequestState extends State<HospitalIndRequest>
                       return Dismissible(
                         key: Key(request.id.toString()),
                         onDismissed: (direction) {
-                          setState(() {
-                            requestController.removeCampaign(request.id);
-
-                            requestController.fetchCampaigns();
-                          });
                           filteredCList.removeAt(index);
+                          setState(() async {
+                            await requestController.removeCampaign(request.id);
+
+                            await requestController.fetchCampaigns();
+                          });
+
                           Get.snackbar("Campaign Deleted", "");
                         },
                         background: Container(
