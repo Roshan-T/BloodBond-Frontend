@@ -1,4 +1,3 @@
-
 import 'package:bloodbond/screen/create_form.dart';
 import 'package:bloodbond/screen/donor_donation_history.dart';
 import 'package:bloodbond/screen/history_donor.dart';
@@ -6,6 +5,7 @@ import 'package:bloodbond/screen/history_hospital.dart';
 import 'package:bloodbond/screen/home_screen.dart';
 import 'package:bloodbond/screen/hospital_ind_reqandcamp.dart';
 import 'package:bloodbond/screen/profile_screen_donor.dart';
+import 'package:bloodbond/screen/profile_screen_hospital.dart';
 import 'package:bloodbond/screen/viral_disease_alert.dart';
 
 import 'package:bloodbond/utils/constants.dart';
@@ -41,8 +41,8 @@ class _MainScreenState extends State<MainScreen> {
       if (role == 'hospital') HospitalIndRequest(),
       if (role == 'hospital') const HistoryHospital(),
       if (role == 'donor') const HistoryDonor(),
-      if (role == 'donor') ProfileScreen(),
-      if (role == 'hospital') ProfileScreen(),
+      if (role == 'donor') ProfileScreenDonor(),
+      if (role == 'hospital') ProfileScreenHospital(),
       if (role == 'donor') ViralDiseaseAlert(),
     ];
   }

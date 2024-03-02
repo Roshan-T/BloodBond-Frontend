@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
 class HospitalController extends GetxController {
-  Rx<Hospital?> donor = Rx<Hospital?>(null);
+  Rx<Hospital?> hospital = Rx<Hospital?>(null);
   RxBool loading = false.obs;
 
   Future<void> fetchDonor(int id) async {
@@ -16,7 +16,7 @@ class HospitalController extends GetxController {
       var response = await http.get(Uri.parse('${Url.gethospitaldetail}$id'));
       if (response.statusCode == 200) {
         loading.value = false;
-        donor.value = hospitalFromJson(response.body);
+        hospital.value = hospitalFromJson(response.body);
       } else if (response.statusCode == 422) {
         print("response:${response.statusCode}");
         var errorResponse = jsonDecode(response.body);
