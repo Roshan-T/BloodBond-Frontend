@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "568479907020",
+    "project_id": "bloodbond-e6373",
+    "storage_bucket": "bloodbond-e6373.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568479907020:android:8fd82ab104fa62ad051669",
+        "android_client_info": {
+          "package_name": "com.example.bloodbond"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXmXRujOyqrD3m-ppiZHd_U34rs2vCpdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

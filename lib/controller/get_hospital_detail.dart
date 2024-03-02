@@ -44,8 +44,8 @@ class Hospital {
   String name;
   String email;
   String phone;
-  int latitude;
-  int longitude;
+  double latitude;
+  double longitude;
   String image;
   bool isVerified;
   String city;
