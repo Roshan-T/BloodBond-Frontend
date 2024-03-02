@@ -17,7 +17,7 @@ class EmergencyRequestBox extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 150,
+          // height: 150,
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
