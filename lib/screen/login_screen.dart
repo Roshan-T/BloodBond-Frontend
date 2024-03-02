@@ -192,7 +192,7 @@ class OptionalSignUpWidget extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            Get.offAll(
+            Get.to(
               const RoleScreen(),
             );
           },

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bloodbond/controller/network_controller.dart';
 import 'package:bloodbond/screen/login_screen.dart';
+import 'package:bloodbond/services/services.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,26 +30,25 @@ class SignUpController extends GetxController {
 
   RxBool loading = false.obs;
 
-
-
-  Future<void> registerDonor() async {
+  Future<void> registerDonor(var image) async {
     loading.value = true;
     try {
+      var file = await ApiService.uploadImage(image);
       final userdata = {
         "first_name": firstnamecontroller.value.text,
         "last_name": lastnamecontroller.value.text,
         "phone": phonecontroller.value.text,
         "sex": gender,
-        "date_of_birth": dateofbirthcontroller.value.text,
+        "date_of_birth": dateofbirthcontroller.value.text.toString(),
         "blood_group": selectedBloodType + selectedBloodRh,
-        "latitude": lat.toString(),
-        "longitude": long.toString(),
+        "latitude": lat!.toDouble(),
+        "longitude": long!.toDouble(),
         "city": city,
         "email": emailcontroller.value.text,
         "password": passwordcontroller.value.text,
-        "image": imagecontroller.value.text,
+        "image": file,
       };
-      //  print("user data: ${userdata}");
+      print("user data: ${userdata}");
       final response = await post(
         Uri.parse(Url.register),
         headers: {"Content-Type": "application/json"},
@@ -56,13 +56,13 @@ class SignUpController extends GetxController {
       );
       print("response.body: ${response.body}");
       var data = response.body;
-
+      print(response.statusCode);
       if (response.statusCode == 201) {
         loading.value = false;
         Get.snackbar(" Success Message :", "User successfully registered!",
             backgroundColor: Colors.green, colorText: Colors.white);
         print(data);
-        
+
         Get.to(const LoginScreen());
       } else {
         loading.value = false;

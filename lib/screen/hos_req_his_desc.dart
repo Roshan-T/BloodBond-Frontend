@@ -1,32 +1,31 @@
 import 'dart:convert';
 
-import 'package:bloodbond/controller/campaign_controller.dart';
-import 'package:bloodbond/models/campaignModel.dart';
+import 'package:bloodbond/controller/home_screen_controller.dart';
 import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class CampaignDetail extends StatefulWidget {
-  const CampaignDetail({super.key, required this.campers});
-  final CampaignDetails campers;
+class EmergencyRequestHistoryDescription extends StatefulWidget {
+  EmergencyRequestHistoryDescription({super.key, required this.request});
+  final EmergencyRequest request;
   @override
-  State<CampaignDetail> createState() => _CampaignDetailState();
+  State<EmergencyRequestHistoryDescription> createState() =>
+      _EmergencyRequestHistoryDescriptionState();
 }
 
-class _CampaignDetailState extends State<CampaignDetail> {
-  var campers;
+class _EmergencyRequestHistoryDescriptionState
+    extends State<EmergencyRequestHistoryDescription> {
+  var request;
   @override
   void initState() {
     super.initState();
-    campers = widget.campers;
+    request = widget.request;
   }
 
   @override
   Widget build(BuildContext context) {
-    final CampaignController controller = Get.put(CampaignController());
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -39,7 +38,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
           ),
           centerTitle: false,
           title: Text(
-            "Campaign Details",
+            "Emergency Request ",
             style: Get.textTheme.headlineSmall?.copyWith(
                 color: Constants.kBlackColor, fontWeight: FontWeight.bold),
           ),
@@ -52,9 +51,9 @@ class _CampaignDetailState extends State<CampaignDetail> {
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
                   child: Image.network(
-                    Url.getImage + jsonDecode(campers.banner),
+                    Url.getImage + jsonDecode(request.report),
                     fit: BoxFit.fill,
-                    height: 300,
+                    height: 200,
                     width: double.maxFinite,
                   ),
                 ),
@@ -64,26 +63,11 @@ class _CampaignDetailState extends State<CampaignDetail> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Description",
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            fontSize: 20,
-                            color: Colors.black,
-                          ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      campers.description,
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          fontSize: 15, fontWeight: FontWeight.normal),
-                    ),
                     const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      "Campaign Details",
+                      "Request Details",
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             fontSize: 20,
                             color: Colors.black,
@@ -92,23 +76,9 @@ class _CampaignDetailState extends State<CampaignDetail> {
                     const SizedBox(
                       height: 20,
                     ),
-                    CampaignDetailsContainer(campers: campers),
+                    RequestDetailsContainer(request: request),
                     const SizedBox(
                       height: 20,
-                    ),
-                    Center(
-                      child: SizedBox(
-                        height: 60,
-                        width: double.maxFinite,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller.register(campers.id);
-                          },
-                          child: const Text(
-                            "Interested for donation",
-                          ),
-                        ),
-                      ),
                     ),
                     const SizedBox(
                       height: 30,
@@ -159,49 +129,57 @@ class CustomText extends StatelessWidget {
   }
 }
 
-class CampDetails extends StatelessWidget {
-  const CampDetails({super.key, required this.campers});
-  final CampaignDetails campers;
+class Details extends StatelessWidget {
+  const Details({super.key, required this.request});
+  final EmergencyRequest request;
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        CustomText(topic: "Title ", topicDetail: campers.title),
+        CustomText(topic: "Patient Name  ", topicDetail: request.patientName),
         Divider(
           thickness: 1,
           color: Colors.grey.withOpacity(0.3),
         ),
-        CustomText(topic: "Hospital Name", topicDetail: campers.hospital.name),
-        Divider(
-          thickness: 1,
-          color: Colors.grey.withOpacity(0.3),
-        ),
-        CustomText(
-            topic: "Campaign Date",
-            topicDetail: dateFormatter.format(campers.date)),
+        CustomText(topic: "Blood Group", topicDetail: request.bloodGroup),
         Divider(
           thickness: 1,
           color: Colors.grey.withOpacity(0.3),
         ),
         CustomText(
-            topic: "Time ", topicDetail: timeFormatter.format(campers.date)),
+            topic: "Medical Condition", topicDetail: request.medicalCondition),
         Divider(
           thickness: 1,
           color: Colors.grey.withOpacity(0.3),
         ),
-
-        CustomText(topic: "Address", topicDetail: campers.city),
-
-        // CustomText(topic: " Quantity", topicDetail: "4"),
+        CustomText(
+            topic: "Donor Name",
+            topicDetail: request.donor == null
+                ? "_"
+                : "${request.donor['first_name']} ${request.donor['last_name']}"),
+        Divider(
+          thickness: 1,
+          color: Colors.grey.withOpacity(0.3),
+        ),
+        CustomText(
+            topic: "Date",
+            topicDetail: dateFormatter.format(request.requestedTime)),
+        Divider(
+          thickness: 1,
+          color: Colors.grey.withOpacity(0.3),
+        ),
+        CustomText(
+            topic: "Time ",
+            topicDetail: timeFormatter.format(request.requestedTime)),
       ],
     );
   }
 }
 
-class CampaignDetailsContainer extends StatelessWidget {
-  const CampaignDetailsContainer({super.key, required this.campers});
-  final CampaignDetails campers;
+class RequestDetailsContainer extends StatelessWidget {
+  const RequestDetailsContainer({super.key, required this.request});
+  final EmergencyRequest request;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -215,7 +193,7 @@ class CampaignDetailsContainer extends StatelessWidget {
           width: 1.0,
         ),
       ),
-      child: CampDetails(campers: campers),
+      child: Details(request: request),
     );
   }
 }

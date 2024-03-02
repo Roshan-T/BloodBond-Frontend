@@ -3,10 +3,13 @@ import 'dart:io';
 
 import 'package:bloodbond/controller/all_hospitals_detail_controller.dart';
 import 'package:bloodbond/controller/home_screen_controller.dart';
+import 'package:bloodbond/models/campaignDonorsModel.dart';
 import 'package:bloodbond/models/campaignModel.dart';
 import 'package:bloodbond/routes/url.dart';
+import 'package:bloodbond/screen/history_donor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
 import '../controller/nearby_donor.controller.dart';
@@ -68,6 +71,7 @@ class ApiService {
     );
     var data = response.body;
 
+    print(data);
     if (response.statusCode == 200) {
       final x = emergencyRequestFromJson(data);
       print(x);
@@ -143,5 +147,58 @@ class ApiService {
         //"email": emailController.value.text,
       }),
     );
+  }
+
+  static Future<CampaignDonorsDetails?> fetchCampaignDonors(int id) async {
+    var response = await http.get(
+      Uri.parse("${Url.getCampaings}/$id"),
+      headers: {"Content-Type": "application/json"},
+    );
+    var data = response.body;
+
+    print(data);
+    if (response.statusCode == 200) {
+      final x = campaignDonorsDetailsFromJson(data);
+      print(x);
+      return x;
+    } else {
+      Get.closeAllSnackbars();
+      Get.snackbar(
+        jsonDecode(data)['detail'],
+        "",
+        colorText: Colors.white,
+        backgroundColor: cons.Constants.kPrimaryColor,
+      );
+      return null;
+    }
+  }
+
+  static Future<List<MyCampaigns>?> fetchDonorsCampaign(
+      {bool All = false}) async {
+    var token = GetStorage().read('token');
+    var response = await http.get(
+      Uri.parse("${Url.getCampaings}/my-campaigns"),
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $token ',
+      },
+    );
+    var data = response.body;
+
+    print(data);
+    if (response.statusCode == 200) {
+      final x = myCampaignsFromJson(data);
+      print(x);
+      return x;
+    } else {
+      Get.closeAllSnackbars();
+      Get.snackbar(
+        jsonDecode(data)['detail'],
+        "",
+        colorText: Colors.white,
+        backgroundColor: cons.Constants.kPrimaryColor,
+      );
+      return null;
+    }
   }
 }

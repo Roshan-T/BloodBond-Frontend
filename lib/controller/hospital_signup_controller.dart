@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bloodbond/controller/network_controller.dart';
 import 'package:bloodbond/screen/login_screen.dart';
+import 'package:bloodbond/services/services.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,18 +22,20 @@ class HospitalSignUpController extends GetxController {
 
   RxBool loading = false.obs;
 
-  Future<void> hospitalSignUp() async {
+  Future<void> hospitalSignUp(image) async {
     loading.value = true;
+
     try {
+      var file = await ApiService.uploadImage(image);
       final userdata = {
         "name": hospitalnamecontroller.value.text,
         "email": emailcontroller.value.text,
         "phone": phonecontroller.value.text,
         "password": passwordcontroller.value.text,
-        "latitude": lat.toString(),
-        "longitude": long.toString(),
+        "latitude": lat!.toDouble(),
+        "longitude": long!.toDouble(),
         "city": city,
-        "image": imagecontroller.value.text,
+        "image": file,
         "is_verified": false
       };
       //  print("user data: ${userdata}");

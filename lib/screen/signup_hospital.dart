@@ -27,7 +27,7 @@ class SignUpScreenHospital extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreenHospital> {
   HospitalSignUpController hController = HospitalSignUpController();
-  XFile? image;
+  File? image;
   bool isFetchingLocation = false;
 
   // final hospitalNameController = TextEditingController();
@@ -41,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
-      image = pickedImage;
+      image = File(pickedImage!.path);
     });
   }
 
@@ -257,7 +257,7 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                           );
                         } else {
                           if (hController.loading.value) return;
-                          hController.hospitalSignUp();
+                          hController.hospitalSignUp(image);
                           //  Get.to(
                           //   () => const LoginScreen(),
                           // );

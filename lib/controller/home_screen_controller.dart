@@ -291,3 +291,75 @@ class Hospital {
         "created_at": createdAt.toIso8601String(),
       };
 }
+
+class Donor {
+  String firstName;
+  String lastName;
+  String phone;
+  String sex;
+  DateTime dateOfBirth;
+  String bloodGroup;
+  double latitude;
+  double longitude;
+  String city;
+  int id;
+  String email;
+  DateTime createdAt;
+  String image;
+  DateTime lastDonationDate;
+  int points;
+
+  Donor({
+    required this.firstName,
+    required this.lastName,
+    required this.phone,
+    required this.sex,
+    required this.dateOfBirth,
+    required this.bloodGroup,
+    required this.latitude,
+    required this.longitude,
+    required this.city,
+    required this.id,
+    required this.email,
+    required this.createdAt,
+    required this.image,
+    required this.lastDonationDate,
+    required this.points,
+  });
+
+  factory Donor.fromJson(Map<String, dynamic> json) => Donor(
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        phone: json["phone"],
+        sex: json["sex"],
+        dateOfBirth: DateTime.parse(json["date_of_birth"]),
+        bloodGroup: json["blood_group"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
+        city: json["city"],
+        id: json["id"],
+        email: json["email"],
+        createdAt: DateTime.parse(json["created_at"]),
+        image: json["image"],
+        lastDonationDate: DateTime.parse(json["last_donation_date"]),
+        points: json["points"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "first_name": firstName,
+        "last_name": lastName,
+        "phone": phone,
+        "sex": sex,
+        "date_of_birth": dateOfBirth.toIso8601String(),
+        "blood_group": bloodGroup,
+        "latitude": latitude,
+        "longitude": longitude,
+        "city": city,
+        "id": id,
+        "email": email,
+        "created_at": createdAt.toIso8601String(),
+        "image": image,
+        "last_donation_date": lastDonationDate.toIso8601String(),
+        "points": points,
+      };
+}
