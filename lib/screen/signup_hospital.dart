@@ -12,7 +12,6 @@ import 'package:http/http.dart' as http;
 import 'package:bloodbond/widget/select_date.dart';
 import 'package:bloodbond/widget/select_gender.dart';
 import 'package:bloodbond/utils/constants.dart';
-//import 'package:bloodbond/widget/select_location.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -200,6 +199,20 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                     },
                     readOnly: true,
                     decoration: InputDecoration(
+                      errorMaxLines: 1,
+                      errorStyle: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.red,
+                      ),
+                      fillColor: Constants.kPrimaryColor.withOpacity(0.1),
+                      filled: true,
+                      enabledBorder: _getBorder(
+                          Constants.kPrimaryColor.withOpacity(0.4), 1.5),
+                      focusedBorder: _getBorder(
+                          Constants.kPrimaryColor.withOpacity(0.6), 2.5),
+                      errorBorder: _getBorder(Constants.kErrorColor, 1.5),
+                      focusedErrorBorder:
+                          _getBorder(Constants.kErrorColor, 2.5),
                       suffixIcon: isFetchingLocation
                           ? const Padding(
                               padding: EdgeInsets.all(8.0),
@@ -208,10 +221,10 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                           : null,
                       isDense: true,
                       hintText: hController.city ?? "Select Location",
-                      hintStyle: Theme.of(context)
-                          .textTheme
-                          .labelMedium!
-                          .copyWith(color: Constants.kGrey),
+                      hintStyle: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black.withOpacity(0.7),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -307,6 +320,15 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
       ),
     );
   }
+
+  InputBorder _getBorder(Color color, double width) {
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: color, width: width),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(12),
+      ),
+    );
+  }
 }
 
 class Textfield extends StatelessWidget {
@@ -332,13 +354,33 @@ class Textfield extends StatelessWidget {
       keyboardType: keyboardtype,
       controller: control,
       decoration: InputDecoration(
-        counterText: "",
-        isDense: true,
-        hintText: hinttext,
-        hintStyle: Theme.of(context)
-            .textTheme
-            .labelMedium!
-            .copyWith(color: Constants.kGrey),
+          counterText: "",
+          hintText: hinttext,
+          hintStyle: TextStyle(
+            fontSize: 16,
+            color: Colors.black.withOpacity(0.7),
+          ),
+          errorMaxLines: 1,
+          errorStyle: const TextStyle(
+            fontSize: 16,
+            color: Colors.red,
+          ),
+          fillColor: Constants.kPrimaryColor.withOpacity(0.1),
+          filled: true,
+          enabledBorder:
+              _getBorder(Constants.kPrimaryColor.withOpacity(0.4), 1.5),
+          focusedBorder:
+              _getBorder(Constants.kPrimaryColor.withOpacity(0.6), 2.5),
+          errorBorder: _getBorder(Constants.kErrorColor, 1.5),
+          focusedErrorBorder: _getBorder(Constants.kErrorColor, 2.5)),
+    );
+  }
+
+  InputBorder _getBorder(Color color, double width) {
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: color, width: width),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(12),
       ),
     );
   }

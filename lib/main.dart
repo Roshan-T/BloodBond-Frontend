@@ -4,6 +4,7 @@ import 'package:bloodbond/controller/network_controller.dart';
 import 'package:bloodbond/screen/splash_screen.dart';
 
 import 'package:bloodbond/utils/theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -16,6 +17,7 @@ void main() async {
 
   OneSignal.Notifications.requestPermission(true);
   await GetStorage.init();
+  await Firebase.initializeApp();
   runApp(
     const MyApp(),
   );
