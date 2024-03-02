@@ -7,6 +7,11 @@ import 'package:http/http.dart' as http;
 class DonorController extends GetxController {
   Rx<Donor?> donor = Rx<Donor?>(null);
   RxBool loading = false.obs;
+  @override
+  onInit() async {
+    super.onInit();
+    await fetchDonor(GetStorage().read('id'));
+  }
 
   Future<void> fetchDonor(int id) async {
     loading.value = true;

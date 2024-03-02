@@ -38,12 +38,12 @@ class _MainScreenState extends State<MainScreen> {
     _screens = [
       HomeScreen(),
       if (role == 'hospital') SelectForm(),
-      if (role == 'hospital') HospitalIndRequest(),
+      if (role == 'hospital') const HospitalIndRequest(),
       if (role == 'hospital') const HistoryHospital(),
       if (role == 'donor') const HistoryDonor(),
       if (role == 'donor') ProfileScreenDonor(),
       if (role == 'hospital') ProfileScreenHospital(),
-      if (role == 'donor') ViralDiseaseAlert(),
+      if (role == 'donor') const ViralDiseaseAlert(),
     ];
   }
 

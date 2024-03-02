@@ -44,10 +44,10 @@ class HomeScreen extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ClipOval(
-            // child: Image.network(
-            // //  Url.getImage + image,
-            //   fit: BoxFit.cover,
-            // ),
+            child: Image.network(
+              Url.getImage + image,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         title: Text(
