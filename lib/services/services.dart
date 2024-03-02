@@ -5,8 +5,10 @@ import 'package:bloodbond/controller/all_hospitals_detail_controller.dart';
 import 'package:bloodbond/controller/home_screen_controller.dart';
 import 'package:bloodbond/models/campaignDonorsModel.dart';
 import 'package:bloodbond/models/campaignModel.dart';
+import 'package:bloodbond/models/rewardsModel.dart';
 import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/screen/history_donor.dart';
+import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -39,7 +41,7 @@ class ApiService {
       return null;
     }
   }
-  
+
 //read user
   static Future<String?> fetchUserProfile() async {
     var response = await http.get(
@@ -229,6 +231,82 @@ class ApiService {
         backgroundColor: cons.Constants.kPrimaryColor,
       );
       return null;
+    }
+  }
+
+  static Future<List<Rewards>?> fetchRewards() async {
+    var token = GetStorage().read('token');
+    var response = await http.get(
+      Uri.parse(Url.getRewards),
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $token ',
+      },
+    );
+    var data = response.body;
+
+    print(data);
+    if (response.statusCode == 200) {
+      final x = rewardsFromJson(data);
+      print(x);
+      return x;
+    } else {
+      Get.closeAllSnackbars();
+      Get.snackbar(
+        jsonDecode(data)['detail'],
+        "",
+        colorText: Colors.white,
+        backgroundColor: cons.Constants.kPrimaryColor,
+      );
+      return null;
+    }
+  }
+
+  static redeemRewards(final id) async {
+    try {
+      var token = GetStorage().read('token');
+
+      final response = await post(
+        Uri.parse("${Url.getRedeem}/$id"),
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer $token ',
+        },
+      );
+      // print(response.statusCode);
+      var data = jsonDecode(response.body);
+      // var user = data.user;
+      // print(response.statusCode);
+      // print(data);
+      if (response.statusCode == 200) {
+        Get.closeAllSnackbars();
+        Get.snackbar(
+          'Sucessfully Redeemed',
+          "",
+          colorText: Colors.white,
+          backgroundColor: Colors.green,
+        );
+        Get.deleteAll();
+      } else {
+        Get.closeAllSnackbars();
+        Get.snackbar(
+          "Failed",
+          data['detail'],
+          colorText: Colors.white,
+          backgroundColor: Constants.kPrimaryColor,
+        );
+      }
+    } catch (e) {
+      Get.closeAllSnackbars();
+
+      if (e == SocketException) {
+        Get.snackbar(
+          'Check Your Internet Connection',
+          "",
+          colorText: Colors.white,
+          backgroundColor: Constants.kPrimaryColor,
+        );
+      }
     }
   }
 }

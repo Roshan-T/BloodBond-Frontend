@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bloodbond/controller/get_donor_detail.dart';
 import 'package:bloodbond/controller/profile_controller.dart';
 import 'package:bloodbond/routes/url.dart';
+import 'package:bloodbond/screen/redeemableRewards.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -149,15 +150,32 @@ class ProfileScreenDonor extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               SizedBox(
-                width: Get.width * 0.4,
-                height: 40,
+                width: Get.width * 0.7,
+                height: 50,
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.green),
                   ),
+                  onPressed: () {
+                    Get.to(RedeemableReward());
+                  },
+                  child: const Text("Available Rewards"),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                width: Get.width * 0.7,
+                height: 50,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
                   onPressed: null,
-                  child: const Text("Redeem"),
+                  child: const Text("Redeemed Rewards"),
                 ),
               ),
               const SizedBox(height: 20),

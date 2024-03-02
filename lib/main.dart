@@ -11,11 +11,14 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  OneSignal.initialize("6e156e67-f308-49c1-a830-2ad88c8de8d3");
+
+  OneSignal.Notifications.requestPermission(true);
   await GetStorage.init();
   runApp(
     const MyApp(),
   );
-
 }
 
 class MyApp extends StatelessWidget {

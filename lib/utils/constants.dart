@@ -55,41 +55,41 @@ class Constants {
 //       phonenumber: "9844545488"),
 // ];
 
-class NearbyDonor {
-  final String Name;
-  final String ImagePath;
-  final String BloodGroup;
-  final int? phonenumber;
+// class NearbyDonor {
+//   final String Name;
+//   final String ImagePath;
+//   final String BloodGroup;
+//   final int? phonenumber;
 
-  NearbyDonor(
-      {required this.Name,
-      required this.ImagePath,
-      required this.BloodGroup,
-      required this.phonenumber});
-}
+//   NearbyDonor(
+//       {required this.Name,
+//       required this.ImagePath,
+//       required this.BloodGroup,
+//       required this.phonenumber});
+// }
 
-final DonorList = [
-  NearbyDonor(
-      Name: "Roshan vai",
-      ImagePath: "assets/images/onboarding1.png",
-      BloodGroup: "A+",
-      phonenumber: 980738388),
-  NearbyDonor(
-      Name: "Samir vai",
-      ImagePath: "assets/images/onboarding2.png",
-      BloodGroup: "O+",
-      phonenumber: 985738390),
-  NearbyDonor(
-      Name: "Shishir vai",
-      ImagePath: "assets/images/onboarding3.png",
-      BloodGroup: "AB+",
-      phonenumber: 980737373),
-  NearbyDonor(
-      Name: "Solti vai",
-      ImagePath: "assets/images/onboarding3.png",
-      BloodGroup: "AB+",
-      phonenumber: 980737373),
-];
+// final DonorList = [
+//   NearbyDonor(
+//       Name: "Roshan vai",
+//       ImagePath: "assets/images/onboarding1.png",
+//       BloodGroup: "A+",
+//       phonenumber: 980738388),
+//   NearbyDonor(
+//       Name: "Samir vai",
+//       ImagePath: "assets/images/onboarding2.png",
+//       BloodGroup: "O+",
+//       phonenumber: 985738390),
+//   NearbyDonor(
+//       Name: "Shishir vai",
+//       ImagePath: "assets/images/onboarding3.png",
+//       BloodGroup: "AB+",
+//       phonenumber: 980737373),
+//   NearbyDonor(
+//       Name: "Solti vai",
+//       ImagePath: "assets/images/onboarding3.png",
+//       BloodGroup: "AB+",
+//       phonenumber: 980737373),
+// ];
 
 class Questions {
   final String question;
@@ -148,40 +148,40 @@ final onBoardData = [
       description: " Be a hero in someone's story donate blood."),
 ];
 
-class DonorHistory {
-  String imageUrl;
-  DateTime time;
-  String hospital;
-  String location;
-  String donatedto;
-  DonorHistory(
-      {required this.imageUrl,
-      required this.time,
-      required this.hospital,
-      required this.location,
-      required this.donatedto});
-}
+// class DonorHistory {
+//   String imageUrl;
+//   DateTime time;
+//   String hospital;
+//   String location;
+//   String donatedto;
+//   DonorHistory(
+//       {required this.imageUrl,
+//       required this.time,
+//       required this.hospital,
+//       required this.location,
+//       required this.donatedto});
+// }
 
-List<DonorHistory> donorHistory = [
-  DonorHistory(
-      imageUrl: "assets/images/onboarding1.png",
-      time: DateTime.now(),
-      hospital: "Manipal",
-      location: "Pokhara",
-      donatedto: "Rathore"),
-  DonorHistory(
-      imageUrl: "assets/images/onboarding2.png",
-      time: DateTime.now(),
-      hospital: "GMC",
-      location: "Pokhara",
-      donatedto: "GMC"),
-  DonorHistory(
-      imageUrl: "assets/images/onboarding1.png",
-      time: DateTime.now(),
-      hospital: "FewaCity",
-      location: "Pokhara",
-      donatedto: "Kalu Pandey"),
-];
+// List<DonorHistory> donorHistory = [
+//   DonorHistory(
+//       imageUrl: "assets/images/onboarding1.png",
+//       time: DateTime.now(),
+//       hospital: "Manipal",
+//       location: "Pokhara",
+//       donatedto: "Rathore"),
+//   DonorHistory(
+//       imageUrl: "assets/images/onboarding2.png",
+//       time: DateTime.now(),
+//       hospital: "GMC",
+//       location: "Pokhara",
+//       donatedto: "GMC"),
+//   DonorHistory(
+//       imageUrl: "assets/images/onboarding1.png",
+//       time: DateTime.now(),
+//       hospital: "FewaCity",
+//       location: "Pokhara",
+//       donatedto: "Kalu Pandey"),
+// ];
 
 // class EmergencyRequest {
 //   EmergencyRequest(

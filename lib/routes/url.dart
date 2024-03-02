@@ -16,4 +16,6 @@ class Url {
   static const readUser = "$mainUrl/api/v1/profile";
   static const getdonor = "$mainUrl/api/v1/donors/";
   static const gethospitaldetail = "$mainUrl/api/v1/hospitals/";
+  static const getRewards = "$mainUrl/api/v1/rewards/";
+  static const getRedeem = "$mainUrl/api/v1/redeem";
 }

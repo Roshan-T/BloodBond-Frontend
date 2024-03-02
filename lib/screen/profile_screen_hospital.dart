@@ -1,7 +1,11 @@
 import 'package:bloodbond/controller/get_donor_detail.dart';
 import 'package:bloodbond/controller/get_hospital_detail.dart';
 import 'package:bloodbond/controller/profile_controller.dart';
+import 'package:bloodbond/models/rewardsModel.dart';
+import 'package:bloodbond/screen/create_reward.dart';
+import 'package:bloodbond/services/services.dart';
 import 'package:bloodbond/utils/constants.dart';
+import 'package:bloodbond/widget/rewardBox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
@@ -18,10 +22,12 @@ class ProfileScreenHospital extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     hospitalController.fetchDonor(GetStorage().read('id'));
-
+    var providedId = GetStorage().read('id');
     return Scaffold(body: Obx(() {
       if (hospitalController.hospital.value == null) {
-        return CircularProgressIndicator(); // Show loading indicator while data is being fetched
+        return const Center(
+            child:
+                CircularProgressIndicator()); // Show loading indicator while data is being fetched
       } else {
         var hospital = hospitalController.hospital.value!;
 
@@ -60,7 +66,7 @@ class ProfileScreenHospital extends StatelessWidget {
                 hospital.name,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     fontSize: 24,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w400,
                     color: Constants.kBlackColor),
               ),
               const SizedBox(height: 10),
@@ -87,7 +93,7 @@ class ProfileScreenHospital extends StatelessWidget {
                 ),
               ),
               const ProfileDataBox(
-                title: "Certified Donor ",
+                title: "Certified Hospital ",
                 icon: Icons.check_circle,
               ),
               // Padding(
@@ -154,7 +160,25 @@ class ProfileScreenHospital extends StatelessWidget {
               //     child: const Text("Redeem"),
               //   ),
               // ),
-              // const SizedBox(height: 20),
+              const SizedBox(height: 20),
+              SizedBox(
+                height: 50,
+                width: Get.width * 0.8,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Constants.kSuccessColor)),
+                  onPressed: () => Get.to(() => MyRewards()),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Text("Rewards"), Icon(Icons.arrow_forward_ios)],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+
               SizedBox(
                 width: Get.width * 0.9,
                 height: 60,
@@ -259,6 +283,90 @@ class DetailBox extends StatelessWidget {
                 .copyWith(color: Colors.black, fontWeight: FontWeight.w400),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class MyRewards extends StatelessWidget {
+  MyRewards({super.key});
+  var providedId = GetStorage().read('id');
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Constants.kWhiteColor,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Constants.kBlackColor),
+          onPressed: () => Navigator.pop(context),
+        ),
+        centerTitle: false,
+        title: Text(
+          "Rewards",
+          style: Get.textTheme.headlineSmall?.copyWith(
+              color: Constants.kBlackColor, fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: FutureBuilder<List<Rewards>?>(
+                future: ApiService.fetchRewards(),
+                builder: (BuildContext context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.black,
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    var filteredList = snapshot.data
+                        ?.where((request) => request.ownerId == providedId)
+                        .toList();
+
+                    if (filteredList!.isEmpty) {
+                      return const Center(
+                          child: Text(
+                        'Not Created',
+                        textAlign: TextAlign.center,
+                      ));
+                    }
+                    return ListView.separated(
+                      physics: const ClampingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final request = filteredList[index];
+
+                        return RewardBox(reward: request);
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(height: 20);
+                      },
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: filteredList.length,
+                    );
+                  }
+                },
+              ),
+            ),
+            SizedBox(
+              height: 60,
+              width: Get.width * 0.75,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Constants.kSuccessColor)),
+                onPressed: () => Get.off(CreateReward()),
+                child: const Text("Create Rewards"),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
