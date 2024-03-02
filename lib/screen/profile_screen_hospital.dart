@@ -10,8 +10,8 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class ProfileScreen extends StatelessWidget {
-  ProfileScreen({super.key});
+class HospitalProfileScreen extends StatelessWidget {
+  HospitalProfileScreen({super.key});
   ProfileController controller = Get.put(ProfileController());
   final HospitalController hospitalController = Get.put(HospitalController());
 

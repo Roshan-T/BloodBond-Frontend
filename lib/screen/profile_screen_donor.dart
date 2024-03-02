@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:bloodbond/controller/get_donor_detail.dart';
 import 'package:bloodbond/controller/profile_controller.dart';
+import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -9,22 +12,21 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class ProfileScreen extends StatelessWidget {
-  ProfileScreen({super.key});
+class DonorProfileScreen extends StatelessWidget {
+  DonorProfileScreen({super.key});
   ProfileController controller = Get.put(ProfileController());
   final DonorController donorController = Get.put(DonorController());
 
   @override
   Widget build(BuildContext context) {
-    donorController.fetchDonor(GetStorage().read('id'));
-
-   
     return Scaffold(body: Obx(() {
       if (donorController.donor.value == null) {
-        return CircularProgressIndicator(); // Show loading indicator while data is being fetched
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       } else {
         var donor = donorController.donor.value!;
-        
+
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -45,12 +47,12 @@ class ProfileScreen extends StatelessWidget {
                       left: 0.5,
                       child: Container(
                         height: 130,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage("assets/images/onboarding2.png"),
-                          ),
+                              image: NetworkImage(
+                            Url.getImage + (donor.image),
+                          )),
                         ),
                       ))
                 ],
@@ -103,16 +105,20 @@ class ProfileScreen extends StatelessWidget {
                     Expanded(
                       child: DetailBox(
                           icon: Icons.monitor_heart_outlined,
-                          title: "Total Donation",
-                          detail: "5"),
+                          title: "Date of Birth",
+                          detail: DateFormat('yyyy-MM-dd').format(
+                              DateTime.parse(donor.dateOfBirth.toString()))),
                     ),
                     Expanded(
                       child: DetailBox(
-                          icon: Icons.calendar_month,
-                          title: "Last Donation",
-                          detail: DateFormat('yyyy-MM-dd').format(
-                              DateTime.parse(
-                                  donor.lastDonationDate.toString()))),
+                        icon: Icons.calendar_month,
+                        title: "Last Donation",
+                        detail: DateFormat('yyyy-MM-dd').format(
+                          DateTime.parse(
+                            donor.lastDonationDate.toString(),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
