@@ -41,8 +41,8 @@ class _MainScreenState extends State<MainScreen> {
       if (role == 'hospital') const HospitalIndRequest(),
       if (role == 'hospital') const HistoryHospital(),
       if (role == 'donor') const HistoryDonor(),
-      if (role == 'donor') (),
-      if (role == 'hospital') HospitalProfileScreenHospital(),
+      if (role == 'donor') ProfileScreenDonor(),
+      if (role == 'hospital') ProfileScreenHospital(),
       if (role == 'donor') const ViralDiseaseAlert(),
     ];
   }
