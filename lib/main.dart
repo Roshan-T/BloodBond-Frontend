@@ -1,5 +1,6 @@
 import 'package:bloodbond/controller/get_donor_detail.dart';
 import 'package:bloodbond/controller/network_controller.dart';
+import 'package:bloodbond/firebase_options.dart';
 
 import 'package:bloodbond/screen/splash_screen.dart';
 
@@ -13,11 +14,16 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  OneSignal.initialize("6e156e67-f308-49c1-a830-2ad88c8de8d3");
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  OneSignal.initialize("bdc6c13e-6cc3-457f-b009-e34972e9e3bf");
 
   OneSignal.Notifications.requestPermission(true);
+
   await GetStorage.init();
-  await Firebase.initializeApp();
+
   runApp(
     const MyApp(),
   );

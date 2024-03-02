@@ -23,7 +23,7 @@ class HistoryBox extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     child: Image.network(
-                        Url.getImage + donorHistory.hospital.image,
+                        "https://i.pinimg.com/originals/07/b2/40/07b240561cb656aec289df602e603bee.png",
                         height: 60,
                         width: 100,
                         fit: BoxFit.cover),
