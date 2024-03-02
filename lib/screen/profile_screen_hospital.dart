@@ -10,8 +10,8 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class HospitalProfileScreen extends StatelessWidget {
-  HospitalProfileScreen({super.key});
+class ProfileScreenHospital extends StatelessWidget {
+  ProfileScreenHospital({super.key});
   ProfileController controller = Get.put(ProfileController());
   final HospitalController hospitalController = Get.put(HospitalController());
 
@@ -20,10 +20,10 @@ class HospitalProfileScreen extends StatelessWidget {
     hospitalController.fetchDonor(GetStorage().read('id'));
 
     return Scaffold(body: Obx(() {
-      if (hospitalController.donor.value == null) {
+      if (hospitalController.hospital.value == null) {
         return CircularProgressIndicator(); // Show loading indicator while data is being fetched
       } else {
-        var hospital = hospitalController.donor.value!;
+        var hospital = hospitalController.hospital.value!;
 
         return SingleChildScrollView(
           child: Column(

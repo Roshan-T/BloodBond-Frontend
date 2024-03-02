@@ -12,8 +12,8 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class DonorProfileScreen extends StatelessWidget {
-  DonorProfileScreen({super.key});
+class ProfileScreenDonor extends StatelessWidget {
+  ProfileScreenDonor({super.key});
   ProfileController controller = Get.put(ProfileController());
   final DonorController donorController = Get.put(DonorController());
 
