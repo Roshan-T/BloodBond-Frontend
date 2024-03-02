@@ -7,7 +7,7 @@ import '../utils/constants.dart';
 
 class RewardBox extends StatelessWidget {
   final reward;
-  final redeem;
+  bool redeem;
   final refresh;
   RewardBox(
       {super.key, required this.reward, this.redeem = false, this.refresh});
@@ -28,18 +28,19 @@ class RewardBox extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.green,
-                    radius: 30,
-                    child: Text(
-                      "${reward.totalQuantity}",
-                      maxLines: 2,
-                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
+                  if (redeem == true)
+                    CircleAvatar(
+                      backgroundColor: Colors.green,
+                      radius: 30,
+                      child: Text(
+                        "${reward.totalQuantity}",
+                        maxLines: 2,
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
                   const SizedBox(
                     width: 15,
                   ),
@@ -84,38 +85,44 @@ class RewardBox extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        "Remaining : ${reward.totalQuantity - reward.redeemedQuantity}",
-                        maxLines: 2,
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            color: Colors.black,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        height: 40,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await ApiService.redeemRewards(reward.id);
-                            refresh();
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.yellow),
-                          ),
-                          child: Text("Redeem",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge!
-                                  .copyWith(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold)),
+                      if (redeem == true)
+                        Text(
+                          "Remaining : ${reward.totalQuantity - reward.redeemedQuantity}",
+                          maxLines: 2,
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge!
+                              .copyWith(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold),
                         ),
-                      )
+                      if (redeem == true)
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      if (redeem == true)
+                        SizedBox(
+                          height: 40,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await ApiService.redeemRewards(reward.id);
+                              refresh();
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.yellow),
+                            ),
+                            child: Text("Redeem",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                          ),
+                        )
                     ],
                   )
                 ],

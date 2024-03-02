@@ -5,6 +5,7 @@ import 'package:bloodbond/controller/all_hospitals_detail_controller.dart';
 import 'package:bloodbond/controller/home_screen_controller.dart';
 import 'package:bloodbond/models/campaignDonorsModel.dart';
 import 'package:bloodbond/models/campaignModel.dart';
+import 'package:bloodbond/models/redeemedRewardsModel.dart';
 import 'package:bloodbond/models/rewardsModel.dart';
 import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/screen/history_donor.dart';
@@ -248,6 +249,34 @@ class ApiService {
     print(data);
     if (response.statusCode == 200) {
       final x = rewardsFromJson(data);
+      print(x);
+      return x;
+    } else {
+      Get.closeAllSnackbars();
+      Get.snackbar(
+        jsonDecode(data)['detail'],
+        "",
+        colorText: Colors.white,
+        backgroundColor: cons.Constants.kPrimaryColor,
+      );
+      return null;
+    }
+  }
+
+  static Future<List<RedeemedRewards>?> fetchRedeemedRewards() async {
+    var token = GetStorage().read('token');
+    var response = await http.get(
+      Uri.parse(Url.getRedeem),
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $token ',
+      },
+    );
+    var data = response.body;
+
+    print(data);
+    if (response.statusCode == 200) {
+      final x = redeemedRewardsFromJson(data);
       print(x);
       return x;
     } else {

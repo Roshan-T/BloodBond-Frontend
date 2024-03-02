@@ -4,6 +4,7 @@ import 'package:bloodbond/controller/get_donor_detail.dart';
 import 'package:bloodbond/controller/profile_controller.dart';
 import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/screen/redeemableRewards.dart';
+import 'package:bloodbond/screen/redeemedRewardsDonor.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -15,11 +16,11 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 class ProfileScreenDonor extends StatelessWidget {
   ProfileScreenDonor({super.key});
-  ProfileController controller = Get.put(ProfileController());
-  final DonorController donorController = Get.put(DonorController());
 
   @override
   Widget build(BuildContext context) {
+    ProfileController controller = Get.put(ProfileController());
+    final DonorController donorController = Get.put(DonorController());
     return Scaffold(body: Obx(() {
       if (donorController.donor.value == null) {
         return const Center(
@@ -174,7 +175,9 @@ class ProfileScreenDonor extends StatelessWidget {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.blue),
                   ),
-                  onPressed: null,
+                  onPressed: () {
+                    Get.to(RedeemedReward());
+                  },
                   child: const Text("Redeemed Rewards"),
                 ),
               ),

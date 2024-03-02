@@ -2,6 +2,7 @@ import 'package:bloodbond/controller/get_donor_detail.dart';
 import 'package:bloodbond/controller/get_hospital_detail.dart';
 import 'package:bloodbond/controller/profile_controller.dart';
 import 'package:bloodbond/models/rewardsModel.dart';
+import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/screen/create_reward.dart';
 import 'package:bloodbond/services/services.dart';
 import 'package:bloodbond/utils/constants.dart';
@@ -51,11 +52,13 @@ class ProfileScreenHospital extends StatelessWidget {
                       left: 0.5,
                       child: Container(
                         height: 130,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage("assets/images/onboarding2.png"),
+                            image: NetworkImage(
+                              Url.getImage + (hospital.image),
+                            ),
                           ),
                         ),
                       ))
