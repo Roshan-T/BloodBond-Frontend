@@ -1,4 +1,4 @@
-
+import 'package:bloodbond/routes/url.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -22,8 +22,11 @@ class HistoryBox extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    child: Image.asset(donorHistory.imageUrl,
-                        height: 60, width: 100, fit: BoxFit.cover),
+                    child: Image.network(
+                        Url.getImage + donorHistory.hospital.image,
+                        height: 60,
+                        width: 100,
+                        fit: BoxFit.cover),
                   ),
                   const SizedBox(
                     width: 15,
@@ -34,7 +37,7 @@ class HistoryBox extends StatelessWidget {
                       SizedBox(
                         width: width - 100 - 80,
                         child: Text(
-                          donorHistory.hospital,
+                          donorHistory.hospital.name,
                           maxLines: 2,
                           style: Theme.of(context)
                               .textTheme
@@ -55,12 +58,12 @@ class HistoryBox extends StatelessWidget {
                               const WidgetSpan(
                                 child: Icon(
                                   Icons.place,
-                                  size: 24,
+                                  size: 18,
                                   color: Colors.red,
                                 ),
                               ),
                               TextSpan(
-                                text: donorHistory.location,
+                                text: donorHistory.hospital.city,
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!
@@ -85,12 +88,12 @@ class HistoryBox extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Donate To: ${donorHistory.donatedto}",
+                    "Donate To: ${donorHistory.patientName}",
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
                         color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "${DateFormat('yyyy-MM-dd').format(donorHistory.time)} | ${DateFormat('HH:mm:a').format(donorHistory.time)}",
+                    "${DateFormat('yyyy MMMM dd').format(donorHistory.requestedTime)} | ${DateFormat('HH:mm:a').format(donorHistory.requestedTime)}",
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
                           color: Colors.black,
                         ),

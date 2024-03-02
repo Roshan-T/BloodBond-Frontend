@@ -2,12 +2,13 @@ import 'package:bloodbond/controller/Signup_controller.dart';
 import 'package:bloodbond/screen/onboarding_screen.dart';
 import 'package:bloodbond/screen/signup_screen.dart';
 import 'package:bloodbond/utils/constants.dart';
+import 'package:cross_file/src/types/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BloodTypeSelectionScreen extends StatefulWidget {
-  const BloodTypeSelectionScreen({super.key});
-
+  BloodTypeSelectionScreen({super.key, required this.images});
+  var images;
   @override
   _BloodTypeSelectionScreenState createState() =>
       _BloodTypeSelectionScreenState();
@@ -15,10 +16,11 @@ class BloodTypeSelectionScreen extends StatefulWidget {
 
 class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
   final controller = signupController;
-
+  var image;
   void updateSelection(String bloodType) {
     setState(() {
       controller.selectedBloodType = bloodType;
+      image = widget.images;
     });
   }
 
@@ -98,7 +100,7 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
                     );
                   } else {
                     if (controller.loading.value) return;
-                    controller.registerDonor();
+                    controller.registerDonor(widget.images);
                   }
                 },
                 child: controller.loading.value == true

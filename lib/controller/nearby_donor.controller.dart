@@ -39,9 +39,10 @@ class NearbyDonorController extends GetxController {
   }
 }
 
-List<NearbyDonor> nearbyDonorFromJson(String str) => List<NearbyDonor>.from(
-    json.decode(str).map((x) => NearbyDonor.fromJson(x)));   // converts from json into list of nearbydonors
-    
+List<NearbyDonor> nearbyDonorFromJson(String str) =>
+    List<NearbyDonor>.from(json.decode(str).map((x) => NearbyDonor.fromJson(
+        x))); // converts from json into list of nearbydonors
+
 String nearbyDonorToJson(List<NearbyDonor> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 

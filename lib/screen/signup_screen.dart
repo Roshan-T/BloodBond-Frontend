@@ -29,7 +29,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  XFile? image;
+  File? image;
   bool isFetchingLocation = false;
 
   // TextEditingController lastNameController = TextEditingController();
@@ -61,10 +61,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Future<void> getImage() async {
     ImagePicker picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    var pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
-      image = pickedImage;
+      image = File(pickedImage!.path);
     });
   }
 
@@ -324,7 +324,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           );
                         } else {
                           Get.to(
-                            () => const BloodTypeSelectionScreen(),
+                            () => BloodTypeSelectionScreen(images: image),
                           );
                         }
                       },

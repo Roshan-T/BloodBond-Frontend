@@ -1,50 +1,46 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bloodbond/models/campaignDonorsModel.dart';
 import 'package:bloodbond/routes/url.dart';
-import 'package:bloodbond/screen/home_screen.dart';
+import 'package:bloodbond/screen/login_screen.dart';
 import 'package:bloodbond/screen/main_screen.dart';
+import 'package:bloodbond/services/services.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart';
 
-import 'package:http/http.dart' as http;
-
-class RequestController extends GetxController {
-  RxBool loading = false.obs;
-
-  void acceptRequest(final id) async {
-    loading.value = true;
+class CampaignController extends GetxController {
+  @override
+  register(final id) async {
     try {
       var token = GetStorage().read('token');
 
-      final response = await http.put(
-        Uri.parse("${Url.getEmergencyRequest}/$id/accept"),
+      final response = await post(
+        Uri.parse("${Url.getCampaings}/$id/register"),
         headers: {
           "Content-Type": "application/json",
           'Authorization': 'Bearer $token ',
         },
       );
-      // print(response.body);
+      print(response.statusCode);
       var data = jsonDecode(response.body);
       // var user = data.user;
       // print(response.statusCode);
       print(data);
-      if (response.statusCode == 200) {
-        loading.value = false;
-
+      if (response.statusCode == 201) {
         Get.closeAllSnackbars();
         Get.snackbar(
-          'Sucessfully Accepted',
-          "Congratulations",
+          'Sucessfully Registered',
+          "",
           colorText: Colors.white,
           backgroundColor: Colors.green,
         );
-        Get.deleteAll();
-        Get.offAll(MainScreen());
+
+        Get.offAll(const MainScreen());
       } else {
-        loading.value = false;
         Get.closeAllSnackbars();
         Get.snackbar(
           "Failed",
@@ -55,7 +51,7 @@ class RequestController extends GetxController {
       }
     } catch (e) {
       Get.closeAllSnackbars();
-      loading.value = false;
+
       if (e == SocketException) {
         Get.snackbar(
           'Check Your Internet Connection',
@@ -64,46 +60,36 @@ class RequestController extends GetxController {
           backgroundColor: Constants.kPrimaryColor,
         );
       }
-
-      Get.snackbar(
-        'Error Occured',
-        "",
-        colorText: Colors.white,
-        backgroundColor: Constants.kPrimaryColor,
-      );
     }
   }
 
-  void confirmDonate(final id) async {
-    loading.value = true;
+  donated(final campaignid, final donorId) async {
     try {
       var token = GetStorage().read('token');
 
-      final response = await http.put(
-        Uri.parse("${Url.getEmergencyRequest}/$id/donate"),
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': 'Bearer $token ',
-        },
-      );
-      // print(response.body);
+      final response =
+          await put(Uri.parse("${Url.getCampaings}/$campaignid/donate"),
+              headers: {
+                "Content-Type": "application/json",
+                'Authorization': 'Bearer $token ',
+              },
+              body: jsonEncode({"donor_id": donorId}));
+
       var data = jsonDecode(response.body);
       // var user = data.user;
       // print(response.statusCode);
       print(data);
       if (response.statusCode == 200) {
-        loading.value = false;
-
         Get.closeAllSnackbars();
         Get.snackbar(
-          'Confirmed.',
-          "Congratulations",
+          'Sucessfully Donated',
+          "",
           colorText: Colors.white,
           backgroundColor: Colors.green,
         );
-        Get.to(MainScreen());
+
+        Get.deleteAll();
       } else {
-        loading.value = false;
         Get.closeAllSnackbars();
         Get.snackbar(
           "Failed",
@@ -114,7 +100,7 @@ class RequestController extends GetxController {
       }
     } catch (e) {
       Get.closeAllSnackbars();
-      loading.value = false;
+
       if (e == SocketException) {
         Get.snackbar(
           'Check Your Internet Connection',
@@ -123,13 +109,6 @@ class RequestController extends GetxController {
           backgroundColor: Constants.kPrimaryColor,
         );
       }
-
-      Get.snackbar(
-        'Error Occured',
-        "",
-        colorText: Colors.white,
-        backgroundColor: Constants.kPrimaryColor,
-      );
     }
   }
 }

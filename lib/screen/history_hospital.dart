@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:bloodbond/controller/home_screen_controller.dart';
+import 'package:bloodbond/models/campaignDonorsModel.dart';
 import 'package:bloodbond/models/campaignModel.dart';
 import 'package:bloodbond/routes/url.dart';
-import 'package:bloodbond/screen/hospitalCampaign.dart';
+import 'package:bloodbond/screen/hos_req_his_desc.dart';
 import 'package:bloodbond/screen/request_description_screen_hospital.dart';
 import 'package:bloodbond/screen/request_description_screendonor.dart';
+import 'package:bloodbond/services/services.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:bloodbond/widget/blood_camp.dart';
 import 'package:bloodbond/widget/emergency_request_box.dart';
@@ -16,14 +18,14 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
-class HospitalIndRequest extends StatefulWidget {
-  const HospitalIndRequest({Key? key}) : super(key: key);
+class HistoryHospital extends StatefulWidget {
+  const HistoryHospital({Key? key}) : super(key: key);
 
   @override
-  _HospitalIndRequestState createState() => _HospitalIndRequestState();
+  _HistoryHospitalState createState() => _HistoryHospitalState();
 }
 
-class _HospitalIndRequestState extends State<HospitalIndRequest>
+class _HistoryHospitalState extends State<HistoryHospital>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -44,6 +46,7 @@ class _HospitalIndRequestState extends State<HospitalIndRequest>
   Widget build(BuildContext context) {
     final HomeController requestController = Get.put(HomeController());
     final int providedId = GetStorage().read('id');
+    var currentTime = DateTime.now();
     print(providedId);
     return Scaffold(
       appBar: AppBar(
@@ -55,7 +58,7 @@ class _HospitalIndRequestState extends State<HospitalIndRequest>
         ),
         centerTitle: false,
         title: Text(
-          "My Details",
+          "My History",
           style: Get.textTheme.headlineSmall?.copyWith(
               color: Constants.kBlackColor, fontWeight: FontWeight.bold),
         ),
@@ -82,161 +85,101 @@ class _HospitalIndRequestState extends State<HospitalIndRequest>
         children: [
           Padding(
             padding: const EdgeInsets.all(12.0),
-            child: Obx(
-              () {
-                if (requestController.isRequestLoading.value) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                        backgroundColor: Colors.black),
-                  );
-                } else {
-                  final filteredList = requestController.requestList
-                      .where((request) => request.hospital.id == providedId)
-                      .toList();
-
-                  if (filteredList.isEmpty) {
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: FutureBuilder<List<EmergencyRequest>?>(
+                future: ApiService.fetchEmergencyRequest(All: true),
+                builder: (BuildContext context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.black,
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    var filteredList = snapshot.data!
+                        .where((request) => (request.donated == true ||
+                            currentTime.isAfter(request.expiryTime)))
+                        .toList();
+                    if (filteredList.isEmpty) {
+                      return const Center(
                         child: Text(
-                      'No request Pending',
-                      textAlign: TextAlign.center,
-                    ));
-                  }
-
-                  return ListView.separated(
-                    physics: ClampingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final request = filteredList[index];
-                      return Dismissible(
-                        key: Key(request.id.toString()),
-                        onDismissed: (direction) {
-                          filteredList.removeAt(index);
-                          setState(() async {
-                            await requestController.removeRequest(request.id);
-
-                            await requestController.fetchEmergencyRequest();
-                          });
-
-                          Get.snackbar("Request Deleted", "");
-                        },
-                        background: Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(12),
-                            ),
-                          ),
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.only(right: 20.0),
-                          child: const Icon(Icons.delete),
-                        ),
-                        child: RequestBox(
-                          title:
-                              request.accepted ? "Accepted" : 'Pending Request',
-                          emergencyRequest: request,
+                          'Not Requested Yet',
+                          textAlign: TextAlign.center,
                         ),
                       );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(height: 20);
-                    },
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: filteredList.length,
-                  );
+                    }
+                    return ListView.separated(
+                      physics: const ClampingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final request = filteredList[index];
 
-                  // ListView.separated(
-                  //   physics: NeverScrollableScrollPhysics(),
-                  //   itemBuilder: (context, index) {
-                  //     return RequestBox(
-                  //         title: 'Pending',
-                  //         emergencyRequest: filteredList[index]);
-                  //   },
-                  //   separatorBuilder: (context, index) {
-                  //     return const SizedBox(height: 20);
-                  //   },
-                  //   shrinkWrap: true,
-                  //   scrollDirection: Axis.vertical,
-                  //   itemCount: filteredList.length,
-                  // );
-                }
-              },
+                        return RequestBox(
+                          emergencyRequest: request,
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(height: 20);
+                      },
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: filteredList.length,
+                    );
+                  }
+                },
+              ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),
-            child: Obx(
-              () {
-                if (requestController.isCampaignLoading.value) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                        backgroundColor: Colors.black),
-                  );
-                } else {
-                  final filteredCList = requestController.campaignList
-                      .where((request) => request.hospital.id == providedId)
-                      .toList();
-
-                  if (filteredCList.isEmpty) {
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: FutureBuilder<List<CampaignDetails>?>(
+                future: ApiService.fetchCampaigns(All: true),
+                builder: (BuildContext context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.black,
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    var filteredList = snapshot.data!
+                        .where((request) =>
+                            (request.hospital.id == providedId &&
+                                currentTime.isAfter(request.date)))
+                        .toList();
+                    if (filteredList.isEmpty) {
+                      return const Center(
                         child: Text(
-                      'No campaign Pending',
-                      textAlign: TextAlign.center,
-                    ));
-                  }
-
-                  return ListView.separated(
-                    physics: ClampingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final request = filteredCList[
-                          index]; // Retrieve the campaign from filteredCList
-                      return Dismissible(
-                        key: Key(request.id.toString()),
-                        onDismissed: (direction) {
-                          filteredCList.removeAt(index);
-                          setState(() async {
-                            await requestController.removeCampaign(request.id);
-
-                            await requestController.fetchCampaigns();
-                          });
-
-                          Get.snackbar("Campaign Deleted", "");
-                        },
-                        background: Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(12),
-                            ),
-                          ),
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.only(right: 20.0),
-                          child: const Icon(Icons.delete),
+                          'Not Requested Yet',
+                          textAlign: TextAlign.center,
                         ),
-                        child: CampaTile(campers: request),
                       );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(height: 20);
-                    },
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: filteredCList.length,
-                  );
+                    }
+                    return ListView.separated(
+                      physics: const ClampingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final request = filteredList[index];
 
-                  // ListView.separated(
-                  //   physics: NeverScrollableScrollPhysics(),
-                  //   itemBuilder: (context, index) {
-                  //     return CampaTile(campers: filteredList[index]);
-                  //   },
-                  //   separatorBuilder: (context, index) {
-                  //     return const SizedBox(height: 20);
-                  //   },
-                  //   shrinkWrap: true,
-                  //   scrollDirection: Axis.vertical,
-                  //   itemCount: filteredList.length,
-                  // );
-                }
-              },
+                        return CampaTile(
+                          campers: request,
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(height: 20);
+                      },
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: filteredList.length,
+                    );
+                  }
+                },
+              ),
             ),
           ),
         ],
@@ -247,9 +190,9 @@ class _HospitalIndRequestState extends State<HospitalIndRequest>
 
 class RequestBox extends StatelessWidget {
   final emergencyRequest;
-  final title;
+
   final width = Get.width;
-  RequestBox({super.key, this.title, required this.emergencyRequest});
+  RequestBox({super.key, required this.emergencyRequest});
 
   @override
   Widget build(BuildContext context) {
@@ -369,12 +312,14 @@ class RequestBox extends StatelessWidget {
                 width: Get.width,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.to(RequestDescrptionScreenHospital(
-                      emergencyRequest: emergencyRequest,
+                    Get.to(EmergencyRequestHistoryDescription(
+                      request: emergencyRequest,
                     ));
                   },
                   child: Text(
-                    title,
+                    emergencyRequest.donated == true
+                        ? "Received"
+                        : "Not Received",
                   ),
                 ),
               )
@@ -458,9 +403,9 @@ class CampaTile extends StatelessWidget {
                 height: 45,
                 width: 280,
                 child: ElevatedButton(
-                  onPressed: () => Get.to(HospitalCampaign(
-                    id: campers.id,
-                  )),
+                  onPressed: () {
+                    Get.to(HistoryCampaign(id: campers.id));
+                  },
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all(Constants.kPrimaryColor),
@@ -489,5 +434,165 @@ class CampaTile extends StatelessWidget {
             ),
           ],
         ));
+  }
+}
+
+// **
+
+class HistoryCampaign extends StatefulWidget {
+  HistoryCampaign({super.key, required this.id});
+  var id;
+
+  @override
+  _HistoryCampaignState createState() => _HistoryCampaignState();
+}
+
+class _HistoryCampaignState extends State<HistoryCampaign> {
+  var id;
+  @override
+  void initState() {
+    super.initState();
+
+    id = widget.id;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Constants.kWhiteColor,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Constants.kBlackColor),
+          onPressed: () => Navigator.pop(context),
+        ),
+        centerTitle: false,
+        title: Text(
+          "Campagin Details",
+          style: Get.textTheme.headlineSmall?.copyWith(
+              color: Constants.kBlackColor, fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: Column(
+        children: [
+          Text(
+            "Donors",
+            style: Get.textTheme.headlineSmall?.copyWith(
+                color: Constants.kBlackColor, fontWeight: FontWeight.normal),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: FutureBuilder<CampaignDonorsDetails?>(
+              future: ApiService.fetchCampaignDonors(id),
+              builder: (BuildContext context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.black,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else if (snapshot.data!.registeredCount == 0) {
+                  return const Center(
+                    child: Text(
+                      'No one Registered ',
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                } else {
+                  var filteredList = snapshot.data!.donors
+                      .where((request) => (request.donated == true))
+                      .toList();
+                  return ListView.separated(
+                    physics: const ClampingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final request = filteredList[index];
+
+                      return DonorBox(
+                        donor: request,
+                        campaignId: id,
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 20);
+                    },
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: filteredList.length,
+                  );
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DonorBox extends StatelessWidget {
+  final width = Get.width;
+
+  var donor;
+  var campaignId;
+  DonorBox({
+    super.key,
+    required this.donor,
+    required this.campaignId,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    var imageUrl = Url.getImage + donor.image;
+
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: const Color.fromARGB(255, 240, 245, 245),
+      ),
+      child: Row(
+        children: [
+          ClipOval(
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+              height: 60,
+              width: 60,
+            ),
+          ),
+          const SizedBox(
+            width: 15,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${donor.name}",
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          const Spacer(),
+          Container(
+            padding: const EdgeInsets.all(5),
+            height: 33,
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
+                ),
+                color: Constants.kWhiteColor),
+            child: donor.donated == true
+                ? const Icon(Icons.check_box)
+                : const Icon(Icons.check_box_outline_blank),
+          )
+        ],
+      ),
+    );
   }
 }
