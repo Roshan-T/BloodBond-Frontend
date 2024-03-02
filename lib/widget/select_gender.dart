@@ -23,13 +23,33 @@ class _SelectGenderState extends State<SelectGender> {
   Widget build(BuildContext context) {
     return Container(
       height: 55,
-      decoration: BoxDecoration(
-        color: const Color(0xffF7F7FB),
-        border: Border.all(color: Colors.black),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
+      // decoration: BoxDecoration(
+      //   color: const Color(0xffF7F7FB),
+      //   border: Border.all(color: Colors.black),
+      //   borderRadius: BorderRadius.circular(12),
+
+      // ),
+      child: InputDecorator(
+        decoration: InputDecoration(
+            counterText: "",
+            hintText: "Select Gender",
+            hintStyle: TextStyle(
+              fontSize: 16,
+              color: Colors.black.withOpacity(0.7),
+            ),
+            errorMaxLines: 1,
+            errorStyle: const TextStyle(
+              fontSize: 16,
+              color: Colors.red,
+            ),
+            fillColor: Constants.kPrimaryColor.withOpacity(0.1),
+            filled: true,
+            enabledBorder:
+                _getBorder(Constants.kPrimaryColor.withOpacity(0.4), 1.5),
+            focusedBorder:
+                _getBorder(Constants.kPrimaryColor.withOpacity(0.6), 2.5),
+            errorBorder: _getBorder(Constants.kErrorColor, 1.5),
+            focusedErrorBorder: _getBorder(Constants.kErrorColor, 2.5)),
         child: DropdownButton(
           items: genderitems.map((valueItem) {
             // to map each item in the genderitems list into a DropdownMenuItem widget
@@ -51,26 +71,37 @@ class _SelectGenderState extends State<SelectGender> {
             });
           },
 
-          style: Theme.of(context)
-              .textTheme
-              .labelMedium!
-              .copyWith(color: Constants.kGrey),
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black.withOpacity(0.7),
+          ),
           underline: const SizedBox(), //to remove underline
           isExpanded: true,
           hint: Text(
             "Select Gender",
-            style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                  color: Constants.kGrey,
-                ),
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black.withOpacity(0.7),
+            ),
           ),
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_drop_down,
             size: 20,
+            color: Constants.kPrimaryColor.withOpacity(0.7),
           ),
           dropdownColor: Colors.white,
 
           //to transform mapped string into list
         ),
+      ),
+    );
+  }
+
+  InputBorder _getBorder(Color color, double width) {
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: color, width: width),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(12),
       ),
     );
   }

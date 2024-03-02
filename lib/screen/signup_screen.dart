@@ -43,6 +43,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     ),
   );
 
+
+
   dateSelect(BuildContext context, TextEditingController controller) async {
     final DateTime todayDate = DateTime.now();
     final DateTime? choosedDate = await showDatePicker(
@@ -245,6 +247,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     readOnly: true,
                     decoration: InputDecoration(
+                      errorMaxLines: 1,
+                      errorStyle: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.red,
+                      ),
+                      fillColor: Constants.kPrimaryColor.withOpacity(0.1),
+                      filled: true,
+                      enabledBorder: _getBorder(
+                          Constants.kPrimaryColor.withOpacity(0.4), 1.5),
+                      focusedBorder: _getBorder(
+                          Constants.kPrimaryColor.withOpacity(0.6), 2.5),
+                      errorBorder: _getBorder(Constants.kErrorColor, 1.5),
+                      focusedErrorBorder:
+                          _getBorder(Constants.kErrorColor, 2.5),
                       suffixIcon: isFetchingLocation
                           ? const Padding(
                               padding: EdgeInsets.all(8.0),
@@ -253,10 +269,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           : null,
                       isDense: true,
                       hintText: signupController.city ?? "Select Location",
-                      hintStyle: Theme.of(context)
-                          .textTheme
-                          .labelMedium!
-                          .copyWith(color: Constants.kGrey),
+                      hintStyle: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black.withOpacity(0.7),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -354,6 +370,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
+  InputBorder _getBorder(Color color, double width) {
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: color, width: width),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(12),
+      ),
+    );
+  }
 }
 
 class Textfield extends StatelessWidget {
@@ -378,13 +403,33 @@ class Textfield extends StatelessWidget {
       keyboardType: keyboardtype,
       controller: control,
       decoration: InputDecoration(
-        counterText: "", // to remove  0/10
-        isDense: true,
-        hintText: hinttext,
-        hintStyle: Theme.of(context)
-            .textTheme
-            .labelMedium!
-            .copyWith(color: Constants.kGrey),
+          counterText: "",
+          hintText: hinttext,
+          hintStyle: TextStyle(
+            fontSize: 16,
+            color: Colors.black.withOpacity(0.7),
+          ),
+          errorMaxLines: 1,
+          errorStyle: const TextStyle(
+            fontSize: 16,
+            color: Colors.red,
+          ),
+          fillColor: Constants.kPrimaryColor.withOpacity(0.1),
+          filled: true,
+          enabledBorder:
+              _getBorder(Constants.kPrimaryColor.withOpacity(0.4), 1.5),
+          focusedBorder:
+              _getBorder(Constants.kPrimaryColor.withOpacity(0.6), 2.5),
+          errorBorder: _getBorder(Constants.kErrorColor, 1.5),
+          focusedErrorBorder: _getBorder(Constants.kErrorColor, 2.5)),
+    );
+  }
+
+  InputBorder _getBorder(Color color, double width) {
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: color, width: width),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(12),
       ),
     );
   }

@@ -128,7 +128,8 @@ class _HospitalIndRequestState extends State<HospitalIndRequest>
                           child: const Icon(Icons.delete),
                         ),
                         child: RequestBox(
-                          title: 'Pending Request',
+                          title:
+                              request.accepted ? "Accepted" : 'Pending Request',
                           emergencyRequest: request,
                         ),
                       );

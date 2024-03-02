@@ -3,10 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bloodbond/controller/home_screen_controller.dart';
-import 'package:bloodbond/controller/network_controller.dart';
 import 'package:bloodbond/routes/url.dart';
-import 'package:bloodbond/screen/home_screen.dart';
 import 'package:bloodbond/screen/main_screen.dart';
 import 'package:bloodbond/services/services.dart';
 import 'package:flutter/material.dart';

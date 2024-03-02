@@ -15,7 +15,7 @@ void main() async {
   runApp(
     const MyApp(),
   );
- Get.lazyPut(() => DonorDetailsController()); 
+
 }
 
 class MyApp extends StatelessWidget {

@@ -43,15 +43,36 @@ class _SelectDateState extends State<SelectDate> {
       },
       readOnly: true,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.calendar_today),
-        isDense: true,
-        hintStyle: Theme.of(context)
-            .textTheme
-            .labelMedium!
-            .copyWith(color: Constants.kGrey),
-        hintText: dateSelected == null
-            ? widget.datename
-            : " ${DateFormat('yyyy-MM-dd').format(dateSelected!)}",
+          prefixIcon: const Icon(Icons.calendar_today),
+          isDense: true,
+          hintText: dateSelected == null
+              ? widget.datename
+              : " ${DateFormat('yyyy-MM-dd').format(dateSelected!)}",
+          hintStyle: TextStyle(
+            fontSize: 16,
+            color: Colors.black.withOpacity(0.7),
+          ),
+          errorMaxLines: 1,
+          errorStyle: const TextStyle(
+            fontSize: 16,
+            color: Colors.red,
+          ),
+          fillColor: Constants.kPrimaryColor.withOpacity(0.1),
+          filled: true,
+          enabledBorder:
+              _getBorder(Constants.kPrimaryColor.withOpacity(0.4), 1.5),
+          focusedBorder:
+              _getBorder(Constants.kPrimaryColor.withOpacity(0.6), 2.5),
+          errorBorder: _getBorder(Constants.kErrorColor, 1.5),
+          focusedErrorBorder: _getBorder(Constants.kErrorColor, 2.5)),
+    );
+  }
+
+  InputBorder _getBorder(Color color, double width) {
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: color, width: width),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(12),
       ),
     );
   }

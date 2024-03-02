@@ -1,62 +1,37 @@
+import 'dart:convert';
 import 'package:bloodbond/routes/url.dart';
-import 'package:bloodbond/utils/constants.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-class DonorDetailsController extends GetxController {
-  RxBool isLoading = true.obs;
+class DonorController extends GetxController {
   Rx<Donor?> donor = Rx<Donor?>(null);
+  RxBool loading = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchDonor(8);
-  }
-
-  void fetchDonor(int id) async {
+  Future<void> fetchDonor(int id) async {
+    loading.value = true;
     try {
-      isLoading(true);
-      var donorDetails = await _fetchDonor(id);
-      donor.value = donorDetails;
+      int id = await GetStorage().read('id');
+      print("Oid:{$id}");
+      var response = await http.get(Uri.parse('${Url.getdonor}$id'));
+      if (response.statusCode == 200) {
+        loading.value = false;
+        donor.value = donorFromJson(response.body);
+      } else if (response.statusCode == 422) {
+        print("response:${response.statusCode}");
+        var errorResponse = jsonDecode(response.body);
+        var errorDetails = errorResponse['detail'][0];
+        throw Exception('Validation Error: ${errorDetails['msg']}');
+      } else {
+        print(response.body);
+        print("response:{$response.body}");
+        print("response:${response.statusCode}");
+        print('Failed to load donor');
+      }
     } catch (e) {
-      Get.closeAllSnackbars();
-
-      Get.snackbar(
-        'Error Occurred',
-        '$e',
-        colorText: Colors.white,
-        backgroundColor: Constants.kPrimaryColor,
-      );
+      print('Exception: $e');
     } finally {
-      isLoading(false);
-    }
-  }
-
-  static Future<Donor?> _fetchDonor(int id) async {
-    var response = await http.get(
-      Uri.parse("${Url.getdonor}/$id"),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    );
-
-    if (response.statusCode == 200) {
-      print("response : ${response.body}${response.statusCode}");
-      return Donor.fromJson(jsonDecode(response.body));
-    } else if (response.statusCode == 404) {
-      print("response : ${response.statusCode}");
-      throw Exception('User doesn\'t exist');
-    } else if (response.statusCode == 422) {
-      print("response : ${response.statusCode}");
-      Map<String, dynamic> responseData = jsonDecode(response.body);
-      String errorMessage = responseData['detail'][0]['msg'];
-      throw Exception(errorMessage);
-    } else {
-      print("response : ${response.statusCode}");
-      throw Exception('Failed to load donor details');
+      loading.value = false; // End loading
     }
   }
 }
@@ -101,21 +76,24 @@ class Donor {
   });
 
   factory Donor.fromJson(Map<String, dynamic> json) => Donor(
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        phone: json["phone"],
-        sex: json["sex"],
-        dateOfBirth: DateTime.parse(json["date_of_birth"]),
-        bloodGroup: json["blood_group"],
-        latitude: json["latitude"],
-        longitude: json["longitude"],
-        city: json["city"],
-        id: json["id"],
-        email: json["email"],
-        createdAt: DateTime.parse(json["created_at"]),
-        image: json["image"],
-        lastDonationDate: DateTime.parse(json["last_donation_date"]),
-        points: json["points"],
+        firstName: json["first_name"] ?? '',
+        lastName: json["last_name"] ?? '',
+        phone: json["phone"] ?? '',
+        sex: json["sex"] ?? '',
+        dateOfBirth:
+            DateTime.tryParse(json["date_of_birth"] ?? '') ?? DateTime.now(),
+        bloodGroup: json["blood_group"] ?? '',
+        latitude: json["latitude"]?.toDouble() ?? 0.0,
+        longitude: json["longitude"]?.toDouble() ?? 0.0,
+        city: json["city"] ?? '',
+        id: json["id"] ?? 0,
+        email: json["email"] ?? '',
+        createdAt:
+            DateTime.tryParse(json["created_at"] ?? '') ?? DateTime.now(),
+        image: json["image"] ?? '',
+        lastDonationDate: DateTime.tryParse(json["last_donation_date"] ?? '') ??
+            DateTime.now(),
+        points: json["points"] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

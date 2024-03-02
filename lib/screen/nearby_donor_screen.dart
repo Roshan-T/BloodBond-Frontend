@@ -1,6 +1,6 @@
 import 'package:bloodbond/controller/nearby_donor.controller.dart';
 import 'package:bloodbond/routes/url.dart';
-import 'package:bloodbond/screen/profile_screen.dart';
+import 'package:bloodbond/screen/profile_screen_donor.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bloodbond/utils/constants.dart';

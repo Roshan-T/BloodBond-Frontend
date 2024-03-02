@@ -93,7 +93,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           focusedBorder:
               _getBorder(Constants.kPrimaryColor.withOpacity(0.6), 2.5),
           errorBorder: _getBorder(Constants.kErrorColor, 1.5),
-          focusedErrorBorder: _getBorder(Constants.kErrorColor, 2.5)),
+          focusedErrorBorder: _getBorder(Constants.kErrorColor, 2.5)
+          ),
     );
   }
 }
