@@ -17,6 +17,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
 
   OneSignal.initialize("bdc6c13e-6cc3-457f-b009-e34972e9e3bf");
 

@@ -20,7 +20,7 @@ class CampTile extends StatelessWidget {
         width: 300,
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 240, 245, 245),
-          border: Border.all(width: 0.5, color: Colors.black),
+          // border: Border.all(width: 0.5, color: Colors.black),
           borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
         child: Column(
@@ -32,11 +32,11 @@ class CampTile extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.green,
-                      border: Border.all(width: 0.5, color: Colors.black),
+                      // border: Border.all(width: 0.5, color: Colors.black),
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
                     ),
                     height: 120,
-                    width: 250,
+                    width: double.infinity,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.all(
                         Radius.circular(15),
@@ -47,6 +47,7 @@ class CampTile extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
                   Text(
                     maxLines: 1,
                     campers.title,
@@ -54,19 +55,21 @@ class CampTile extends StatelessWidget {
                         color: Constants.kBlackColor,
                         fontWeight: FontWeight.bold),
                   ),
+                  const SizedBox(height: 5),
                   Text(
                     maxLines: 2,
                     campers.description,
                     style: Theme.of(context).textTheme.labelSmall,
                     overflow: TextOverflow.ellipsis,
-                  )
+                  ),
+                  const SizedBox(height: 5),
                 ],
               ),
             ),
             const Spacer(),
             Center(
               child: SizedBox(
-                height: 45,
+                // height: 45,
                 width: 280,
                 child: ElevatedButton(
                   onPressed: () => Get.to(CampaignDetail(campers: campers)),
