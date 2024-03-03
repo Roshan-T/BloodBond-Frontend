@@ -40,7 +40,9 @@ class ForgetPasswordController extends GetxController {
         );
         // emailController.close();
 
-        Get.to(const VerificationScreen());
+        Get.to(VerificationScreen(
+          email: emailController.value.text,
+        ));
       } else {
         loading.value = false;
         Get.closeAllSnackbars();
