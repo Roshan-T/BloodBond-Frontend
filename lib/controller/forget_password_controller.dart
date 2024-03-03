@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bloodbond/controller/network_controller.dart';
 import 'package:bloodbond/screen/verification_screen.dart';
+import 'package:bloodbond/utils/send_email.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
@@ -17,6 +18,7 @@ class ForgetPasswordController extends GetxController {
   void forgetPassword() async {
     loading.value = true;
     try {
+      print("here");
       final response = await post(
         Uri.parse(Url.forgetPassword),
         headers: {"Content-Type": "application/json"},
@@ -28,7 +30,7 @@ class ForgetPasswordController extends GetxController {
 
       if (response.statusCode == 200) {
         loading.value = false;
-
+        sendOtpEmail(emailController.value.text, data['otp'].toString());
         Get.closeAllSnackbars();
         Get.snackbar(
           'Enter the OTP send in email',
@@ -36,7 +38,7 @@ class ForgetPasswordController extends GetxController {
           colorText: Colors.white,
           backgroundColor: Colors.green,
         );
-        emailController.close();
+        // emailController.close();
 
         Get.to(const VerificationScreen());
       } else {
@@ -67,6 +69,7 @@ class ForgetPasswordController extends GetxController {
         colorText: Colors.white,
         backgroundColor: Constants.kPrimaryColor,
       );
+      print("error: $e");
     }
   }
 }
