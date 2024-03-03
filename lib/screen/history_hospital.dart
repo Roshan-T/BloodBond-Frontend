@@ -379,7 +379,7 @@ class CampaTile extends StatelessWidget {
                     height: 120,
                     width: 250,
                     child: Image.network(
-                      Url.getImage + jsonDecode(campers.banner),
+                      Url.getImage + campers.banner,
                       fit: BoxFit.fill,
                     ),
                   ),

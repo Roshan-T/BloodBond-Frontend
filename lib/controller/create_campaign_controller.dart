@@ -39,7 +39,7 @@ class CreateCampaginController extends GetxController {
           "address": address,
           "city": city,
           "date": date.toString(),
-          "banner": file
+          "banner": jsonDecode(file)
         }),
       );
 

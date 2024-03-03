@@ -42,7 +42,7 @@ class CampTile extends StatelessWidget {
                         Radius.circular(15),
                       ),
                       child: Image.network(
-                        Url.getImage + jsonDecode(campers.banner),
+                        Url.getImage + campers.banner,
                         fit: BoxFit.fill,
                       ),
                     ),

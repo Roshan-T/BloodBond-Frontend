@@ -227,11 +227,8 @@ class CampaignBox extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    child: Image.network(
-                        Url.getImage + jsonDecode(donorsCampaign.image),
-                        height: 60,
-                        width: 100,
-                        fit: BoxFit.cover),
+                    child: Image.network(Url.getImage + donorsCampaign.image,
+                        height: 60, width: 100, fit: BoxFit.cover),
                   ),
                   const SizedBox(
                     width: 15,

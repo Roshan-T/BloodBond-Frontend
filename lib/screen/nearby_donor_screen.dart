@@ -103,7 +103,7 @@ class NearbyDonorBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var imageUrl = Url.getImage + donor.image;
-
+    print("image $imageUrl");
     return InkWell(
       onTap: () {
         Get.to(DonorDetail(donor: donor));
@@ -120,7 +120,7 @@ class NearbyDonorBox extends StatelessWidget {
               children: [
                 ClipOval(
                   child: Image.network(
-                    imageUrl,
+                    (imageUrl),
                     fit: BoxFit.cover,
                     height: 60,
                     width: 60,

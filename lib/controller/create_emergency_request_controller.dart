@@ -39,7 +39,7 @@ class CreateEmergencyRequestController extends GetxController {
           "patient_name": patientName,
           "blood_group": bloodGroup,
           "medical_condition": medicalProblem,
-          "report": file,
+          "report": jsonDecode(file),
           "requested_time": requestedDate.toString(),
           "expiry_time": expiryDate.toString()
         }),

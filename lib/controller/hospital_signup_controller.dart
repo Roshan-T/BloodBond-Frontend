@@ -35,7 +35,7 @@ class HospitalSignUpController extends GetxController {
         "latitude": lat!.toDouble(),
         "longitude": long!.toDouble(),
         "city": city,
-        "image": file,
+        "image": jsonDecode(file),
         "is_verified": false
       };
       //  print("user data: ${userdata}");
