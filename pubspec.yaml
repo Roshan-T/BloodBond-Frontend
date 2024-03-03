@@ -52,6 +52,7 @@ dependencies:
   onesignal_flutter: ^5.0.4
   web_socket_channel: ^2.4.0
   firebase_core: ^2.25.5
+  mailer: ^6.1.0
 
 dev_dependencies:
   flutter_test:
