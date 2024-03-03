@@ -27,7 +27,7 @@ class _CustomStepperState extends State<CustomStepper> {
     List<Step> Steps = [
       Step(
         title: Text(
-          'Request Pending',
+          'Request Sent',
           style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 17),
         ),
         content: Container(),

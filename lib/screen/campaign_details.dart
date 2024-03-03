@@ -6,6 +6,7 @@ import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 
 class CampaignDetail extends StatefulWidget {
@@ -52,7 +53,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
                   child: Image.network(
-                    Url.getImage + jsonDecode(campers.banner),
+                    Url.getImage + campers.banner,
                     fit: BoxFit.fill,
                     height: 300,
                     width: double.maxFinite,
@@ -96,20 +97,22 @@ class _CampaignDetailState extends State<CampaignDetail> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Center(
-                      child: SizedBox(
-                        height: 60,
-                        width: double.maxFinite,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller.register(campers.id);
-                          },
-                          child: const Text(
-                            "Interested for donation",
-                          ),
-                        ),
-                      ),
-                    ),
+                    GetStorage().read('role') == "donor"
+                        ? Center(
+                            child: SizedBox(
+                              height: 60,
+                              width: double.maxFinite,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  await controller.register(campers.id);
+                                },
+                                child: const Text(
+                                  "Interested for donation",
+                                ),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
                     const SizedBox(
                       height: 30,
                     ),

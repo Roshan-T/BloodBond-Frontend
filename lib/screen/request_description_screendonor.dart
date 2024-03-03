@@ -137,13 +137,12 @@ class _MapPageState extends State<RequestDetail> {
                           onTap: () {
                             Get.to(
                               FullScreen(
-                                photoUrl:
-                                    Url.getImage + jsonDecode(request.report),
+                                photoUrl: Url.getImage + request.report,
                               ),
                             );
                           },
                           child: Image.network(
-                            Url.getImage + jsonDecode(request.report),
+                            Url.getImage + request.report,
                             fit: BoxFit.fill,
                             width: 50,
                             height: 50,

@@ -34,6 +34,10 @@ class SignUpController extends GetxController {
     loading.value = true;
     try {
       var file = await ApiService.uploadImage(image);
+      // print("file: $file");
+      // print("file decoded: ${jsonDecode(file)}");
+      // print("file data: ${file.toString()}");
+
       final userdata = {
         "first_name": firstnamecontroller.value.text,
         "last_name": lastnamecontroller.value.text,
@@ -46,7 +50,7 @@ class SignUpController extends GetxController {
         "city": city,
         "email": emailcontroller.value.text,
         "password": passwordcontroller.value.text,
-        "image": file,
+        "image": jsonDecode(file),
       };
       print("user data: ${userdata}");
       final response = await post(

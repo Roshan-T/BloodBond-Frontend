@@ -432,7 +432,7 @@ class CampaTile extends StatelessWidget {
                     height: 120,
                     width: 250,
                     child: Image.network(
-                      Url.getImage + jsonDecode(campers.banner),
+                      Url.getImage + campers.banner,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -458,9 +458,12 @@ class CampaTile extends StatelessWidget {
                 height: 45,
                 width: 280,
                 child: ElevatedButton(
-                  onPressed: () => Get.to(HospitalCampaign(
-                    id: campers.id,
-                  )),
+                  onPressed: () {
+                    print("id: ${campers.id}");
+                    Get.to(HospitalCampaign(
+                      id: campers.id,
+                    ));
+                  },
                   style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all(Constants.kPrimaryColor),

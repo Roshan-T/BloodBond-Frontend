@@ -51,7 +51,7 @@ class _EmergencyRequestHistoryDescriptionState
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
                   child: Image.network(
-                    Url.getImage + jsonDecode(request.report),
+                    Url.getImage + request.report,
                     fit: BoxFit.fill,
                     height: 200,
                     width: double.maxFinite,

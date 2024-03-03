@@ -84,7 +84,7 @@ class _MainScreenState extends State<MainScreen> {
                     FontAwesomeIcons.handHoldingHeart,
                   ),
                 ),
-                label: "Donate",
+                label: "Donation",
               ),
             if (role == 'hospital')
               const BottomNavigationBarItem(
