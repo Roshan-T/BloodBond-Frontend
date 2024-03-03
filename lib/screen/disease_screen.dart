@@ -1,4 +1,5 @@
 import 'package:bloodbond/screen/viral_disease_alert.dart';
+import 'package:bloodbond/utils/send_email.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -61,34 +62,38 @@ class DiseaseScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        child: Expanded(
-          child: ListView.separated(
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () => index == 0
-                      ? Get.to(() => const ViralDiseaseAlert())
-                      : null,
-                  child: ListTile(
-                    minVerticalPadding: 10,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    tileColor: Colors.grey[200],
-                    leading: Image.asset(
-                      diseaseAlerts[index].image,
-                      width: 50,
-                      height: 50,
-                    ),
-                    title: Text(diseaseAlerts[index].title,
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                    subtitle: Text(diseaseAlerts[index].description,
-                        style: TextStyle(fontSize: 15)),
-                  ),
-                );
-              },
-              separatorBuilder: (context, _) => SizedBox(height: 10),
-              itemCount: diseaseAlerts.length),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => index == 0
+                          ? Get.to(() => const ViralDiseaseAlert())
+                          : null,
+                      child: ListTile(
+                        minVerticalPadding: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        tileColor: Colors.grey[200],
+                        leading: Image.asset(
+                          diseaseAlerts[index].image,
+                          width: 50,
+                          height: 50,
+                        ),
+                        title: Text(diseaseAlerts[index].title,
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                        subtitle: Text(diseaseAlerts[index].description,
+                            style: TextStyle(fontSize: 15)),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, _) => SizedBox(height: 10),
+                  itemCount: diseaseAlerts.length),
+            ),
+          ],
         ),
       ),
     );

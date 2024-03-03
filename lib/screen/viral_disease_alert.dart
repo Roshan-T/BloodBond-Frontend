@@ -86,9 +86,9 @@ class ViralDiseaseAlertState extends State<ViralDiseaseAlert>
               Expanded(
                 child: GridView.builder(
                     gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            childAspectRatio: 3 / 2,
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 1.2,
                             mainAxisSpacing: 20),
                     itemCount: 10,
                     itemBuilder: (BuildContext ctx, index) {
@@ -146,10 +146,11 @@ class ViralDiseaseAlertState extends State<ViralDiseaseAlert>
               Expanded(
                 child: GridView.builder(
                     gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            childAspectRatio: 3 / 2,
-                            mainAxisSpacing: 20),
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1.2,
+                      mainAxisSpacing: 20,
+                    ),
                     itemCount: 8,
                     itemBuilder: (BuildContext ctx, index) {
                       return Container(
