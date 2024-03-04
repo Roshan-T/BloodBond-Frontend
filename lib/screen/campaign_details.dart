@@ -176,33 +176,37 @@ class CustomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Center(
-            child: Text(
-              topic,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(fontSize: 17),
+    return Expanded(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Center(
+              child: Text(
+                topic,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(fontSize: 17),
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Text(
-            topicDetail,
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge!
-                .copyWith(color: Colors.grey, fontSize: 17),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Text(
+                topicDetail,
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: Colors.grey,
+                      fontSize: 17,
+                    ),
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -257,7 +261,7 @@ class CampaignDetailsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 320,
+      height: 350,
       width: double.maxFinite,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(20)),

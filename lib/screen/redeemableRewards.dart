@@ -51,7 +51,7 @@ class _RedeemableRewardState extends State<RedeemableReward> {
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
+                    return Text('Error Occur');
                   } else {
                     var filteredList = snapshot.data
                         ?.where((request) =>
