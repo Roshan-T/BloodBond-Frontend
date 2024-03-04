@@ -32,170 +32,173 @@ class ProfileScreenHospital extends StatelessWidget {
       } else {
         var hospital = hospitalController.hospital.value!;
 
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  ClipPath(
-                    clipper: OvalBottomBorderClipper(),
-                    child: Container(
-                      color: Constants.kPrimaryColor,
-                      height: 175,
-                      width: double.infinity,
-                    ),
+        return Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                ClipPath(
+                  clipper: OvalBottomBorderClipper(),
+                  child: Container(
+                    color: Constants.kPrimaryColor,
+                    height: 175,
+                    width: double.infinity,
                   ),
-                  Positioned(
-                      bottom: -50,
-                      right: 0.5,
-                      left: 0.5,
-                      child: Container(
-                        height: 130,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                              Url.getImage + (hospital.image),
-                            ),
+                ),
+                Positioned(
+                    bottom: -50,
+                    right: 0.5,
+                    left: 0.5,
+                    child: Container(
+                      height: 130,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            Url.getImage + (hospital.image),
                           ),
                         ),
-                      ))
-                ],
-              ),
-              const SizedBox(height: 60),
-              Text(
-                hospital.name,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w400,
-                    color: Constants.kBlackColor),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                hospital.email,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelSmall!
-                    .copyWith(fontSize: 14),
-              ),
-              IconButton(
-                onPressed: () async {
-                  final Uri url = Uri(scheme: 'tel', path: hospital.phone);
-                  if (await canLaunchUrl(url)) {
-                    launchUrl(url);
-                  } else {
-                    throw 'Could not launch';
-                  }
-                },
-                iconSize: 30,
-                icon: const Icon(
-                  Icons.call,
-                  color: Colors.blue,
-                ),
-              ),
-              const ProfileDataBox(
-                title: "Certified Hospital ",
-                icon: Icons.check_circle,
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.all(6.0),
-              //   child: Row(
-              //     children: [
-              //       Expanded(
-              //         child: DetailBox(
-              //             icon: Icons.bloodtype,
-              //             title: "My Rewards",
-              //             detail: "12345"),
-              //       ),
-              //       Expanded(
-              //         child: DetailBox(
-              //             icon: Icons.monitor_heart_outlined,
-              //             title: "Create Rewards",
-              //             detail: "5"),
-              //       ),
-              //     //   Expanded(
-              //     //     child: DetailBox(
-              //     //         icon: Icons.calendar_month,
-              //     //         title: "Last Donation",
-              //     //         detail: DateFormat('yyyy-MM-dd').format(
-              //     //             DateTime.parse(
-              //     //                 donor.lastDonationDate.toString()))),
-              //     //   ),
-              //     ],
-              //   ),
-              // ),
-              // const SizedBox(height: 10),
-              // Text(
-              //   "Rewards",
-              //   style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              //         color: Colors.black,
-              //       ),
-              // ),
-              // const SizedBox(height: 10),
-              // CircularPercentIndicator(
-              //   radius: 60.0,
-              //   lineWidth: 5.0,
-              //   percent: 0.75,
-              //   center: Text("150"),
-              //   linearGradient: const LinearGradient(
-              //     colors: [
-              //       Constants.kPrimaryColor,
-              //       Constants.kAccentColor,
-              //       Constants.kLightRed,
-              //       Colors.blue,
-              //       Colors.green,
-              //       Colors.yellowAccent
-              //     ],
-              //   ),
-              // ),
-              // const SizedBox(height: 15),
-              // SizedBox(
-              //   width: Get.width * 0.4,
-              //   height: 40,
-              //   child: ElevatedButton(
-              //     style: ButtonStyle(
-              //       backgroundColor:
-              //           MaterialStateProperty.all<Color>(Colors.green),
-              //     ),
-              //     onPressed: null,
-              //     child: const Text("Redeem"),
-              //   ),
-              // ),
-              const SizedBox(height: 20),
-              SizedBox(
-                height: 50,
-                width: Get.width * 0.8,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Constants.kSuccessColor)),
-                  onPressed: () => Get.to(() => MyRewards()),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Text("Rewards"), Icon(Icons.arrow_forward_ios)],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
+                      ),
+                    ))
+              ],
+            ),
+            const SizedBox(height: 60),
+            Text(
+              hospital.name,
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w400,
+                  color: Constants.kBlackColor),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              hospital.email,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelSmall!
+                  .copyWith(fontSize: 14),
+            ),
 
-              SizedBox(
-                width: Get.width * 0.9,
-                height: 60,
-                child: Obx(
-                  () => ElevatedButton(
-                    onPressed: controller.logout,
-                    child: controller.isLoading.value
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : const Text('Logout'),
-                  ),
+            IconButton(
+              onPressed: () async {
+                final Uri url = Uri(scheme: 'tel', path: hospital.phone);
+                if (await canLaunchUrl(url)) {
+                  launchUrl(url);
+                } else {
+                  throw 'Could not launch';
+                }
+              },
+              iconSize: 30,
+              icon: const Icon(
+                Icons.call,
+                color: Colors.blue,
+              ),
+            ),
+
+            const ProfileDataBox(
+              title: "Certified Hospital ",
+              icon: Icons.check_circle,
+            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(6.0),
+            //   child: Row(
+            //     children: [
+            //       Expanded(
+            //         child: DetailBox(
+            //             icon: Icons.bloodtype,
+            //             title: "My Rewards",
+            //             detail: "12345"),
+            //       ),
+            //       Expanded(
+            //         child: DetailBox(
+            //             icon: Icons.monitor_heart_outlined,
+            //             title: "Create Rewards",
+            //             detail: "5"),
+            //       ),
+            //     //   Expanded(
+            //     //     child: DetailBox(
+            //     //         icon: Icons.calendar_month,
+            //     //         title: "Last Donation",
+            //     //         detail: DateFormat('yyyy-MM-dd').format(
+            //     //             DateTime.parse(
+            //     //                 donor.lastDonationDate.toString()))),
+            //     //   ),
+            //     ],
+            //   ),
+            // ),
+            // const SizedBox(height: 10),
+            // Text(
+            //   "Rewards",
+            //   style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            //         color: Colors.black,
+            //       ),
+            // ),
+            // const SizedBox(height: 10),
+            // CircularPercentIndicator(
+            //   radius: 60.0,
+            //   lineWidth: 5.0,
+            //   percent: 0.75,
+            //   center: Text("150"),
+            //   linearGradient: const LinearGradient(
+            //     colors: [
+            //       Constants.kPrimaryColor,
+            //       Constants.kAccentColor,
+            //       Constants.kLightRed,
+            //       Colors.blue,
+            //       Colors.green,
+            //       Colors.yellowAccent
+            //     ],
+            //   ),
+            // ),
+            // const SizedBox(height: 15),
+            // SizedBox(
+            //   width: Get.width * 0.4,
+            //   height: 40,
+            //   child: ElevatedButton(
+            //     style: ButtonStyle(
+            //       backgroundColor:
+            //           MaterialStateProperty.all<Color>(Colors.green),
+            //     ),
+            //     onPressed: null,
+            //     child: const Text("Redeem"),
+            //   ),
+            // ),
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 60,
+              width: Get.width * 0.9,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Constants.kSuccessColor)),
+                onPressed: () => Get.to(() => MyRewards()),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [Text("Rewards"), Icon(Icons.arrow_forward_ios)],
                 ),
               ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+
+            Spacer(),
+
+            SizedBox(
+              width: Get.width * 0.9,
+              height: 60,
+              child: Obx(
+                () => ElevatedButton(
+                  onPressed: controller.logout,
+                  child: controller.isLoading.value
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text('Logout'),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
         );
       }
     }));
@@ -210,7 +213,8 @@ class ProfileDataBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(8),
+      width: Get.width * 0.9,
+      // margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.all(20),
       height: 75,
       decoration: BoxDecoration(
@@ -311,10 +315,10 @@ class MyRewards extends StatelessWidget {
               color: Constants.kBlackColor, fontWeight: FontWeight.bold),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: FutureBuilder<List<Rewards>?>(
                 future: ApiService.fetchRewards(),
@@ -357,19 +361,20 @@ class MyRewards extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(
-              height: 60,
-              width: Get.width * 0.75,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Constants.kSuccessColor)),
-                onPressed: () => Get.off(CreateReward()),
-                child: const Text("Create Rewards"),
-              ),
-            )
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 60,
+            width: Get.width * 0.8,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Constants.kSuccessColor)),
+              onPressed: () => Get.off(CreateReward()),
+              child: const Text("Create Rewards"),
+            ),
+          ),
+          SizedBox(height: 20),
+        ],
       ),
     );
   }

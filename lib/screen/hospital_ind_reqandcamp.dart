@@ -256,7 +256,7 @@ class RequestBox extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 150,
+          // height: 150,
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -411,10 +411,10 @@ class CampaTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.all(8),
-        height: 250,
+        height: 280,
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 239, 236, 236),
-          border: Border.all(width: 0.5, color: Colors.black),
+          // border: Border.all(width: 0.5, color: Colors.black),
           borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
         child: Column(
@@ -455,7 +455,7 @@ class CampaTile extends StatelessWidget {
             const Spacer(),
             Center(
               child: SizedBox(
-                height: 45,
+                // height: 45,
                 width: 280,
                 child: ElevatedButton(
                   onPressed: () {
