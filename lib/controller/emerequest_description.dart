@@ -74,7 +74,7 @@ class RequestController extends GetxController {
     }
   }
 
-  void confirmDonate(final id) async {
+  confirmDonate(final id) async {
     loading.value = true;
     try {
       var token = GetStorage().read('token');
@@ -101,7 +101,8 @@ class RequestController extends GetxController {
           colorText: Colors.white,
           backgroundColor: Colors.green,
         );
-        Get.to(MainScreen());
+        Get.deleteAll();
+        Get.offAll(const MainScreen());
       } else {
         loading.value = false;
         Get.closeAllSnackbars();
