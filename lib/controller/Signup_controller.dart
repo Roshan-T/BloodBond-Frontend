@@ -63,7 +63,7 @@ class SignUpController extends GetxController {
       print(response.statusCode);
       if (response.statusCode == 201) {
         loading.value = false;
-        Get.snackbar(" Success Message :", "User successfully registered!",
+        Get.snackbar(" Success Message ", "User successfully registered!",
             backgroundColor: Colors.green, colorText: Colors.white);
         print(data);
 
@@ -84,7 +84,7 @@ class SignUpController extends GetxController {
       if (NetworkController().connectionStatus == 0.obs) {
         Get.snackbar(
           'Check Your Internet Connection ',
-          "$e",
+          "",
           colorText: Colors.white,
           backgroundColor: Constants.kPrimaryColor,
         );
