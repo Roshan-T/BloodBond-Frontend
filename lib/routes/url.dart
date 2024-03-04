@@ -20,4 +20,5 @@ class Url {
   static const gethospitaldetail = "$mainUrl/api/v1/hospitals/";
   static const getRewards = "$mainUrl/api/v1/rewards/";
   static const getRedeem = "$mainUrl/api/v1/redeem";
+  static const getRedeemdDonors = "$mainUrl/api/v1/hospital-redeem";
 }

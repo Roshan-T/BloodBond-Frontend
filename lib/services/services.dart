@@ -6,6 +6,7 @@ import 'package:bloodbond/controller/home_screen_controller.dart';
 import 'package:bloodbond/models/campaignDonorsModel.dart';
 import 'package:bloodbond/models/campaignModel.dart';
 import 'package:bloodbond/models/redeemedRewardsModel.dart';
+import 'package:bloodbond/models/rewardRedeemedDonors.dart';
 import 'package:bloodbond/models/rewardsModel.dart';
 import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/screen/changePassword.dart';
@@ -337,6 +338,34 @@ class ApiService {
           backgroundColor: Constants.kPrimaryColor,
         );
       }
+    }
+  }
+
+  static Future<List<RewardRedeemedDonors>?> rewardRedeemedDonors() async {
+    var token = GetStorage().read('token');
+    var response = await http.get(
+      Uri.parse(Url.getRedeemdDonors),
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer $token ',
+      },
+    );
+    var data = response.body;
+
+    print(data);
+    if (response.statusCode == 200) {
+      final x = rewardRedeemedDonorsFromJson(data);
+      print(x);
+      return x;
+    } else {
+      Get.closeAllSnackbars();
+      Get.snackbar(
+        jsonDecode(data)['detail'],
+        "",
+        colorText: Colors.white,
+        backgroundColor: cons.Constants.kPrimaryColor,
+      );
+      return null;
     }
   }
 

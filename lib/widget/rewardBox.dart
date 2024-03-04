@@ -1,6 +1,8 @@
 import 'package:bloodbond/routes/url.dart';
+import 'package:bloodbond/screen/hospitalRewardredeemedDonors.dart';
 import 'package:bloodbond/services/services.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../utils/constants.dart';
@@ -100,6 +102,28 @@ class RewardBox extends StatelessWidget {
                       if (redeem == true)
                         const SizedBox(
                           height: 20,
+                        ),
+                      if (redeem == false)
+                        SizedBox(
+                          height: 40,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Get.to(HospitalRewardRedeemedDonors(
+                                  rewardid: reward.id));
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.green),
+                            ),
+                            child: Text("Redeemed Donors",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold)),
+                          ),
                         ),
                       if (redeem == true)
                         SizedBox(
