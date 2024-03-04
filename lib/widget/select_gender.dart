@@ -23,12 +23,6 @@ class _SelectGenderState extends State<SelectGender> {
   Widget build(BuildContext context) {
     return Container(
       height: 55,
-      // decoration: BoxDecoration(
-      //   color: const Color(0xffF7F7FB),
-      //   border: Border.all(color: Colors.black),
-      //   borderRadius: BorderRadius.circular(12),
-
-      // ),
       child: InputDecorator(
         decoration: InputDecoration(
             counterText: "",

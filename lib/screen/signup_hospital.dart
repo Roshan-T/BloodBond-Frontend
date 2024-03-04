@@ -158,6 +158,7 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                     hinttext: "Password",
                     control: hController.passwordcontroller.value,
                     keyboardtype: TextInputType.text,
+                    obscureText: true,
                   ),
                   const SizedBox(
                     height: 15,
@@ -279,7 +280,9 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                         }
                       },
                       child: hController.loading.value == true
-                          ? const CircularProgressIndicator()
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
                           : Text(
                               "Continue",
                               style: Get.textTheme.titleLarge
@@ -337,6 +340,7 @@ class Textfield extends StatelessWidget {
   final String? hinttext;
   final TextInputType? keyboardtype;
   final TextEditingController? control;
+  final bool? obscureText;
 
   final int? maxilength;
 
@@ -346,6 +350,7 @@ class Textfield extends StatelessWidget {
     required this.keyboardtype,
     required this.control,
     this.maxilength,
+    this.obscureText,
   });
 
   @override
@@ -355,6 +360,8 @@ class Textfield extends StatelessWidget {
       readOnly: false,
       keyboardType: keyboardtype,
       controller: control,
+      obscureText: obscureText ?? false,
+      obscuringCharacter: '*',
       decoration: InputDecoration(
           counterText: "",
           hintText: hinttext,

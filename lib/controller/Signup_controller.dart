@@ -34,10 +34,7 @@ class SignUpController extends GetxController {
     loading.value = true;
     try {
       var file = await ApiService.uploadImage(image);
-      // print("file: $file");
-      // print("file decoded: ${jsonDecode(file)}");
-      // print("file data: ${file.toString()}");
-
+      
       final userdata = {
         "first_name": firstnamecontroller.value.text,
         "last_name": lastnamecontroller.value.text,
@@ -84,7 +81,7 @@ class SignUpController extends GetxController {
       if (NetworkController().connectionStatus == 0.obs) {
         Get.snackbar(
           'Check Your Internet Connection ',
-          "",
+          "$e",
           colorText: Colors.white,
           backgroundColor: Constants.kPrimaryColor,
         );
