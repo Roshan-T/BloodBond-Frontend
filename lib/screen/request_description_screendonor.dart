@@ -204,31 +204,31 @@ class _MapPageState extends State<RequestDetail> {
             ),
             Center(
               child: SizedBox(
-                  height: 60,
-                  width: Get.width * 0.8,
-                  child: Obx(
-                    () => ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          controller.acceptRequest(request.id);
-                          homeController.fetchEmergencyRequest();
-                        });
-                        // login user
-                      },
-                      child: controller.loading.value
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : (request.accepted
-                              ? const Text("Accepted")
-                              : const Text('Accept Request')),
-                    ),
-                  )
-                  // ElevatedButton(
-                  //   onPressed: null,
-                  //   child: Text(
-                  //     request.accepted ? "Accepted" : "Accept Request",
-                  //   ),
-                  // ),
+                height: 60,
+                width: Get.width * 0.8,
+                child: Obx(
+                  () => ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        controller.acceptRequest(request.id);
+                        homeController.fetchEmergencyRequest();
+                      });
+                      // login user
+                    },
+                    child: controller.loading.value
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : (request.accepted
+                            ? const Text("Already Accepted")
+                            : const Text('Accept Request')),
                   ),
+                ),
+                // ElevatedButton(
+                //   onPressed: null,
+                //   child: Text(
+                //     request.accepted ? "Accepted" : "Accept Request",
+                //   ),
+                // ),
+              ),
             ),
           ],
         ),
