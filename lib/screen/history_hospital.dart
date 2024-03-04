@@ -100,9 +100,10 @@ class _HistoryHospitalState extends State<HistoryHospital>
                     return Text('Error: ${snapshot.error}');
                   } else {
                     var filteredList = snapshot.data!
-                        .where((request) => ((request.id == providedId) &&
-                            (request.donated == true ||
-                                currentTime.isAfter(request.expiryTime))))
+                        .where((request) =>
+                            ((request.hospital.id == providedId) &&
+                                (request.donated == true ||
+                                    currentTime.isAfter(request.expiryTime))))
                         .toList();
                     if (filteredList.isEmpty) {
                       return const Center(

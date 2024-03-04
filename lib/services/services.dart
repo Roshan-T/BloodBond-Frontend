@@ -8,6 +8,7 @@ import 'package:bloodbond/models/campaignModel.dart';
 import 'package:bloodbond/models/redeemedRewardsModel.dart';
 import 'package:bloodbond/models/rewardsModel.dart';
 import 'package:bloodbond/routes/url.dart';
+import 'package:bloodbond/screen/changePassword.dart';
 import 'package:bloodbond/screen/history_donor.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -316,6 +317,56 @@ class ApiService {
           backgroundColor: Colors.green,
         );
         Get.deleteAll();
+      } else {
+        Get.closeAllSnackbars();
+        Get.snackbar(
+          "Failed",
+          data['detail'],
+          colorText: Colors.white,
+          backgroundColor: Constants.kPrimaryColor,
+        );
+      }
+    } catch (e) {
+      Get.closeAllSnackbars();
+
+      if (e == SocketException) {
+        Get.snackbar(
+          'Check Your Internet Connection',
+          "",
+          colorText: Colors.white,
+          backgroundColor: Constants.kPrimaryColor,
+        );
+      }
+    }
+  }
+
+  static verfiyotp(final email, final otp) async {
+    try {
+      final response = await post(
+        Uri.parse(Url.verifyotp),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode({
+          "email": email,
+          "otp": otp,
+        }),
+      );
+      // print(response.statusCode);
+      var data = jsonDecode(response.body);
+      // var user = data.user;
+      // print(response.statusCode);
+      // print(data);
+      if (response.statusCode == 200) {
+        Get.closeAllSnackbars();
+        Get.snackbar(
+          'Sucessfully Verified',
+          "",
+          colorText: Colors.white,
+          backgroundColor: Colors.green,
+        );
+        Get.deleteAll();
+        Get.to(ChangePassword(email: email));
       } else {
         Get.closeAllSnackbars();
         Get.snackbar(

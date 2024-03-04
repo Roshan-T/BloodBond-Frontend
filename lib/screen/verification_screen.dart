@@ -1,16 +1,28 @@
+import 'package:bloodbond/services/services.dart';
 import 'package:bloodbond/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({super.key});
+  final email;
+  VerificationScreen({super.key, required this.email});
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
 }
 
 class _VerificationScreenState extends State<VerificationScreen> {
+  var email;
+  bool isFetching = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    email = widget.email;
+  }
+
+  TextEditingController pinController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,10 +72,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                const Pinput(
+                Pinput(
                   length: 6,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  controller: pinController,
                 ),
                 const SizedBox(
                   height: 40,
@@ -72,12 +85,23 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   width: Get.width * 0.9,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Continue",
-                      style: Get.textTheme.titleLarge
-                          ?.copyWith(color: Colors.white),
-                    ),
+                    onPressed: () async {
+                      setState(() {
+                        isFetching = true;
+                      });
+                      await ApiService.verfiyotp(
+                          email, pinController.value.text);
+                      setState(() {
+                        isFetching = false;
+                      });
+                    },
+                    child: isFetching
+                        ? const CircularProgressIndicator()
+                        : Text(
+                            "Continue",
+                            style: Get.textTheme.titleLarge
+                                ?.copyWith(color: Colors.white),
+                          ),
                   ),
                 ),
               ],
