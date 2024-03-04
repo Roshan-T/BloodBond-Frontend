@@ -43,8 +43,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     ),
   );
 
-
-
   dateSelect(BuildContext context, TextEditingController controller) async {
     final DateTime todayDate = DateTime.now();
     final DateTime? choosedDate = await showDatePicker(
@@ -191,6 +189,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hinttext: "Password",
                     control: signupController.passwordcontroller.value,
                     keyboardtype: TextInputType.text,
+                    obscureText: true,
                   ),
                   const SizedBox(
                     height: 15,
@@ -281,57 +280,64 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     width: Get.width * 0.9,
                     height: 60,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (signupController
-                                .firstnamecontroller.value.text.isEmpty ||
-                            signupController
-                                .lastnamecontroller.value.text.isEmpty ||
-                            signupController
-                                .passwordcontroller.value.text.isEmpty ||
-                            signupController
-                                .emailcontroller.value.text.isEmpty ||
-                            signupController
-                                .phonecontroller.value.text.isEmpty ||
-                            requestedDate.text.isEmpty) {
-                          // Display an error message or handle the case where not all fields are filled
+                    child: Obx(
+                      () => ElevatedButton(
+                        onPressed: () {
+                          if (signupController
+                                  .firstnamecontroller.value.text.isEmpty ||
+                              signupController
+                                  .lastnamecontroller.value.text.isEmpty ||
+                              signupController
+                                  .passwordcontroller.value.text.isEmpty ||
+                              signupController
+                                  .emailcontroller.value.text.isEmpty ||
+                              signupController
+                                  .phonecontroller.value.text.isEmpty ||
+                              requestedDate.text.isEmpty) {
+                            // Display an error message or handle the case where not all fields are filled
 
-                          Get.snackbar(
-                            "Please fill all the fields ",
-                            "",
-                            colorText: Colors.white,
-                            backgroundColor: Constants.kPrimaryColor,
-                          );
-                        } else if (!isEmailValid(signupController
-                            .emailcontroller.value.text
-                            .trim())) {
-                          Get.snackbar(
-                            "Error!",
-                            "Enter a valid email",
-                            colorText: Colors.white,
-                            backgroundColor: Constants.kPrimaryColor,
-                          );
-                        } else if (signupController
-                                .passwordcontroller.value.text
-                                .trim()
-                                .length <
-                            6) {
-                          Get.snackbar(
-                            "Error!",
-                            "Enter valid password",
-                            colorText: Colors.white,
-                            backgroundColor: Constants.kPrimaryColor,
-                          );
-                        } else {
-                          Get.to(
-                            () => BloodTypeSelectionScreen(images: image),
-                          );
-                        }
-                      },
-                      child: Text(
-                        "Continue",
-                        style: Get.textTheme.titleLarge
-                            ?.copyWith(color: Colors.white),
+                            Get.snackbar(
+                              "Please fill all the fields ",
+                              "",
+                              colorText: Colors.white,
+                              backgroundColor: Constants.kPrimaryColor,
+                            );
+                          } else if (!isEmailValid(signupController
+                              .emailcontroller.value.text
+                              .trim())) {
+                            Get.snackbar(
+                              "Error!",
+                              "Enter a valid email",
+                              colorText: Colors.white,
+                              backgroundColor: Constants.kPrimaryColor,
+                            );
+                          } else if (signupController
+                                  .passwordcontroller.value.text
+                                  .trim()
+                                  .length <
+                              6) {
+                            Get.snackbar(
+                              "Error!",
+                              "Enter valid password",
+                              colorText: Colors.white,
+                              backgroundColor: Constants.kPrimaryColor,
+                            );
+                          } else {
+                            Get.to(
+                              () => BloodTypeSelectionScreen(images: image),
+                            );
+                            signupController.registerDonor(image);
+                          }
+                        },
+                        child: signupController.loading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
+                            : Text(
+                                "Continue",
+                                style: Get.textTheme.titleLarge?.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),
@@ -386,6 +392,7 @@ class Textfield extends StatelessWidget {
   final TextInputType? keyboardtype;
   final TextEditingController? control;
   final int? maxilength;
+  final bool? obscureText;
 
   const Textfield({
     super.key,
@@ -393,6 +400,7 @@ class Textfield extends StatelessWidget {
     required this.keyboardtype,
     required this.control,
     this.maxilength,
+    this.obscureText,
   });
 
   @override
@@ -402,6 +410,8 @@ class Textfield extends StatelessWidget {
       readOnly: false,
       keyboardType: keyboardtype,
       controller: control,
+      obscuringCharacter: '*',
+      obscureText: obscureText ?? false,
       decoration: InputDecoration(
           counterText: "",
           hintText: hinttext,
