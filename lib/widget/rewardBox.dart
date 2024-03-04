@@ -11,8 +11,13 @@ class RewardBox extends StatelessWidget {
   final reward;
   bool redeem;
   final refresh;
+  bool redeemHistory;
   RewardBox(
-      {super.key, required this.reward, this.redeem = false, this.refresh});
+      {super.key,
+      required this.reward,
+      this.redeem = false,
+      this.refresh,
+      this.redeemHistory = false});
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +130,7 @@ class RewardBox extends StatelessWidget {
                                         fontWeight: FontWeight.bold)),
                           ),
                         ),
-                      if (redeem == true)
+                      if (redeem == true && redeemHistory == false)
                         SizedBox(
                           height: 40,
                           child: ElevatedButton(

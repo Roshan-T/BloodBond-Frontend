@@ -48,7 +48,7 @@ class _RedeemedRewardState extends State<RedeemedReward> {
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
+                    return const Text('Error occured');
                   } else {
                     if (snapshot.data!.isEmpty) {
                       return const Center(
@@ -64,6 +64,8 @@ class _RedeemedRewardState extends State<RedeemedReward> {
 
                         return RewardBox(
                           reward: snapshot.data![index].reward,
+                          redeem: true,
+                          redeemHistory: true,
                         );
                       },
                       separatorBuilder: (context, index) {

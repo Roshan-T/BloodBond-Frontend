@@ -78,7 +78,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     errorText: passwordErrorText,
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 50,
                   ),
                   SizedBox(
                     height: 60,

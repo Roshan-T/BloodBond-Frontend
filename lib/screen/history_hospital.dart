@@ -97,7 +97,7 @@ class _HistoryHospitalState extends State<HistoryHospital>
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
+                    return Text('Error Occured');
                   } else {
                     var filteredList = snapshot.data!
                         .where((request) =>
@@ -148,7 +148,7 @@ class _HistoryHospitalState extends State<HistoryHospital>
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
+                    return Text('Error occured');
                   } else {
                     var filteredList = snapshot.data!
                         .where((request) =>

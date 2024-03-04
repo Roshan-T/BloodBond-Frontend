@@ -43,8 +43,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     ),
   );
 
-
-
   dateSelect(BuildContext context, TextEditingController controller) async {
     final DateTime todayDate = DateTime.now();
     final DateTime? choosedDate = await showDatePicker(
