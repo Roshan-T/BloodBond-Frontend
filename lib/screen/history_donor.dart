@@ -98,7 +98,8 @@ class _HistoryDonorState extends State<HistoryDonor>
                     var filteredList = snapshot.data
                         ?.where((request) =>
                             (request.donor != null) &&
-                            request.donor['id'] == providedId)
+                            (request.donor['id'] == providedId) &&
+                            request.donated == true)
                         .toList();
                     if (filteredList!.isEmpty) {
                       return const Center(

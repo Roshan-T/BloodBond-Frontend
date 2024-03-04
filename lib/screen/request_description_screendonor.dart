@@ -86,8 +86,8 @@ class _MapPageState extends State<RequestDetail> {
                   Marker(
                       markerId: const MarkerId("1"),
                       icon: BitmapDescriptor.defaultMarker,
-                      position: LatLng(
-                          request.hospital.latitude, request.hospital.latitude),
+                      position: LatLng(request.hospital.latitude.toDouble(),
+                          request.hospital.latitude.toDouble()),
                       infoWindow: InfoWindow(title: request.hospital.name)),
                   Marker(
                       markerId: const MarkerId("2"),
