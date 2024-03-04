@@ -108,8 +108,9 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
                       ),
                     );
                   } else {
-                    if (controller.loading.value) return;
                     setState(() {});
+                    if (controller.loading.value) return;
+
                     await controller.registerDonor(widget.images);
                     setState(() {});
                   }

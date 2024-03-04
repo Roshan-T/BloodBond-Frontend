@@ -234,7 +234,7 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                     width: Get.width * 0.9,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         //check email
 
                         if (hController
@@ -269,8 +269,10 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                             backgroundColor: Constants.kPrimaryColor,
                           );
                         } else {
+                          setState(() {});
                           if (hController.loading.value) return;
-                          hController.hospitalSignUp(image);
+                          await hController.hospitalSignUp(image);
+                          setState(() {});
                           //  Get.to(
                           //   () => const LoginScreen(),
                           // );
