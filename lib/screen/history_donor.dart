@@ -93,7 +93,7 @@ class _HistoryDonorState extends State<HistoryDonor>
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
+                    return Text('Error Occured');
                   } else {
                     var filteredList = snapshot.data
                         ?.where((request) =>
@@ -139,7 +139,7 @@ class _HistoryDonorState extends State<HistoryDonor>
                       ),
                     );
                   } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
+                    return Text('Error:Occured');
                   } else if (snapshot.data!.isEmpty) {
                     return const Center(
                         child: Text(

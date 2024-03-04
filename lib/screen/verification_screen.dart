@@ -60,7 +60,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 ),
                 Text(
                     textAlign: TextAlign.left,
-                    "Enter the 5 digit verification code that has been sent to your email address samire10@gmail.com",
+                    "Enter the 6 digit verification code that has been sent to: $email",
                     style: Theme.of(context).textTheme.labelLarge),
                 const SizedBox(
                   height: 20,
