@@ -73,7 +73,7 @@ class SignUpController extends GetxController {
         Get.closeAllSnackbars();
         Get.snackbar(
           "SignUp Failed",
-          data ?? "hi",
+          "",
           colorText: Colors.white,
           backgroundColor: Constants.kPrimaryColor,
         );

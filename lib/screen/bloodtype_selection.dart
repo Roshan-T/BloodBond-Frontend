@@ -10,6 +10,7 @@ class BloodTypeSelectionScreen extends StatefulWidget {
   BloodTypeSelectionScreen({super.key, required this.images});
   var images;
   bool isFetching = false;
+
   @override
   _BloodTypeSelectionScreenState createState() =>
       _BloodTypeSelectionScreenState();
@@ -18,6 +19,13 @@ class BloodTypeSelectionScreen extends StatefulWidget {
 class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
   final controller = signupController;
   var image;
+  bool isLoading = false;
+  @override
+  dispose() {
+    super.dispose();
+    signupController.dispose();
+  }
+
   void updateSelection(String bloodType) {
     setState(() {
       controller.selectedBloodType = bloodType;
@@ -85,7 +93,7 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
               width: Get.width * 0.8,
               height: 60,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (controller.selectedBloodType.isEmpty ||
                       controller.selectedBloodRh.isEmpty) {
                     Get.snackbar(
@@ -101,7 +109,8 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
                     );
                   } else {
                     if (controller.loading.value) return;
-                    controller.registerDonor(widget.images);
+                    setState(() {});
+                    await controller.registerDonor(widget.images);
                     setState(() {});
                   }
                 },
