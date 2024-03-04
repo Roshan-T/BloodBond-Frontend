@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 class BloodTypeSelectionScreen extends StatefulWidget {
   BloodTypeSelectionScreen({super.key, required this.images});
   var images;
+  bool isFetching = false;
   @override
   _BloodTypeSelectionScreenState createState() =>
       _BloodTypeSelectionScreenState();
@@ -101,10 +102,13 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
                   } else {
                     if (controller.loading.value) return;
                     controller.registerDonor(widget.images);
+                    setState(() {});
                   }
                 },
                 child: controller.loading.value == true
-                    ? const CircularProgressIndicator()
+                    ? const CircularProgressIndicator(
+                        color: Colors.white,
+                      )
                     : Text(
                         "Sign Up",
                         style: Get.textTheme.titleLarge

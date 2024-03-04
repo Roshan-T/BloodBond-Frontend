@@ -31,7 +31,11 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   File? image;
   bool isFetchingLocation = false;
-
+  @override
+  dispose() {
+    super.dispose();
+    signupController.dispose();
+  }
   // TextEditingController lastNameController = TextEditingController();
   // TextEditingController passwordController = TextEditingController();
   // TextEditingController emailController = TextEditingController();
