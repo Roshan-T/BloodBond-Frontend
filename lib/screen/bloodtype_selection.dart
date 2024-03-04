@@ -52,7 +52,7 @@ class _BloodTypeSelectionScreenState extends State<BloodTypeSelectionScreen> {
         ),
       ),
       body: Container(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(11),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

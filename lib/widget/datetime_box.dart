@@ -46,10 +46,14 @@ class DateTimeBox extends StatelessWidget {
                         color: Constants.kBlackColor,
                         fontWeight: FontWeight.bold),
                   ),
-                  IconButton(
-                    onPressed: onPressed,
-                    icon: icon,
-                    padding: EdgeInsets.zero,
+                  SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: IconButton(
+                      onPressed: onPressed,
+                      icon: icon,
+                      padding: EdgeInsets.zero,
+                    ),
                   )
                 ],
               ),
