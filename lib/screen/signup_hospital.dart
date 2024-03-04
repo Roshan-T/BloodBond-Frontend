@@ -280,7 +280,9 @@ class _SignUpScreenState extends State<SignUpScreenHospital> {
                         }
                       },
                       child: hController.loading.value == true
-                          ? const CircularProgressIndicator()
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
                           : Text(
                               "Continue",
                               style: Get.textTheme.titleLarge
