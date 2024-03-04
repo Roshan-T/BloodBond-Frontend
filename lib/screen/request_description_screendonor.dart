@@ -182,54 +182,72 @@ class _MapPageState extends State<RequestDetail> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Obx(() => TimerBox(
-                          time:
-                              "${countdownController.timeRemaining.value.inHours}",
-                          timeDuration: "Hour")),
-                      Obx(() => TimerBox(
-                          time:
-                              "${countdownController.timeRemaining.value.inMinutes % 60}",
-                          timeDuration: "Min")),
-                      Obx(() => TimerBox(
-                          time:
-                              "${countdownController.timeRemaining.value.inSeconds % 60}",
-                          timeDuration: "Sec"))
+                      Obx(() => Expanded(
+                            child: TimerBox(
+                                time:
+                                    "${countdownController.timeRemaining.value.inDays}",
+                                timeDuration: "Days"),
+                          )),
+                      SizedBox(width: 10),
+                      Obx(() => Expanded(
+                            child: TimerBox(
+                                time:
+                                    "${countdownController.timeRemaining.value.inHours % 24}",
+                                timeDuration: "Hours"),
+                          )),
+                      SizedBox(width: 10),
+                      Obx(() => Expanded(
+                            child: TimerBox(
+                                time:
+                                    "${countdownController.timeRemaining.value.inMinutes % 60}",
+                                timeDuration: "Mins"),
+                          )),
+                      SizedBox(width: 10),
+                      Obx(() => Expanded(
+                            child: TimerBox(
+                                time:
+                                    "${countdownController.timeRemaining.value.inSeconds % 60}",
+                                timeDuration: "Sec"),
+                          )),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
             const SizedBox(
               height: 15,
             ),
-            Center(
-              child: SizedBox(
-                  height: 60,
-                  width: Get.width * 0.8,
-                  child: Obx(
-                    () => ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          controller.acceptRequest(request.id);
-                          homeController.fetchEmergencyRequest();
-                        });
-                        // login user
-                      },
-                      child: controller.loading.value
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : (request.accepted
-                              ? const Text("Accepted")
-                              : const Text('Accept Request')),
+            GetStorage().read('role') == 'hospital'
+                ? const SizedBox()
+                : Center(
+                    child: SizedBox(
+                      height: 60,
+                      width: Get.width * 0.8,
+                      child: Obx(
+                        () => ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              controller.acceptRequest(request.id);
+                              homeController.fetchEmergencyRequest();
+                            });
+                            // login user
+                          },
+                          child: controller.loading.value
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white)
+                              : (request.accepted
+                                  ? const Text("Already Accepted")
+                                  : const Text('Accept Request')),
+                        ),
+                      ),
+                      // ElevatedButton(
+                      //   onPressed: null,
+                      //   child: Text(
+                      //     request.accepted ? "Accepted" : "Accept Request",
+                      //   ),
+                      // ),
                     ),
-                  )
-                  // ElevatedButton(
-                  //   onPressed: null,
-                  //   child: Text(
-                  //     request.accepted ? "Accepted" : "Accept Request",
-                  //   ),
-                  // ),
                   ),
-            ),
           ],
         ),
       ),

@@ -1,8 +1,10 @@
+import 'package:bloodbond/controller/get_donor_detail.dart';
 import 'package:bloodbond/routes/url.dart';
 import 'package:bloodbond/screen/hospitalRewardredeemedDonors.dart';
 import 'package:bloodbond/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 
 import '../utils/constants.dart';
@@ -21,6 +23,7 @@ class RewardBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DonorController donorController = Get.put(DonorController());
     final double width = MediaQuery.of(context).size.width * 1;
     return Stack(
       children: [
@@ -136,6 +139,8 @@ class RewardBox extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () async {
                               await ApiService.redeemRewards(reward.id);
+                              await donorController
+                                  .fetchDonor(GetStorage().read('id'));
                               refresh();
                             },
                             style: ButtonStyle(
