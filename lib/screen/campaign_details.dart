@@ -118,7 +118,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
                       Obx(() => Expanded(
                             child: TimerBox(
                                 time:
-                                    "${countdownController.timeRemaining.value.inHours}",
+                                    "${countdownController.timeRemaining.value.inHours % 24}",
                                 timeDuration: "Hours"),
                           )),
                       SizedBox(width: 10),

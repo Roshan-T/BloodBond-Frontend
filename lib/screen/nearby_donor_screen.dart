@@ -37,15 +37,20 @@ class NearbyDonorScreen extends StatelessWidget {
         Get.put(NearbyDonorController());
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "NearbyDonors",
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall!
-              .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ),
+          centerTitle: true,
+          title: Text(
+            "Nearby Donors",
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall!
+                .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+            onPressed: () {
+              Get.back();
+            },
+          )),
       body: Obx(() {
         if (donorController.isLoading.value) {
           return const Center(
