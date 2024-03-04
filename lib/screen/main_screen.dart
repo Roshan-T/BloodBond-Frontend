@@ -55,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
 
       //bottom navbar
       bottomNavigationBar: BottomNavigationBar(
-          elevation: 0,
+          elevation: 10,
           type: BottomNavigationBarType.fixed,
           selectedIconTheme: const IconThemeData(
             color: Constants.kPrimaryColor,
@@ -65,6 +65,7 @@ class _MainScreenState extends State<MainScreen> {
             color: Constants.kGrey,
             size: 24,
           ),
+          backgroundColor: Colors.grey[100],
           selectedItemColor: Constants.kPrimaryColor,
           items: [
             const BottomNavigationBarItem(
