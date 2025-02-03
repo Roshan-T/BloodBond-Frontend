@@ -74,5 +74,3 @@ flutter pub get
 flutter run
 ```
 
-
-**Save a Life, One Tap at a Time** 💖
